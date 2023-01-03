@@ -7,7 +7,7 @@ namespace SAE
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        private SpriteBatch _spriteBatch;        
 
         public Game1()
         {
@@ -19,7 +19,7 @@ namespace SAE
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            Window.Title = "Test";
             base.Initialize();
         }
 
