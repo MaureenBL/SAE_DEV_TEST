@@ -251,6 +251,39 @@ namespace SAE
                 //animation bas
                 _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
             }
+           //FANTOME
+            if(Collision entre joueur et zone de spawn)
+            {
+                
+            }
+         */
+            //Déplacement
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _keyboardState = Keyboard.GetState();
+            //flèche droite
+            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+            {
+                //animation droite
+                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche gauche
+            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
+            {
+                //animation gauche
+                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche haut
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+            {
+                //animation haut
+                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+            //flèche bas
+            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+            {
+                //animation bas
+                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
+            }
 
 >>>>>>> 3b8b0826df93ba6ff0a586f0a3ffa6e96793f4ca
             base.Update(gameTime);
