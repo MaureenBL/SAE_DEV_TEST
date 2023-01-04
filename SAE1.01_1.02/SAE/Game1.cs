@@ -5,6 +5,8 @@ using System;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
+using MonoGame.Extended.Screens;
+using MonoGame.Extended.Screens.Transitions;
 
 namespace SAE
 {
@@ -41,6 +43,9 @@ namespace SAE
         public const int GHOST_HAUTEUR = 64;
         public const int SKELETON_LARGEUR = 64;
         public const int SKELETON_HAUTEUR = 64;
+        public int _vitesseBat;
+        public int _vitesseGhost;
+        public int _vitesseSkeleton;
 
 
 
@@ -58,16 +63,26 @@ namespace SAE
         private string _jouer;
         private SpriteFont _policeJouer;
         private Vector2 _positionJouer;
+        public const int TAILLE_JOUER = 100;
         //règle
         private string _regle;
         private SpriteFont _policeRegle;
         private Vector2 _positionRegle;
+        public const int TAILLE_REGLE = 100;
         //commande
         private string _commande;
         private SpriteFont _policeCommande;
         private Vector2 _positionCommande;
+        public const int TAILLE_COMMANDE = 100;
+        //acces
+        private MouseState _mouseState;
+        //transition
+        private readonly ScreenManager _screenManager;
+        private Regle.MyScreen1 _myScreen1;
+        private Commande.MyScreen2 _myScreen2;
+        public SpriteBatch SpriteBatch { get; set; }
 
-        private KeyboardState _keyboardState;
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
 
@@ -105,16 +120,24 @@ namespace SAE
             //commande
             _commande = "Commandes";
             _policeCommande = Content.Load<SpriteFont>("Font");
-            _positionCommande = new Vector2(150, 550); 
+            _positionCommande = new Vector2(150, 550);
+
+            //propriétés des monstres
+            _vitesseBat = 0;
+            _vitesseGhost = 0;
+            _vitesseSkeleton = 100;
 
             base.Initialize();
-            //beredsferd
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _textureFond = Content.Load<Texture2D>("accueil");
+
+            //TRANSITION
+            _myScreen1 = new Regle.MyScreen1(this); // en leur donnant une référence au Game
+            _myScreen2 = new Commande.MyScreen2(this);
 
             //GEORGE            
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
@@ -128,20 +151,47 @@ namespace SAE
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            //ACCUEIL
+            _mouseState = Mouse.GetState();
+
+            if (_mouseState.LeftButton == ButtonState.Pressed)
+            {
+                if (_mouseState.X >= _positionCommande.X && _mouseState.Y >= _positionCommande.Y && _mouseState.X <= _positionCommande.X + TAILLE_COMMANDE && _mouseState.Y <= _positionCommande.Y + TAILLE_COMMANDE)
+                {
+                    _screenManager.LoadScreen(_myScreen1, new FadeTransition(GraphicsDevice,Color.Black));
+                }
+                else if (_mouseState.X >= _positionRegle.X && _mouseState.Y >= _positionRegle.Y && _mouseState.X <= _positionRegle.X + TAILLE_REGLE && _mouseState.Y <= _positionRegle.Y + TAILLE_REGLE)
+                {
+                    _screenManager.LoadScreen(_myScreen2, new FadeTransition(GraphicsDevice,Color.Black));
+                }
+                else if(_mouseState.X >= _positionJouer.X && _mouseState.Y >= _positionJouer.Y && _mouseState.X <= _positionJouer.X + TAILLE_JOUER && _mouseState.Y <= _positionJouer.Y + TAILLE_JOUER)
+                {
+                    Exit();
+
+                }
+            }
+
+
             //GEORGE
           //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
             
-            //SQUELETTE
+         /*   //SQUELETTE
             if(Voir())
             {
-
+                //Foncer sur le héros
+                
             }
             else
             {
-                //Marcher d'avant en arrière
+                //Roder sur la map en faisant un trait
             }
 
+           //FANTOME
+            if(Collision entre joueur et zone de spawn)
+            {
+                
+            }
+         */
             //Déplacement
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
@@ -193,6 +243,8 @@ namespace SAE
             
             base.Draw(gameTime);
         }
+
+
         /* public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
          {
              Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA,);
