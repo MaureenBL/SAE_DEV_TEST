@@ -82,7 +82,7 @@ namespace SAE
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //GEORGE
+            //GEORGE            
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
 
