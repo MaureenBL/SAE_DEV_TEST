@@ -19,9 +19,9 @@ namespace SAE
         private Vector2 _sensPersoHorizontal;
         private Vector2 _sensPersoVertical;
         private int _vitessePerso;
+        private int _nbVie;
         public const int LARGEUR_PERSO = 200;
         public const int HAUTEUR_PERSO = 154;
-
 
         //MONSTRES
         //animation
@@ -132,6 +132,7 @@ namespace SAE
             _vitessePerso = 100;
             _sensPersoHorizontal = Vector2.Normalize(new Vector2(1, 0));
             _sensPersoVertical = Vector2.Normalize(new Vector2(0, 1));
+            _nbVie = 3;
             //ACCUEIL
             _positionFond = new Vector2(700, 900);
             //titre
@@ -204,7 +205,7 @@ namespace SAE
             }
 
 
-          /*//GEORGE
+          //GEORGE
             //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
 
                //SQUELETTE
@@ -240,7 +241,7 @@ namespace SAE
                {
                
                }
-            
+            */
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
 =======
@@ -249,7 +250,7 @@ namespace SAE
             {
                 
             }
-         
+         */
             //Déplacement
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
@@ -282,7 +283,7 @@ namespace SAE
             {
                 
             }
-         
+         */
             //Déplacement
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
@@ -301,8 +302,7 @@ namespace SAE
             //flèche haut
             if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
             {
-                //animation haut
-                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
+                _vitesseSkeleton = 100;
             }
             //flèche bas
             if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
@@ -310,7 +310,8 @@ namespace SAE
                 //animation bas
                 _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
             }
-            */
+
+>>>>>>> 3b8b0826df93ba6ff0a586f0a3ffa6e96793f4ca
             base.Update(gameTime);
         }
 
