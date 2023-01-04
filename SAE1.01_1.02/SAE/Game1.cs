@@ -16,7 +16,8 @@ namespace SAE
         //PERSONNAGE - GEORGE
         private AnimatedSprite _perso;
         private Vector2 _positionPerso;
-        private int _sensPerso;
+        private Vector2 _sensPersoHorizontal;
+        private Vector2 _sensPersoVertical;
         private int _vitessePerso;
         public const int LARGEUR_PERSO = 200;
         public const int HAUTEUR_PERSO = 154;
@@ -79,19 +80,14 @@ namespace SAE
         public const int TAILLE_COMMANDE = 100;
         //acces
         private MouseState _mouseState;
+        private KeyboardState _keyboardState;
+
         //transition
         private readonly ScreenManager _screenManager;
         private Regle.MyScreen1 _myScreen1;
         private Commande.MyScreen2 _myScreen2;
         public SpriteBatch SpriteBatch { get; set; }
 
-
-        public Game1(SpriteBatch spriteBatch)
-        {
-            _screenManager = new ScreenManager();
-            Components.Add(_screenManager);
-            this.SpriteBatch = spriteBatch;
-        }
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
@@ -113,6 +109,10 @@ namespace SAE
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
             _graphics.ApplyChanges();
 
+            //PERSO
+            _vitessePerso = 100;
+            _sensPersoHorizontal = Vector2.Normalize(new Vector2(1, 0));
+            _sensPersoVertical = Vector2.Normalize(new Vector2(0, 1));
             //ACCUEIL
             _positionFond = new Vector2(700, 900);
             //jouer
@@ -178,7 +178,7 @@ namespace SAE
             }
 
 
-          //GEORGE
+          /*//GEORGE
             //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
 
                //SQUELETTE
@@ -208,6 +208,7 @@ namespace SAE
 
                 }
 
+<<<<<<< HEAD
               //FANTOME
                if(Collision entre joueur et zone de spawn)
                {
@@ -216,6 +217,42 @@ namespace SAE
             */
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
+=======
+           //FANTOME
+            if(Collision entre joueur et zone de spawn)
+            {
+                
+            }
+         */
+            //Déplacement
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _keyboardState = Keyboard.GetState();
+            //flèche droite
+            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+            {
+                //animation droite
+                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche gauche
+            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
+            {
+                //animation gauche
+                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche haut
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+            {
+                //animation haut
+                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+            //flèche bas
+            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+            {
+                //animation bas
+                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+
+>>>>>>> 3b8b0826df93ba6ff0a586f0a3ffa6e96793f4ca
             base.Update(gameTime);
         }
 
