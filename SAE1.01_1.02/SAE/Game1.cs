@@ -19,9 +19,9 @@ namespace SAE
         private Vector2 _sensPersoHorizontal;
         private Vector2 _sensPersoVertical;
         private int _vitessePerso;
+        private int _nbVie;
         public const int LARGEUR_PERSO = 200;
         public const int HAUTEUR_PERSO = 154;
-
 
         //MONSTRES
         //animation
@@ -122,6 +122,7 @@ namespace SAE
             _vitessePerso = 100;
             _sensPersoHorizontal = Vector2.Normalize(new Vector2(1, 0));
             _sensPersoVertical = Vector2.Normalize(new Vector2(0, 1));
+            _nbVie = 3;
             //ACCUEIL
             _positionFond = new Vector2(700, 900);
             //titre
@@ -246,15 +247,16 @@ namespace SAE
                 }
                 _vitesseSkeleton = 250;
             }
-            else
+            //flèche haut
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
             {
                 _vitesseSkeleton = 100;
             }
-
-           /* //FANTOME
-            if (Collision entre joueur et zone de spawn)
-               {
-
+            //flèche bas
+            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+            {
+                //animation bas
+                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
             }
             */
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
