@@ -59,5 +59,11 @@ namespace SAE
             GraphicsDevice.Clear(Color.Red);
             base.Draw(gameTime);
         }
+        public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
+        {
+            Rectangle rectOb = new Rectangle(xObjetA, yObjetA, LARGEUR_objetA, HAUTEUR_objetB);
+            Rectangle rectPereNoel = new Rectangle((int)_positionPereNoel.X, (int)_positionPereNoel.Y, LARGEUR_PERE_NOEL, HAUTEUR_PERE_NOEL);
+            return rectCadeau.Intersects(rectPereNoel);
+        }
     }
 }
