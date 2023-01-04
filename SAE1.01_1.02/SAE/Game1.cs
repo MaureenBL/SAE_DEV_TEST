@@ -19,9 +19,9 @@ namespace SAE
         private Vector2 _sensPersoHorizontal;
         private Vector2 _sensPersoVertical;
         private int _vitessePerso;
+        private int _nbVie;
         public const int LARGEUR_PERSO = 200;
         public const int HAUTEUR_PERSO = 154;
-
 
         //MONSTRES
         //animation
@@ -113,6 +113,7 @@ namespace SAE
             _vitessePerso = 100;
             _sensPersoHorizontal = Vector2.Normalize(new Vector2(1, 0));
             _sensPersoVertical = Vector2.Normalize(new Vector2(0, 1));
+            _nbVie = 3;
             //ACCUEIL
             _positionFond = new Vector2(700, 900);
             //jouer
@@ -216,13 +217,13 @@ namespace SAE
                 _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
             }
             //flèche haut
-            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
             {
                 //animation haut
                 _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
             }
             //flèche bas
-            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
             {
                 //animation bas
                 _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
