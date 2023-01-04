@@ -40,6 +40,9 @@ namespace SAE
         public const int GHOST_HAUTEUR = 64;
         public const int SKELETON_LARGEUR = 64;
         public const int SKELETON_HAUTEUR = 64;
+        public int _vitesseBat;
+        public int _vitesseGhost;
+        public int _vitesseSkeleton;
 
 
 
@@ -105,10 +108,14 @@ namespace SAE
             //commande
             _commande = "Commandes";
             _policeCommande = Content.Load<SpriteFont>("Font");
-            _positionCommande = new Vector2(150, 550); 
+            _positionCommande = new Vector2(150, 550);
+
+            //propriétés des monstres
+            _vitesseBat = 0;
+            _vitesseGhost = 0;
+            _vitesseSkeleton = 100;
 
             base.Initialize();
-            //beredsferd
         }
 
         protected override void LoadContent()
