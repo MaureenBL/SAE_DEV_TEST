@@ -57,14 +57,19 @@ namespace SAE
         private string _jouer;
         private SpriteFont _policeJouer;
         private Vector2 _positionJouer;
+        public const int TAILLE_JOUER = 100;
         //règle
         private string _regle;
         private SpriteFont _policeRegle;
         private Vector2 _positionRegle;
+        public const int TAILLE_REGLE = 100;
         //commande
         private string _commande;
         private SpriteFont _policeCommande;
         private Vector2 _positionCommande;
+        public const int TAILLE_COMMANDE = 100;
+        //acces
+        private MouseState _mouseState;
 
 
         private GraphicsDeviceManager _graphics;
@@ -123,12 +128,32 @@ namespace SAE
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            //ACCUEIL
+            _mouseState = Mouse.GetState();
+
+            if (_mouseState.LeftButton == ButtonState.Pressed)
+            {
+                if (_mouseState.X >= _positionCommande.X && _mouseState.Y >= _positionCommande.Y && _mouseState.X <= _positionCommande.X + TAILLE_COMMANDE && _mouseState.Y <= _positionCommande.Y + TAILLE_COMMANDE)
+                {
+                    this.Initialize();
+                }
+                else if (_mouseState.X >= _positionRegle.X && _mouseState.Y >= _positionRegle.Y && _mouseState.X <= _positionRegle.X + TAILLE_REGLE && _mouseState.Y <= _positionRegle.Y + TAILLE_REGLE)
+                {
+
+                }
+                else if(_mouseState.X >= _positionJouer.X && _mouseState.Y >= _positionJouer.Y && _mouseState.X <= _positionJouer.X + TAILLE_JOUER && _mouseState.Y <= _positionJouer.Y + TAILLE_JOUER)
+                {
+
+                }
+                  /*  Exit(); */
+            }
+
+
             //GEORGE
-          //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
-            
+            //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
+
             //SQUELETTE
-            if(Voir())
+            if (Voir())
             {
 
             }
@@ -160,6 +185,8 @@ namespace SAE
             
             base.Draw(gameTime);
         }
+
+
         /* public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
          {
              Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA,);
