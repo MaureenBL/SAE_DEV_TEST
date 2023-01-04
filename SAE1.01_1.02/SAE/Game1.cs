@@ -121,6 +121,16 @@ namespace SAE
             //GEORGE
             _perso.Play("gBas"); // une des animations définies dans « animation.sf »
             
+            //SQUELETTE
+            if(Voir())
+            {
+
+            }
+            else
+            {
+                //Marcher d'avant en arrière
+            }
+
             base.Update(gameTime);
         }
 
@@ -144,11 +154,12 @@ namespace SAE
             
             base.Draw(gameTime);
         }
-       /* public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
-        {
-            Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA,);
-            Rectangle rectObjetB = new Rectangle(xObjetB, yObjetB, largeurObjetB, largeurObjetB);
-            return rectObjetA.Intersects(rectObjetB);
-        }*/
+        /* public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
+         {
+             Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA,);
+             Rectangle rectObjetB = new Rectangle(xObjetB, yObjetB, largeurObjetB, largeurObjetB);
+             return rectObjetA.Intersects(rectObjetB);
+         }*/
+
     }
 }
