@@ -5,6 +5,8 @@ using System;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
+using MonoGame.Extended.Screens;
+using MonoGame.Extended.Screens.Transitions;
 
 namespace SAE
 {
@@ -70,7 +72,19 @@ namespace SAE
         public const int TAILLE_COMMANDE = 100;
         //acces
         private MouseState _mouseState;
+        //transition
+        private readonly ScreenManager _screenManager;
+        private Regle.MyScreen1 _myScreen1;
+        private Commande.MyScreen2 _myScreen2;
+        public SpriteBatch SpriteBatch { get; set; }
 
+
+        public Game1(SpriteBatch spriteBatch)
+        {
+            _screenManager = new ScreenManager();
+            Components.Add(_screenManager);
+            this.SpriteBatch = spriteBatch;
+        }
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
@@ -116,6 +130,10 @@ namespace SAE
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _textureFond = Content.Load<Texture2D>("accueil");
 
+            //TRANSITION
+            _myScreen1 = new Regle.MyScreen1(this); // en leur donnant une référence au Game
+            _myScreen2 = new Commande.MyScreen2(this);
+
             //GEORGE            
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
                 _perso = new AnimatedSprite(spriteSheet);*/
@@ -135,17 +153,17 @@ namespace SAE
             {
                 if (_mouseState.X >= _positionCommande.X && _mouseState.Y >= _positionCommande.Y && _mouseState.X <= _positionCommande.X + TAILLE_COMMANDE && _mouseState.Y <= _positionCommande.Y + TAILLE_COMMANDE)
                 {
-                    this.Initialize();
+                    _screenManager.LoadScreen(_myScreen1, new FadeTransition(GraphicsDevice,Color.Black));
                 }
                 else if (_mouseState.X >= _positionRegle.X && _mouseState.Y >= _positionRegle.Y && _mouseState.X <= _positionRegle.X + TAILLE_REGLE && _mouseState.Y <= _positionRegle.Y + TAILLE_REGLE)
                 {
-
+                    _screenManager.LoadScreen(_myScreen2, new FadeTransition(GraphicsDevice,Color.Black));
                 }
                 else if(_mouseState.X >= _positionJouer.X && _mouseState.Y >= _positionJouer.Y && _mouseState.X <= _positionJouer.X + TAILLE_JOUER && _mouseState.Y <= _positionJouer.Y + TAILLE_JOUER)
                 {
+                    Exit();
 
                 }
-                  /*  Exit(); */
             }
 
 
