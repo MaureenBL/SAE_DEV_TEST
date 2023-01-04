@@ -125,7 +125,7 @@ namespace SAE
 
         protected override void Update(GameTime gameTime)
         {
-         /*   if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             //ACCUEIL
@@ -152,7 +152,7 @@ namespace SAE
             //GEORGE
           //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
             
-            //SQUELETTE
+         /*   //SQUELETTE
             if(Voir())
             {
                 //Foncer sur le héros
