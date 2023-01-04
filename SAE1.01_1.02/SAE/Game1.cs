@@ -35,7 +35,7 @@ namespace SAE
         private int _batOrientationX;
         private int _batOrientationY;
         private int _ghostOrientationX;
-        private int _batOrientationY;
+        private int _ghostOrientationY;
         private int _skeletonOrientationX;
         private int _skeletonOrientationY;
         //dimentions
@@ -178,21 +178,35 @@ namespace SAE
             }
 
 
-            //GEORGE
+          //GEORGE
             //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
 
-            /*   //SQUELETTE
+               //SQUELETTE
                if(Voir())
                {
-                   //Foncer sur le héros
-                   _skeletonPosition.X += _sensPereNoel * _vitessePereNoel * deltaTime;
-                   _skeletonPosition.Y += _sensPereNoel * _vitessePereNoel * deltaTime;
-
+               if(_skeletonPosition.X < _positionPerso.X)
+                {
+                   _skeletonOrientationX = 1;
+                }
+               else
+                {
+                    _skeletonOrientationX = 1;
+                }
+               if(_skeletonPosition.Y < _positionPerso.Y)
+                {
+                    _skeletonOrientationY = 1;
+                }
+               else
+                {
+                    _skeletonOrientationY = -1;
+                }
+                _vitesseSkeleton = 250;
                }
                else
-               {
-                   //Roder sur la map en faisant un trait
-               }
+                _vitesseSkeleton = 100;
+                {
+
+                }
 
               //FANTOME
                if(Collision entre joueur et zone de spawn)
@@ -200,7 +214,8 @@ namespace SAE
                
                }
             */
-
+            _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
+            _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
             base.Update(gameTime);
         }
 
