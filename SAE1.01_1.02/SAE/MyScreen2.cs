@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
-    internal class Regle
+    internal class MyScreen2
     {
         public class MyScreen1 : GameScreen
         {

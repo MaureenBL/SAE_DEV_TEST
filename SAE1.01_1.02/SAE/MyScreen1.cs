@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
-    internal class Commande
+    internal class MyScreen1
     {
         public class MyScreen2 : GameScreen
         {

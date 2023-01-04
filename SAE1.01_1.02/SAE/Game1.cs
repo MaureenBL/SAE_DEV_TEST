@@ -93,8 +93,8 @@ namespace SAE
 
         //transition
         private readonly ScreenManager _screenManager;
-        private Regle.MyScreen1 _myScreen1;
-        private Commande.MyScreen2 _myScreen2;
+        private MyScreen1 _myScreen1;
+        private MyScreen2 _myScreen2;
         public SpriteBatch SpriteBatch { get; set; }
 
 
@@ -106,6 +106,16 @@ namespace SAE
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+        }
+
+        public Game1(MyScreen1 myScreen1)
+        {
+            this._myScreen1 = myScreen1;
+        }
+
+        public Game1(MyScreen2 myScreen2)
+        {
+            this._myScreen2 = myScreen2;
         }
 
         protected override void Initialize()
@@ -159,8 +169,8 @@ namespace SAE
             _textureFond = Content.Load<Texture2D>("accueil");
 
             //TRANSITION
-            _myScreen1 = new Regle.MyScreen1(this); // en leur donnant une référence au Game
-            _myScreen2 = new Commande.MyScreen2(this);
+            _myScreen1 = new MyScreen1(this); // en leur donnant une référence au Game
+            _myScreen2 = new MyScreen2(this);
 
             //GEORGE            
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
@@ -230,7 +240,7 @@ namespace SAE
                {
                
                }
-            */
+            
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
 =======
@@ -239,7 +249,7 @@ namespace SAE
             {
                 
             }
-         */
+         
             //Déplacement
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
@@ -272,7 +282,7 @@ namespace SAE
             {
                 
             }
-         */
+         
             //Déplacement
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
@@ -300,8 +310,7 @@ namespace SAE
                 //animation bas
                 _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
             }
-
->>>>>>> 3b8b0826df93ba6ff0a586f0a3ffa6e96793f4ca
+            */
             base.Update(gameTime);
         }
 
