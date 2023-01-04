@@ -80,6 +80,8 @@ namespace SAE
         public const int TAILLE_COMMANDE = 100;
         //acces
         private MouseState _mouseState;
+        private KeyboardState _keyboardState;
+
         //transition
         private readonly ScreenManager _screenManager;
         private Regle.MyScreen1 _myScreen1;
