@@ -16,7 +16,8 @@ namespace SAE
         //PERSONNAGE - GEORGE
         private AnimatedSprite _perso;
         private Vector2 _positionPerso;
-        private int _sensPerso;
+        private Vector2 _sensPersoHorizontal;
+        private Vector2 _sensPersoVertical;
         private int _vitessePerso;
         public const int LARGEUR_PERSO = 200;
         public const int HAUTEUR_PERSO = 154;
@@ -32,9 +33,12 @@ namespace SAE
         private Vector2 _ghostPosition;
         private Vector2 _skeletonPosition;
         //orientation
-        private int _batOrientation;
-        private int _ghostOrientation;
-        private int _skeletonOrientation;
+        private int _batOrientationX;
+        private int _batOrientationY;
+        private int _ghostOrientationX;
+        private int _ghostOrientationY;
+        private int _skeletonOrientationX;
+        private int _skeletonOrientationY;
         //dimentions
         public const int BAT_LARGEUR = 48;
         public const int BAT_HAUTEUR = 64;
@@ -42,6 +46,10 @@ namespace SAE
         public const int GHOST_HAUTEUR = 64;
         public const int SKELETON_LARGEUR = 64;
         public const int SKELETON_HAUTEUR = 64;
+        //vitesse
+        private int _vitesseBat;
+        private int _vitesseGhost;
+        private int _vitesseSkeleton;
 
 
 
@@ -81,19 +89,14 @@ namespace SAE
         public const int TAILLE_QUITTER = 100;
         //acces
         private MouseState _mouseState;
+        private KeyboardState _keyboardState;
+
         //transition
         private readonly ScreenManager _screenManager;
         private Regle.MyScreen1 _myScreen1;
         private Commande.MyScreen2 _myScreen2;
         public SpriteBatch SpriteBatch { get; set; }
 
-
-        public Game1(SpriteBatch spriteBatch)
-        {
-            _screenManager = new ScreenManager();
-            Components.Add(_screenManager);
-            this.SpriteBatch = spriteBatch;
-        }
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
@@ -115,6 +118,10 @@ namespace SAE
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
             _graphics.ApplyChanges();
 
+            //PERSO
+            _vitessePerso = 100;
+            _sensPersoHorizontal = Vector2.Normalize(new Vector2(1, 0));
+            _sensPersoVertical = Vector2.Normalize(new Vector2(0, 1));
             //ACCUEIL
             _positionFond = new Vector2(700, 900);
             //titre
@@ -138,8 +145,12 @@ namespace SAE
             _policeQuitter = Content.Load<SpriteFont>("quitter");
             _positionQuitter = new Vector2(870, 675);
 
+            //propriétés des monstres
+            _vitesseBat = 0;
+            _vitesseGhost = 0;
+            _vitesseSkeleton = 100;
+
             base.Initialize();
-            //beredsferd
         }
 
         protected override void LoadContent()
@@ -183,26 +194,114 @@ namespace SAE
             }
 
 
-            //GEORGE
-          //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
-            
-         /*   //SQUELETTE
-            if(Voir())
-            {
-                //Foncer sur le héros
-                
-            }
-            else
-            {
-                //Roder sur la map en faisant un trait
-            }
+          /*//GEORGE
+            //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
 
+               //SQUELETTE
+               if(Voir())
+               {
+               if(_skeletonPosition.X < _positionPerso.X)
+                {
+                   _skeletonOrientationX = 1;
+                }
+               else
+                {
+                    _skeletonOrientationX = 1;
+                }
+               if(_skeletonPosition.Y < _positionPerso.Y)
+                {
+                    _skeletonOrientationY = 1;
+                }
+               else
+                {
+                    _skeletonOrientationY = -1;
+                }
+                _vitesseSkeleton = 250;
+               }
+               else
+                _vitesseSkeleton = 100;
+                {
+
+                }
+
+<<<<<<< HEAD
+              //FANTOME
+               if(Collision entre joueur et zone de spawn)
+               {
+               
+               }
+            */
+            _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
+            _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
+=======
            //FANTOME
             if(Collision entre joueur et zone de spawn)
             {
                 
             }
          */
+            //Déplacement
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _keyboardState = Keyboard.GetState();
+            //flèche droite
+            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+            {
+                //animation droite
+                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche gauche
+            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
+            {
+                //animation gauche
+                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche haut
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+            {
+                //animation haut
+                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+            //flèche bas
+            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+            {
+                //animation bas
+                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+           //FANTOME
+            if(Collision entre joueur et zone de spawn)
+            {
+                
+            }
+         */
+            //Déplacement
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _keyboardState = Keyboard.GetState();
+            //flèche droite
+            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+            {
+                //animation droite
+                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche gauche
+            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
+            {
+                //animation gauche
+                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche haut
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+            {
+                //animation haut
+                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+            //flèche bas
+            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+            {
+                //animation bas
+                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+
+>>>>>>> 3b8b0826df93ba6ff0a586f0a3ffa6e96793f4ca
             base.Update(gameTime);
         }
 
