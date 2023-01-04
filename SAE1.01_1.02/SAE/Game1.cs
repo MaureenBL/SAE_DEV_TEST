@@ -33,9 +33,12 @@ namespace SAE
         private Vector2 _ghostPosition;
         private Vector2 _skeletonPosition;
         //orientation
-        private int _batOrientation;
-        private int _ghostOrientation;
-        private int _skeletonOrientation;
+        private int _batOrientationX;
+        private int _batOrientationY;
+        private int _ghostOrientationX;
+        private int _batOrientationY;
+        private int _skeletonOrientationX;
+        private int _skeletonOrientationY;
         //dimentions
         public const int BAT_LARGEUR = 48;
         public const int BAT_HAUTEUR = 64;
@@ -43,9 +46,10 @@ namespace SAE
         public const int GHOST_HAUTEUR = 64;
         public const int SKELETON_LARGEUR = 64;
         public const int SKELETON_HAUTEUR = 64;
-        public int _vitesseBat;
-        public int _vitesseGhost;
-        public int _vitesseSkeleton;
+        //vitesse
+        private int _vitesseBat;
+        private int _vitesseGhost;
+        private int _vitesseSkeleton;
 
 
 
@@ -173,18 +177,20 @@ namespace SAE
 
 
             //GEORGE
-          //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
-            
-         /*   //SQUELETTE
-            if(Voir())
-            {
-                //Foncer sur le héros
-                
-            }
-            else
-            {
-                //Roder sur la map en faisant un trait
-            }
+            //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
+
+            /*   //SQUELETTE
+               if(Voir())
+               {
+                   //Foncer sur le héros
+                   _skeletonPosition.X += _sensPereNoel * _vitessePereNoel * deltaTime;
+                   _skeletonPosition.Y += _sensPereNoel * _vitessePereNoel * deltaTime;
+
+               }
+               else
+               {
+                   //Roder sur la map en faisant un trait
+               }
 
            //FANTOME
             if(Collision entre joueur et zone de spawn)
