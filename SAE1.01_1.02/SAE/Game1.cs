@@ -33,12 +33,12 @@ namespace SAE
         private int _ghostOrientation;
         private int _skeletonOrientation;
         //dimentions
-        public const int bat_LARGEUR = 48;
-        public const int bat_HAUTEUR = 64;
-        public const int ghost_LARGEUR = 64;
-        public const int ghost_HAUTEUR = 64;
-        public const int skeleton_LARGEUR = 64;
-        public const int skeleton_HAUTEUR = 64;
+        public const int BAT_LARGEUR = 48;
+        public const int BAT_HAUTEUR = 64;
+        public const int GHOST_LARGEUR = 64;
+        public const int GHOST_HAUTEUR = 64;
+        public const int SKELETON_LARGEUR = 64;
+        public const int SKELETON_HAUTEUR = 64;
 
         //TAILLE FENETRE
         public const int TAILLE_FENETRE = 800;
