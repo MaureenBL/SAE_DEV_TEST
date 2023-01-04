@@ -14,7 +14,8 @@ namespace SAE
         //PERSONNAGE - GEORGE
         private AnimatedSprite _perso;
         private Vector2 _positionPerso;
-        private int _sensPerso;
+        private Vector2 _sensPersoHorizontal;
+        private Vector2 _sensPersoVertical;
         private int _vitessePerso;
         public const int LARGEUR_PERSO = 200;
         public const int HAUTEUR_PERSO = 154;
@@ -66,7 +67,7 @@ namespace SAE
         private SpriteFont _policeCommande;
         private Vector2 _positionCommande;
 
-
+        private KeyboardState _keyboardState;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
 
@@ -87,6 +88,10 @@ namespace SAE
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
             _graphics.ApplyChanges();
 
+            //PERSO
+            _vitessePerso = 100;
+            _sensPersoHorizontal = Vector2.Normalize(new Vector2(1, 0));
+            _sensPersoVertical = Vector2.Normalize(new Vector2(0, 1));
             //ACCUEIL
             _positionFond = new Vector2(700, 900);
             //jouer
@@ -135,6 +140,34 @@ namespace SAE
             else
             {
                 //Marcher d'avant en arrière
+            }
+
+            //Déplacement
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _keyboardState = Keyboard.GetState();
+            //flèche droite
+            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+            {
+                //animation droite
+                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche gauche
+            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
+            {
+                //animation gauche
+                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche haut
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+            {
+                //animation haut
+                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+            //flèche bas
+            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+            {
+                //animation bas
+                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
             }
 
             base.Update(gameTime);
