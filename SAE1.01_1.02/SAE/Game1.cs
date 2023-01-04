@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
@@ -40,6 +41,8 @@ namespace SAE
         public const int SKELETON_LARGEUR = 64;
         public const int SKELETON_HAUTEUR = 64;
 
+
+
         //TAILLE FENETRE
         public const int TAILLE_FENETRE = 800;
 
@@ -74,6 +77,26 @@ namespace SAE
         {
             // TODO: Add your initialization logic here
             Window.Title = "Haunted Manor"; //titre de la fenêtre
+
+            //FENETRE
+            _graphics.PreferredBackBufferWidth = TAILLE_FENETRE;
+            _graphics.PreferredBackBufferHeight = TAILLE_FENETRE;
+            _graphics.ApplyChanges();
+
+            //ACCUEIL
+            //jouer
+            _jouer = "JOUER";
+            _policeJouer = Content.Load<SpriteFont>("Font");
+            _positionJouer = new Vector2(300, 300);
+            //régle
+            _regle = "Règles du jeu";
+            _policeRegle = Content.Load<SpriteFont>("Font");
+            _positionRegle = new Vector2(400, 400);
+            //commande
+            _commande = "Commandes";
+            _policeCommande = Content.Load<SpriteFont>("Font");
+            _positionCommande = new Vector2(100, 400);
+
             base.Initialize();
             //beredsferd
         }
@@ -83,8 +106,8 @@ namespace SAE
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //GEORGE            
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
-            _perso = new AnimatedSprite(spriteSheet);
+           /* SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
+            _perso = new AnimatedSprite(spriteSheet);*/
 
             // TODO: use this.Content to load your game content here
         }
@@ -108,10 +131,17 @@ namespace SAE
             // TODO: Add your drawing code here
             GraphicsDevice.Clear(Color.Red);
 
+            //ACCUEIL
+            _spriteBatch.DrawString(_policeJouer, $"{_jouer}", _positionJouer, Color.White);
+            _spriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+            _spriteBatch.DrawString(_policeCommande, $"{_commande}", _positionCommande, Color.White);
+
             //GEORGE
             _spriteBatch.Begin();
             _spriteBatch.Draw(_perso, _positionPerso);
             _spriteBatch.End();
+
+            
             base.Draw(gameTime);
         }
        /* public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
