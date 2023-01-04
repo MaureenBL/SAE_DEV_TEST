@@ -6,6 +6,16 @@ namespace SAE
 {
     public class Game1 : Game
     {
+
+        //PERSONNAGE
+        private Texture2D _texturePerso;
+        private Vector2 _positionPerso;
+        private int _sensPerso;
+        private int _vitessePerso;
+
+
+        //MONSTRES
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
 
