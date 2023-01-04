@@ -12,9 +12,33 @@ namespace SAE
         private Vector2 _positionPerso;
         private int _sensPerso;
         private int _vitessePerso;
+        public const int LARGEUR_PERSO = 200;
+        public const int HAUTEUR_PERSO = 154;
 
 
         //MONSTRES
+
+
+
+        //TAILLE FENETRE
+        public const int TAILLE_FENETRE = 800;
+
+
+
+        //ECRAN ACCUEIL
+        //jouer
+        private string _jouer;
+        private SpriteFont _policeJouer;
+        private Vector2 _positionJouer;
+        //règle
+        private string _regle;
+        private SpriteFont _policeRegle;
+        private Vector2 _positionRegle;
+        //commande
+        private string _commande;
+        private SpriteFont _policeCommande;
+        private Vector2 _positionCommande;
+
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
