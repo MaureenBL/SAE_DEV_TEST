@@ -85,9 +85,9 @@ namespace SAE
         }
         public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
         {
-            Rectangle rectOb = new Rectangle(xObjetA, yObjetA, LARGEUR_objetA, HAUTEUR_objetB);
-            Rectangle rectPereNoel = new Rectangle((int)_positionPereNoel.X, (int)_positionPereNoel.Y, LARGEUR_PERE_NOEL, HAUTEUR_PERE_NOEL);
-            return rectCadeau.Intersects(rectPereNoel);
+            Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA,);
+            Rectangle rectObjetB = new Rectangle(xObjetB, yObjetB, largeurObjetB, largeurObjetB);
+            return rectObjetA.Intersects(rectObjetB);
         }
     }
 }
