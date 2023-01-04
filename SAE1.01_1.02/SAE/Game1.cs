@@ -52,6 +52,10 @@ namespace SAE
 
 
         //ECRAN ACCUEIL
+        //titre
+        private string _titre;
+        private SpriteFont _policeTitre;
+        private Vector2 _positionTitre;
         //fond ecran
         private Texture2D _textureFond;
         private Vector2 _positionFond;
@@ -64,12 +68,17 @@ namespace SAE
         private string _regle;
         private SpriteFont _policeRegle;
         private Vector2 _positionRegle;
-        public const int TAILLE_REGLE = 100;
+        public const int TAILLE_REGLE = 200;
         //commande
         private string _commande;
         private SpriteFont _policeCommande;
         private Vector2 _positionCommande;
-        public const int TAILLE_COMMANDE = 100;
+        public const int TAILLE_COMMANDE = 200;
+        //quitter
+        private string _quitter;
+        private SpriteFont _policeQuitter;
+        private Vector2 _positionQuitter;
+        public const int TAILLE_QUITTER = 100;
         //acces
         private MouseState _mouseState;
         //transition
@@ -108,6 +117,10 @@ namespace SAE
 
             //ACCUEIL
             _positionFond = new Vector2(700, 900);
+            //titre
+            _titre = "Haunted Manor";
+            _policeTitre = Content.Load<SpriteFont>("Titre");
+            _positionTitre = new Vector2(265, 150);
             //jouer
             _jouer = "JOUER";
             _policeJouer = Content.Load<SpriteFont>("Font");
@@ -119,7 +132,11 @@ namespace SAE
             //commande
             _commande = "Commandes";
             _policeCommande = Content.Load<SpriteFont>("Font");
-            _positionCommande = new Vector2(150, 550); 
+            _positionCommande = new Vector2(150, 550);
+            //quitter
+            _quitter = "Quitter";
+            _policeQuitter = Content.Load<SpriteFont>("quitter");
+            _positionQuitter = new Vector2(870, 675);
 
             base.Initialize();
             //beredsferd
@@ -153,16 +170,15 @@ namespace SAE
             {
                 if (_mouseState.X >= _positionCommande.X && _mouseState.Y >= _positionCommande.Y && _mouseState.X <= _positionCommande.X + TAILLE_COMMANDE && _mouseState.Y <= _positionCommande.Y + TAILLE_COMMANDE)
                 {
-                    _screenManager.LoadScreen(_myScreen1, new FadeTransition(GraphicsDevice,Color.Black));
+                    _screenManager.LoadScreen(_myScreen1, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
                 }
                 else if (_mouseState.X >= _positionRegle.X && _mouseState.Y >= _positionRegle.Y && _mouseState.X <= _positionRegle.X + TAILLE_REGLE && _mouseState.Y <= _positionRegle.Y + TAILLE_REGLE)
                 {
-                    _screenManager.LoadScreen(_myScreen2, new FadeTransition(GraphicsDevice,Color.Black));
+                    _screenManager.LoadScreen(_myScreen2, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
                 }
-                else if(_mouseState.X >= _positionJouer.X && _mouseState.Y >= _positionJouer.Y && _mouseState.X <= _positionJouer.X + TAILLE_JOUER && _mouseState.Y <= _positionJouer.Y + TAILLE_JOUER)
+                else if(_mouseState.X >= _positionQuitter.X && _mouseState.Y >= _positionQuitter.Y && _mouseState.X <= _positionQuitter.X + TAILLE_QUITTER && _mouseState.Y <= _positionQuitter.Y + TAILLE_QUITTER)
                 {
                     Exit();
-
                 }
             }
 
@@ -198,9 +214,11 @@ namespace SAE
             _spriteBatch.Begin();
             //ACCUEIL
             _spriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
+            _spriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
             _spriteBatch.DrawString(_policeJouer, $"{_jouer}", _positionJouer, Color.White);
             _spriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
             _spriteBatch.DrawString(_policeCommande, $"{_commande}", _positionCommande, Color.White); 
+            _spriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White); 
 
             //GEORGE
 
