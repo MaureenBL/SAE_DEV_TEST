@@ -56,7 +56,7 @@ namespace SAE
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Window.Title = "Test";
+            Window.Title = "Haunted Manor"; //titre de la fenêtre
             base.Initialize();
             //beredsferd
         }
@@ -86,11 +86,11 @@ namespace SAE
             GraphicsDevice.Clear(Color.Red);
             base.Draw(gameTime);
         }
-        public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
+       /* public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
         {
             Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA,);
             Rectangle rectObjetB = new Rectangle(xObjetB, yObjetB, largeurObjetB, largeurObjetB);
             return rectObjetA.Intersects(rectObjetB);
-        }
+        }*/
     }
 }
