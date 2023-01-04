@@ -194,114 +194,72 @@ namespace SAE
             }
 
 
-          /*//GEORGE
+          //GEORGE
             //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
+         
+            //Déplacement
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _keyboardState = Keyboard.GetState();
+            //flèche droite
+            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+            {
+                //animation droite
+                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche gauche
+            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
+            {
+                //animation gauche
+                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche haut
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+            {
+                //animation haut
+                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+            //flèche bas
+            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+            {
+                //animation bas
+                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
+            }
 
-               //SQUELETTE
-               if(Voir())
-               {
-               if(_skeletonPosition.X < _positionPerso.X)
-                {
-                   _skeletonOrientationX = 1;
-                }
-               else
+            //SQUELETTE
+            if (Voir())
+            {
+                if (_skeletonPosition.X < _positionPerso.X)
                 {
                     _skeletonOrientationX = 1;
                 }
-               if(_skeletonPosition.Y < _positionPerso.Y)
+                else
+                {
+                    _skeletonOrientationX = 1;
+                }
+                if (_skeletonPosition.Y < _positionPerso.Y)
                 {
                     _skeletonOrientationY = 1;
                 }
-               else
+                else
                 {
                     _skeletonOrientationY = -1;
                 }
                 _vitesseSkeleton = 250;
-               }
-               else
+            }
+            else
+            {
                 _vitesseSkeleton = 100;
-                {
+            }
 
-                }
-
-<<<<<<< HEAD
-              //FANTOME
-               if(Collision entre joueur et zone de spawn)
+           /* //FANTOME
+            if (Collision entre joueur et zone de spawn)
                {
-               
-               }
+
+            }
             */
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
-=======
-           //FANTOME
-            if(Collision entre joueur et zone de spawn)
-            {
-                
-            }
-         */
-            //Déplacement
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _keyboardState = Keyboard.GetState();
-            //flèche droite
-            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-            {
-                //animation droite
-                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            }
-            //flèche gauche
-            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
-            {
-                //animation gauche
-                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
-            }
-            //flèche haut
-            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-            {
-                //animation haut
-                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
-            }
-            //flèche bas
-            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-            {
-                //animation bas
-                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
-            }
-           //FANTOME
-            if(Collision entre joueur et zone de spawn)
-            {
-                
-            }
-         */
-            //Déplacement
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _keyboardState = Keyboard.GetState();
-            //flèche droite
-            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-            {
-                //animation droite
-                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            }
-            //flèche gauche
-            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
-            {
-                //animation gauche
-                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
-            }
-            //flèche haut
-            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-            {
-                //animation haut
-                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
-            }
-            //flèche bas
-            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-            {
-                //animation bas
-                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
-            }
 
->>>>>>> 3b8b0826df93ba6ff0a586f0a3ffa6e96793f4ca
             base.Update(gameTime);
         }
 
