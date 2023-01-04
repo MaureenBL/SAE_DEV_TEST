@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Content;
+using MonoGame.Extended.Sprites;
 
 namespace SAE
 {
@@ -9,6 +11,7 @@ namespace SAE
 
         //PERSONNAGE
         private Texture2D _texturePerso;
+        private AnimatedSprite _perso;
         private Vector2 _positionPerso;
         private int _sensPerso;
         private int _vitessePerso;
