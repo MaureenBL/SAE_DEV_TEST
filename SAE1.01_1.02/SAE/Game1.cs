@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Content;
+using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 
 namespace SAE
@@ -9,8 +10,7 @@ namespace SAE
     public class Game1 : Game
     {
 
-        //PERSONNAGE
-        private Texture2D _texturePerso;
+        //PERSONNAGE - GEORGE
         private AnimatedSprite _perso;
         private Vector2 _positionPerso;
         private int _sensPerso;
@@ -64,7 +64,11 @@ namespace SAE
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-           
+
+            //GEORGE
+            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
+            _perso = new AnimatedSprite(spriteSheet);
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -74,7 +78,9 @@ namespace SAE
                 Exit();
 
             // TODO: Add your update logic here
-
+            //GEORGE
+            _perso.Play("gBas"); // une des animations définies dans « animation.sf »
+            
             base.Update(gameTime);
         }
 
@@ -84,6 +90,11 @@ namespace SAE
 
             // TODO: Add your drawing code here
             GraphicsDevice.Clear(Color.Red);
+
+            //GEORGE
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_perso, _positionPerso);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
        /* public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
