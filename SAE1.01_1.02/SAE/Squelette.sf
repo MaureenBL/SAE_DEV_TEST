@@ -1,0 +1,29 @@
+{
+  "textureAtlas": {
+    "texture": "C:\\Users\\medkourl\\Downloads\\mon2_ani\\mon2_sprite_base.png",
+    "regionWidth": 64,
+    "regionHeight": 64
+  },
+  "cycles": {
+    "squeletteEnPose": {
+      "frames": [0,1,2,3],
+      "isLooping": true,
+      "frameDuration": 0.2
+    },
+    "squeletteEnMarche": {
+      "frames": [8,9,10,11],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "squeletteAttaque": {
+      "frames": [16,17,18,19],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "squeletteTuer": {
+      "frames": [24,25,26,27,28,29,30],
+      "isLooping": false,
+      "frameDuration": 0.1
+    }
+  }
+}

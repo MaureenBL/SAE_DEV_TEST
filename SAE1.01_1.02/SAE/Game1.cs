@@ -20,8 +20,25 @@ namespace SAE
 
 
         //MONSTRES
-
-
+        //animation
+        private AnimatedSprite _bat;
+        private AnimatedSprite _ghost;
+        private AnimatedSprite _skeleton;
+        //position
+        private Vector2 _batPosition;
+        private Vector2 _ghostPosition;
+        private Vector2 _skeletonPosition;
+        //orientation
+        private int _batOrientation;
+        private int _ghostOrientation;
+        private int _skeletonOrientation;
+        //dimentions
+        public const int bat_LARGEUR = 48;
+        public const int bat_HAUTEUR = 64;
+        public const int ghost_LARGEUR = 64;
+        public const int ghost_HAUTEUR = 64;
+        public const int skeleton_LARGEUR = 64;
+        public const int skeleton_HAUTEUR = 64;
 
         //TAILLE FENETRE
         public const int TAILLE_FENETRE = 800;
