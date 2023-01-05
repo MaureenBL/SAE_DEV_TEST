@@ -92,7 +92,8 @@ namespace SAE
                 // TODO: Add your update logic here
                 float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 
-               /* if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
+
+                /*if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
                     _nbDebattage += 1;
                 }
@@ -134,14 +135,14 @@ namespace SAE
                     ghost.Play("fantomeInvoque");
                     _ghostPosition = _positionPerso;
                   }
-                 while(CollisionJoueur(avec la zone) && _nbDebattage < 25)
+                 //while(CollisionJoueur(avec la zone) && _nbDebattage < 25)
                  
-                 if*/
+                 //if
 
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
                 base.Update(gameTime);
-            }
+            }*/
 
             protected override void Draw(GameTime gameTime)
             {
@@ -157,13 +158,13 @@ namespace SAE
 
                 base.Draw(gameTime);
             }
-            public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
+            /*public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
             {
              Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
              Rectangle rectObjet = new Rectangle(xObjet, yObjet, largeurObjet, hauteurObjet);
              return rectJoueur.Intersects(rectObjet);
-            }
-            /*public bool VoirJoueur(int xMonstre, int yMonstre)
+            }*/
+           /* public bool VoirJoueur(int xMonstre, int yMonstre)
             {
                 Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
                 if()

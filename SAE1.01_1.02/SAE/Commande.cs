@@ -58,9 +58,10 @@ namespace SAE
         public override void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Escape))
+            if (keyboardState.IsKeyDown(Keys.Space))
             {
-                _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
+                Initialize();
+               // _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
             }
         }
         public override void Draw(GameTime gameTime)

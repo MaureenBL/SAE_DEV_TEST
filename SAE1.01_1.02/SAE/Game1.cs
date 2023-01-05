@@ -99,6 +99,8 @@ namespace SAE
             _sensPersoHorizontal = Vector2.Normalize(new Vector2(1, 0));
             _sensPersoVertical = Vector2.Normalize(new Vector2(0, 1));
             _nbVie = 3;
+
+
             //ACCUEIL
             _positionFond = new Vector2(700, 900);
             //titre
@@ -153,6 +155,12 @@ namespace SAE
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+    /*        KeyboardState keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+               
+               // _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
+            }*/
             //ACCUEIL
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
