@@ -63,8 +63,9 @@ namespace SAE
 
         //transition
         private readonly ScreenManager _screenManager;
-        private Commande _commandes;
-        private Regle _regles;
+        private Commande _commandesTrans;
+        private Regle _reglesTrans;
+        private Jouer2 _jouerTrans;
         public SpriteBatch SpriteBatch { get; set; }
 
 
@@ -121,9 +122,9 @@ namespace SAE
             _positionQuitter = new Vector2(870, 675);
 
             //propriétés des monstres
-            _vitesseBat = 0;
-            _vitesseGhost = 0;
-            _vitesseSkeleton = 100;
+            //_vitesseBat = 0;
+            //_vitesseGhost = 0;
+            //_vitesseSkeleton = 100;
 
             base.Initialize();
         }
@@ -134,8 +135,9 @@ namespace SAE
             _textureFond = Content.Load<Texture2D>("accueil");
 
             //TRANSITION
-            _commandes = new Commande(this); // en leur donnant une référence au Game
-            _regles = new Regle(this);
+            _commandesTrans = new Commande(this); // en leur donnant une référence au Game
+            _reglesTrans = new Regle(this);
+            _jouerTrans = new Jouer2(this);
 
             //GEORGE            
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
@@ -156,11 +158,15 @@ namespace SAE
             {
                 if (_mouseState.X >= _positionCommande.X && _mouseState.Y >= _positionCommande.Y && _mouseState.X <= _positionCommande.X + TAILLE_COMMANDE && _mouseState.Y <= _positionCommande.Y + TAILLE_COMMANDE)
                 {
-                    _screenManager.LoadScreen(_commandes, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
+                    _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
                 }
                 else if (_mouseState.X >= _positionRegle.X && _mouseState.Y >= _positionRegle.Y && _mouseState.X <= _positionRegle.X + TAILLE_REGLE && _mouseState.Y <= _positionRegle.Y + TAILLE_REGLE)
                 {
-                    _screenManager.LoadScreen(_regles, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
+                    _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
+                }
+                else if (_mouseState.X >= _positionJouer.X && _mouseState.Y >= _positionJouer.Y && _mouseState.X <= _positionJouer.X + TAILLE_JOUER && _mouseState.Y <= _positionJouer.Y + TAILLE_JOUER)
+                {
+                    _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
                 }
                 else if(_mouseState.X >= _positionQuitter.X && _mouseState.Y >= _positionQuitter.Y && _mouseState.X <= _positionQuitter.X + TAILLE_QUITTER && _mouseState.Y <= _positionQuitter.Y + TAILLE_QUITTER)
                 {
