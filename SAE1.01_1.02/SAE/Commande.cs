@@ -58,15 +58,16 @@ namespace SAE
         public override void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Escape))
+            if (keyboardState.IsKeyDown(Keys.Space))
             {
-                _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
+                Initialize();
+               // _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
             }
         }
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.Blue); // on utilise la reference vers Game1 pour changer le graphisme
-            SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White); // NE MARCHE PAS 
+           // SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White); // NE MARCHE PAS 
         }
     }
 }

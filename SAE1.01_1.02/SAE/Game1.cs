@@ -66,6 +66,7 @@ namespace SAE
         private Commande _commandesTrans;
         private Regle _reglesTrans;
         private Jouer2 _jouerTrans;
+        private Accueil _accueilTrans;
         public SpriteBatch SpriteBatch { get; set; }
 
 
@@ -98,6 +99,8 @@ namespace SAE
             _sensPersoHorizontal = Vector2.Normalize(new Vector2(1, 0));
             _sensPersoVertical = Vector2.Normalize(new Vector2(0, 1));
             _nbVie = 3;
+
+
             //ACCUEIL
             _positionFond = new Vector2(700, 900);
             //titre
@@ -138,6 +141,7 @@ namespace SAE
             _commandesTrans = new Commande(this); // en leur donnant une référence au Game
             _reglesTrans = new Regle(this);
             _jouerTrans = new Jouer2(this);
+            _accueilTrans = new Accueil(this);
 
             //GEORGE            
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
@@ -151,6 +155,12 @@ namespace SAE
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+    /*        KeyboardState keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+               
+               // _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
+            }*/
             //ACCUEIL
             _mouseState = Mouse.GetState();
 
