@@ -22,7 +22,6 @@ namespace SAE
             _myGame = game;
         }
 
-
         public override void LoadContent()
         {
             base.LoadContent();

@@ -39,10 +39,6 @@ namespace SAE
 
         private GraphicsDeviceManager _graphics;
 
-
-
-      
-
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
         // défini dans Game1
         public Commande(Game1 game) : base(game)
@@ -70,7 +66,7 @@ namespace SAE
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.Blue); // on utilise la reference vers Game1 pour changer le graphisme
-            SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
         }
 
     }
