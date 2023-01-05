@@ -29,7 +29,6 @@ namespace SAE
         public const int TAILLE_FENETRE_H = 700;
 
 
-
         //ECRAN ACCUEIL
         //titre
         private string _titre;

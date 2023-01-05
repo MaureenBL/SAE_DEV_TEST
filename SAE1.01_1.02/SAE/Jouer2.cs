@@ -30,8 +30,8 @@ namespace SAE
         { }
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.LightYellow); // on utilise la reference vers
-                                                     // Game1 pour changer le graphisme
+            _myGame.GraphicsDevice.Clear(Color.LightYellow); // on utilise la reference vers Game1 pour changer le graphisme
+
         }
     }
 }
