@@ -66,6 +66,7 @@ namespace SAE
         private Commande _commandesTrans;
         private Regle _reglesTrans;
         private Jouer2 _jouerTrans;
+        private Accueil _accueilTrans;
         public SpriteBatch SpriteBatch { get; set; }
 
 
@@ -94,7 +95,7 @@ namespace SAE
             _graphics.ApplyChanges();
 
             //PERSO
-            _vitessePerso = 100;
+         /*   _vitessePerso = 100;
             _sensPersoHorizontal = Vector2.Normalize(new Vector2(1, 0));
             _sensPersoVertical = Vector2.Normalize(new Vector2(0, 1));
             _nbVie = 3;
@@ -125,7 +126,7 @@ namespace SAE
             //_vitesseBat = 0;
             //_vitesseGhost = 0;
             //_vitesseSkeleton = 100;
-
+         */
             base.Initialize();
         }
 
@@ -138,6 +139,7 @@ namespace SAE
             _commandesTrans = new Commande(this); // en leur donnant une référence au Game
             _reglesTrans = new Regle(this);
             _jouerTrans = new Jouer2(this);
+            _accueilTrans = new Accueil(this);
 
             //GEORGE            
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
@@ -152,7 +154,26 @@ namespace SAE
                 Exit();
 
             //ACCUEIL
-            _mouseState = Mouse.GetState();
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+            }
+            
+
+      /*      _mouseState = Mouse.GetState();
 
             if (_mouseState.LeftButton == ButtonState.Pressed)
             {
@@ -171,8 +192,8 @@ namespace SAE
                 else if(_mouseState.X >= _positionQuitter.X && _mouseState.Y >= _positionQuitter.Y && _mouseState.X <= _positionQuitter.X + TAILLE_QUITTER && _mouseState.Y <= _positionQuitter.Y + TAILLE_QUITTER)
                 {
                     Exit();
-                }
-            }
+                } 
+            } */
 
 
           //GEORGE
@@ -211,10 +232,10 @@ namespace SAE
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Pink);
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
+          /*  _spriteBatch.Begin();
             //ACCUEIL
             _spriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
             _spriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
@@ -226,7 +247,7 @@ namespace SAE
             //GEORGE
 
             //     _spriteBatch.Draw(_perso, _positionPerso);
-            _spriteBatch.End();
+            _spriteBatch.End(); */
 
 
             base.Draw(gameTime);
