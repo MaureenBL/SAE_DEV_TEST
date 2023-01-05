@@ -208,7 +208,7 @@ namespace SAE
           //GEORGE
             //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
 
-               //SQUELETTE
+            /*   //SQUELETTE
                if(Voir())
                {
                if(_skeletonPosition.X < _positionPerso.X)
@@ -241,7 +241,7 @@ namespace SAE
                {
                
                }
-            */
+            
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
 =======
@@ -250,7 +250,7 @@ namespace SAE
             {
                 
             }
-         */
+         
             //Déplacement
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
@@ -283,7 +283,7 @@ namespace SAE
             {
                 
             }
-         */
+         
             //Déplacement
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
@@ -311,7 +311,7 @@ namespace SAE
                 _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
             }
 
->>>>>>> 3b8b0826df93ba6ff0a586f0a3ffa6e96793f4ca
+>>>>>>> 3b8b0826df93ba6ff0a586f0a3ffa6e96793f4ca */
             base.Update(gameTime);
         }
 
