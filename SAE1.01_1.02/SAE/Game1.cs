@@ -178,82 +178,7 @@ namespace SAE
           //GEORGE
             //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
 
-            /*   //SQUELETTE
-               if(Voir())
-               {
-               if(_skeletonPosition.X < _positionPerso.X)
-                {
-                   _skeletonOrientationX = 1;
-                }
-               else
-                {
-                    _skeletonOrientationX = 1;
-                }
-               if(_skeletonPosition.Y < _positionPerso.Y)
-                {
-                    _skeletonOrientationY = 1;
-                }
-               else
-                {
-                    _skeletonOrientationY = -1;
-                }
-                _vitesseSkeleton = 250;
-               }
-               else
-                _vitesseSkeleton = 100;
-                {
-
-                }
-
-<<<<<<< HEAD
-              //FANTOME
-               if(Collision entre joueur et zone de spawn)
-               {
-               
-               }
-            
-            _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
-            _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
-=======
-           //FANTOME
-            if(Collision entre joueur et zone de spawn)
-            {
-                
-            }
-         
-            //Déplacement
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _keyboardState = Keyboard.GetState();
-            //flèche droite
-            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-            {
-                //animation droite
-                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            }
-            //flèche gauche
-            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
-            {
-                //animation gauche
-                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
-            }
-            //flèche haut
-            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-            {
-                //animation haut
-                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
-            }
-            //flèche bas
-            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-            {
-                //animation bas
-                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
-            }
-           //FANTOME
-            if(Collision entre joueur et zone de spawn)
-            {
-                
-            }
-         
+         /*
             //Déplacement
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _keyboardState = Keyboard.GetState();
@@ -280,8 +205,7 @@ namespace SAE
                 //animation bas
                 _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
             }
-
->>>>>>> 3b8b0826df93ba6ff0a586f0a3ffa6e96793f4ca */
+            */
             base.Update(gameTime);
         }
 
@@ -307,14 +231,6 @@ namespace SAE
 
             base.Draw(gameTime);
         }
-
-
-        /* public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
-         {
-             Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA,);
-             Rectangle rectObjetB = new Rectangle(xObjetB, yObjetB, largeurObjetB, largeurObjetB);
-             return rectObjetA.Intersects(rectObjetB);
-         }*/
 
     }
 }

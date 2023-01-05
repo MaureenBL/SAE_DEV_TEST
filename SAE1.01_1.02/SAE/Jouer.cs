@@ -20,7 +20,15 @@ namespace SAE
         {
             private GraphicsDeviceManager _graphics;
             private SpriteBatch _spriteBatch;
-
+            //PERSONNAGE - GEORGE
+            private AnimatedSprite _perso;
+            private Vector2 _positionPerso;
+            private Vector2 _sensPersoHorizontal;
+            private Vector2 _sensPersoVertical;
+            private int _vitessePerso;
+            private int _nbVie;
+            public const int LARGEUR_PERSO = 200;
+            public const int HAUTEUR_PERSO = 154;
             //MONSTRES
             //animation
             private AnimatedSprite _bat;
@@ -108,27 +116,37 @@ namespace SAE
                       //attendre 5 secondes
                   }*/
 
-                /* //FANTOME
-                  if(Collision entre joueur et zone de spawn)
+                //FANTOME
+                  /*if(Collision())
                   {
+                    ghost.Play("fantomeInvoque");
 
                   }*/
 
-                _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
+            _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
                 base.Update(gameTime);
             }
 
             protected override void Draw(GameTime gameTime)
             {
-                _spriteBatch.End();
+                
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                var chauveSourisTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
-                var chauveSouris = new AnimatedSprite(chauveSourisTexture);
-                chauveSouris.Play("batVolFace");
+                var batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
+                var bat = new AnimatedSprite(batTexture);
+                bat.Play("batVolFace");
+                var ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
+                var ghost = new AnimatedSprite(ghostTexture);
+                _spriteBatch.End();
                 // TODO: Add your drawing code here
 
                 base.Draw(gameTime);
+            }
+            public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int hauteurObjetB)
+            {
+             Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA);
+             Rectangle rectObjetB = new Rectangle(xObjetB, yObjetB, largeurObjetB, hauteurObjetB);
+             return rectObjetA.Intersects(rectObjetB);
             }
         }
     }
