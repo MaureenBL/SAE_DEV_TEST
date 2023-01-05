@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
-    internal class Commande : GameScreen
+    internal class Instru : GameScreen
     {
         private Game1 _myGame;
 
@@ -41,7 +41,7 @@ namespace SAE
 
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
         // défini dans Game1
-        public Commande(Game1 game) : base(game)
+        public Instru(Game1 game) : base(game)
         {
             _myGame = game;
         }
@@ -49,27 +49,25 @@ namespace SAE
 
         public override void Initialize()
         {
-            
+
         }
         public override void LoadContent()
         {
+
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Space))
+            if (keyboardState.IsKeyDown(Keys.Escape))
             {
-                Initialize();
-               // _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
+                _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
             }
         }
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.Blue); // on utilise la reference vers Game1 pour changer le graphisme
-            _myGame.SpriteBatch.Begin();
-            _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White); // NE MARCHE PAS 
-            _myGame.SpriteBatch.End();
+                                                      //  SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White); // NE MARCHE PAS 
         }
     }
 }

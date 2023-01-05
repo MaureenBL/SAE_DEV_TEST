@@ -100,7 +100,7 @@ namespace SAE
 
         public override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             _textureFond = Content.Load<Texture2D>("accueil");
 
             //TRANSITION
@@ -140,19 +140,19 @@ namespace SAE
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
+            _myGame.SpriteBatch.Begin();
             //ACCUEIL
-            _spriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
-            _spriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
-            _spriteBatch.DrawString(_policeJouer, $"{_jouer}", _positionJouer, Color.White);
-            _spriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
-            _spriteBatch.DrawString(_policeCommande, $"{_commande}", _positionCommande, Color.White);
-            _spriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
+            _myGame.SpriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
+            _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeJouer, $"{_jouer}", _positionJouer, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeCommande, $"{_commande}", _positionCommande, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
 
             //GEORGE
 
             //     _spriteBatch.Draw(_perso, _positionPerso);
-            _spriteBatch.End();
+            _myGame.SpriteBatch.End();
 
         }
     }

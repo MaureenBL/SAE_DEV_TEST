@@ -35,13 +35,25 @@ namespace SAE
         private Vector2 _positionRejouer;
         private Rectangle _rectRejouer;
         //Rejouer
-        private string _quitter;
+      /*  private string _quitter;
         private Vector2 _positionQuitter;
-        private Rectangle _rectQuitter;
+        private Rectangle _rectQuitter; */
         //Score
         private Vector2 _positionScorePartie;
 
         private SpriteFont _police;
+
+
+
+
+
+
+
+        private string _quitter;
+        private SpriteFont _policeQuitter;
+        private Vector2 _positionQuitter;
+        public const int TAILLE_QUITTER = 100;
+
 
 
 
@@ -66,14 +78,17 @@ namespace SAE
             _rejouer = "REJOUER";
             _positionRejouer = new Vector2((TAILLE_FENETRE_L * 1 / 4) - TAILLE_POLICE * _rejouer.Length / 2, TAILLE_FENETRE_H * 3 / 4);
             _rectRejouer = new Rectangle((int)_positionRejouer.X, (int)_positionRejouer.Y, TAILLE_POLICE * _rejouer.Length, TAILLE_POLICE * 2);
-            //QUITTER 
+          /*  //QUITTER 
             _quitter = "QUITTER";
             _positionQuitter = new Vector2((TAILLE_FENETRE_L * 3 / 4) - TAILLE_POLICE * _quitter.Length / 2, TAILLE_FENETRE_H * 3 / 4);
             _rectQuitter = new Rectangle((int)_positionQuitter.X, (int)_positionQuitter.Y, TAILLE_POLICE * _quitter.Length, TAILLE_POLICE * 2);
             //SCORE FIN DE PARTIE
             _positionScorePartie = new Vector2((TAILLE_FENETRE_L / 2) - 145, TAILLE_FENETRE_H / 2);
-
-
+*/
+            //quitter
+            _quitter = "Quitter";
+            _policeQuitter = Content.Load<SpriteFont>("quitter");
+            _positionQuitter = new Vector2(870, 675);
 
             base.Initialize();
         }
@@ -92,7 +107,7 @@ namespace SAE
             {
                 Initialize();
             }
-            else if (_mouseState.LeftButton == ButtonState.Pressed && _rectQuitter.Contains(_mouseState.Position))
+        //    else if (_mouseState.LeftButton == ButtonState.Pressed && _rectQuitter.Contains(_mouseState.Position))
             {
                 //_screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
 
@@ -104,21 +119,26 @@ namespace SAE
         {
             _myGame.GraphicsDevice.Clear(Color.Red); // on utilise la reference vers
                                                      // Game1 pour changer le graphisme
-            _spriteBatch.Begin();
 
-            if (_finPartie)
-            {
-                GraphicsDevice.Clear(Color.Red * 0.7f);
+            // TODO: Add your drawing code here
+            
+              _myGame.SpriteBatch.Begin();
+              _myGame.SpriteBatch.DrawString(_police, _quitter, _positionQuitter, Color.Blue);
+              _myGame.SpriteBatch.End();
+            /*
+             if (_finPartie)
+             {
+                 GraphicsDevice.Clear(Color.Red * 0.7f);
 
-                _spriteBatch.DrawString(_police, _gameOver, _positionGameOver, Color.White);
-                _spriteBatch.DrawString(_police, _rejouer, _positionRejouer, Color.White);
-                _spriteBatch.DrawString(_police, _quitter, _positionQuitter, Color.White);
-               // _spriteBatch.DrawString(_police, $"Score de la partie :{_score}", _positionScorePartie, Color.White);
+                 _spriteBatch.DrawString(_police, _gameOver, _positionGameOver, Color.White);
+                 _spriteBatch.DrawString(_police, _rejouer, _positionRejouer, Color.White);
+                 _spriteBatch.DrawString(_police, _quitter, _positionQuitter, Color.White);
+                 _spriteBatch.DrawString(_police, $"Score de la partie :{_score}", _positionScorePartie, Color.White);
 
 
-            }
+             } 
 
-            _spriteBatch.End();
+            _spriteBatch.End(); */
         }
     }
 }

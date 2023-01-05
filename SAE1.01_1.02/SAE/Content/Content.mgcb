@@ -32,11 +32,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
-#begin george.sf
-/importer:
-/processor:
-/build:george.sf
-
 #begin quitter.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
