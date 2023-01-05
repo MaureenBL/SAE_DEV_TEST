@@ -38,7 +38,10 @@ namespace SAE
 
 
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+
+
+
+      
 
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
         // défini dans Game1
@@ -47,19 +50,13 @@ namespace SAE
             _myGame = game;
         }
 
+       
         public override void Initialize()
         {
-           
+            
         }
         public override void LoadContent()
         {
-            //QUITTER
-            _quitter = "Quitter";
-            _policeQuitter = Content.Load<SpriteFont>("quitter");
-            _positionQuitter = new Vector2(870, 675);
-
-          //  _game1 = new Game1(this);
-
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
@@ -67,15 +64,13 @@ namespace SAE
             KeyboardState keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Escape))
             {
-                _screenManager.LoadScreen(_regles, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-
+               Initialize();
             }
         }
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.Blue); // on utilise la reference vers Game1 pour chnger le graphisme
-            
-
+            _myGame.GraphicsDevice.Clear(Color.Blue); // on utilise la reference vers Game1 pour changer le graphisme
+            SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
         }
 
     }
