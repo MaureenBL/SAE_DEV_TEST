@@ -23,8 +23,8 @@ namespace SAE
             //PERSONNAGE - GEORGE
             private AnimatedSprite _perso;
             private Vector2 _positionPerso;
-            private Vector2 _sensPersoHorizontal;
-            private Vector2 _sensPersoVertical;
+            private int _sensPersoHorizontal;
+            private int _sensPersoVertical;
             private int _vitessePerso;
             private int _nbVie;
             private int _nbDebattage;
@@ -80,7 +80,8 @@ namespace SAE
             protected override void LoadContent()
             {
                 _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+                SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
+                _perso = new AnimatedSprite(persoTexture);
                 // TODO: use this.Content to load your game content here
             }
 
@@ -140,8 +141,11 @@ namespace SAE
                  //if
 
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
-            _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
-                base.Update(gameTime);*/
+            _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;*/
+
+                _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+                base.Update(gameTime);
             }
 
             protected override void Draw(GameTime gameTime)
