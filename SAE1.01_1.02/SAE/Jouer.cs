@@ -91,7 +91,7 @@ namespace SAE
 
                 // TODO: Add your update logic here
                 float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                
+
 
                 /*if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
@@ -141,8 +141,8 @@ namespace SAE
 
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
-                base.Update(gameTime);
-            }*/
+                base.Update(gameTime);*/
+            }
 
             protected override void Draw(GameTime gameTime)
             {
