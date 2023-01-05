@@ -23,36 +23,6 @@ namespace SAE
         public const int LARGEUR_PERSO = 200;
         public const int HAUTEUR_PERSO = 154;
 
-        //MONSTRES
-        //animation
-        private AnimatedSprite _bat;
-        private AnimatedSprite _ghost;
-        private AnimatedSprite _skeleton;
-        //position
-        private Vector2 _batPosition;
-        private Vector2 _ghostPosition;
-        private Vector2 _skeletonPosition;
-        //orientation
-        private int _batOrientationX;
-        private int _batOrientationY;
-        private int _ghostOrientationX;
-        private int _ghostOrientationY;
-        private int _skeletonOrientationX;
-        private int _skeletonOrientationY;
-        //dimentions
-        public const int BAT_LARGEUR = 48;
-        public const int BAT_HAUTEUR = 64;
-        public const int GHOST_LARGEUR = 64;
-        public const int GHOST_HAUTEUR = 64;
-        public const int SKELETON_LARGEUR = 64;
-        public const int SKELETON_HAUTEUR = 64;
-        //vitesse
-        private int _vitesseBat;
-        private int _vitesseGhost;
-        private int _vitesseSkeleton;
-
-
-
         //TAILLE FENETRE
         public const int TAILLE_FENETRE_L = 950;
         public const int TAILLE_FENETRE_H = 700;
@@ -334,7 +304,7 @@ namespace SAE
             //     _spriteBatch.Draw(_perso, _positionPerso);
             _spriteBatch.End();
 
-            
+
             base.Draw(gameTime);
         }
 
