@@ -33,7 +33,7 @@ namespace SAE
         //transition
         private readonly ScreenManager _screenManager;
         private Game1 _game1;
-        private Regle _regles;
+        private Regle _reglesTrans;
         public SpriteBatch SpriteBatch { get; set; }
 
 
@@ -46,7 +46,7 @@ namespace SAE
             _myGame = game;
         }
 
-       
+
         public override void Initialize()
         {
             
@@ -60,14 +60,13 @@ namespace SAE
             KeyboardState keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Escape))
             {
-               Initialize();
+                _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
             }
         }
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.Blue); // on utilise la reference vers Game1 pour changer le graphisme
-            _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
+            SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White); // NE MARCHE PAS 
         }
-
     }
 }
