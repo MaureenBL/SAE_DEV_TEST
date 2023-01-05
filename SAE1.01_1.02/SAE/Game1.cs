@@ -63,8 +63,8 @@ namespace SAE
 
         //transition
         private readonly ScreenManager _screenManager;
-        private MyScreen1 _myScreen1;
-        private MyScreen2 _myScreen2;
+        private Commande _commandes;
+        private Regle _regles;
         public SpriteBatch SpriteBatch { get; set; }
 
 
@@ -76,18 +76,12 @@ namespace SAE
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            _screenManager = new ScreenManager();
+            Components.Add(_screenManager);
         }
 
-        public Game1(MyScreen1 myScreen1)
-        {
-            this._myScreen1 = myScreen1;
-        }
-
-        public Game1(MyScreen2 myScreen2)
-        {
-            this._myScreen2 = myScreen2;
-        }
-
+       
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -140,8 +134,8 @@ namespace SAE
             _textureFond = Content.Load<Texture2D>("accueil");
 
             //TRANSITION
-            _myScreen1 = new MyScreen1(this); // en leur donnant une référence au Game
-            _myScreen2 = new MyScreen2(this);
+            _commandes = new Commande(this); // en leur donnant une référence au Game
+            _regles = new Regle(this);
 
             //GEORGE            
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
@@ -162,11 +156,11 @@ namespace SAE
             {
                 if (_mouseState.X >= _positionCommande.X && _mouseState.Y >= _positionCommande.Y && _mouseState.X <= _positionCommande.X + TAILLE_COMMANDE && _mouseState.Y <= _positionCommande.Y + TAILLE_COMMANDE)
                 {
-                    _screenManager.LoadScreen(_myScreen1, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
+                    _screenManager.LoadScreen(_commandes, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
                 }
                 else if (_mouseState.X >= _positionRegle.X && _mouseState.Y >= _positionRegle.Y && _mouseState.X <= _positionRegle.X + TAILLE_REGLE && _mouseState.Y <= _positionRegle.Y + TAILLE_REGLE)
                 {
-                    _screenManager.LoadScreen(_myScreen2, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
+                    _screenManager.LoadScreen(_regles, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
                 }
                 else if(_mouseState.X >= _positionQuitter.X && _mouseState.Y >= _positionQuitter.Y && _mouseState.X <= _positionQuitter.X + TAILLE_QUITTER && _mouseState.Y <= _positionQuitter.Y + TAILLE_QUITTER)
                 {
@@ -231,6 +225,14 @@ namespace SAE
 
             base.Draw(gameTime);
         }
+
+
+        /* public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int largeurObjetB)
+         {
+             Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA,);
+             Rectangle rectObjetB = new Rectangle(xObjetB, yObjetB, largeurObjetB, largeurObjetB);
+             return rectObjetA.Intersects(rectObjetB);
+         }*/
 
     }
 }
