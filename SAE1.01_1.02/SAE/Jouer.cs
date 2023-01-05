@@ -70,7 +70,10 @@ namespace SAE
             protected override void Initialize()
             {
                 // TODO: Add your initialization logic here
-
+                //propriétés des monstres
+                _vitesseBat = 0;
+                _vitesseGhost = 0;
+                _vitesseSkeleton = 100;
                 base.Initialize();
             }
 
@@ -86,8 +89,9 @@ namespace SAE
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
 
-               /* // TODO: Add your update logic here
+                // TODO: Add your update logic here
                 float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                /*
                 if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
                     _nbDebattage += 1;

@@ -120,11 +120,6 @@ namespace SAE
             _policeQuitter = Content.Load<SpriteFont>("quitter");
             _positionQuitter = new Vector2(870, 675);
 
-            //propriétés des monstres
-            _vitesseBat = 0;
-            _vitesseGhost = 0;
-            _vitesseSkeleton = 100;
-
             base.Initialize();
         }
 
