@@ -32,7 +32,7 @@ namespace SAE
 
         //transition
         private readonly ScreenManager _screenManager;
-        private Commande _commandes;
+        private Game1 _game1;
         private Regle _regles;
         public SpriteBatch SpriteBatch { get; set; }
 
@@ -49,30 +49,32 @@ namespace SAE
 
         public override void Initialize()
         {
+           
+        }
+        public override void LoadContent()
+        {
             //QUITTER
             _quitter = "Quitter";
             _policeQuitter = Content.Load<SpriteFont>("quitter");
             _positionQuitter = new Vector2(870, 675);
-        }
-        public override void LoadContent()
-        {
+
+          //  _game1 = new Game1(this);
+
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
         {
-            _mouseState = Mouse.GetState();
-
-            if (_mouseState.X >= _positionQuitter.X && _mouseState.Y >= _positionQuitter.Y && _mouseState.X <= _positionQuitter.X + TAILLE_QUITTER && _mouseState.Y <= _positionQuitter.Y + TAILLE_QUITTER)
+            KeyboardState keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Escape))
             {
                 _screenManager.LoadScreen(_regles, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+
             }
         }
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.Blue); // on utilise la reference vers Game1 pour chnger le graphisme
-            _myGame.SpriteBatch.Begin();
-            _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
-            _myGame.SpriteBatch.End();
+            
 
         }
 
