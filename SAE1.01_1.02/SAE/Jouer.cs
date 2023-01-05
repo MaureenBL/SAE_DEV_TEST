@@ -27,6 +27,7 @@ namespace SAE
             private Vector2 _sensPersoVertical;
             private int _vitessePerso;
             private int _nbVie;
+            private int _nbDebattage;
             public const int LARGEUR_PERSO = 200;
             public const int HAUTEUR_PERSO = 154;
             //MONSTRES
@@ -56,6 +57,8 @@ namespace SAE
             private int _vitesseBat;
             private int _vitesseGhost;
             private int _vitesseSkeleton;
+            //zone
+            public int[,] zoneFantome;
 
             public Game2()
             {
@@ -83,10 +86,15 @@ namespace SAE
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
 
-                // TODO: Add your update logic here
+               /* // TODO: Add your update logic here
                 float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    _nbDebattage += 1;
+                }*/
+
                 //SQUELETTE
-                /* if(Voir())
+                 /*if(VoirJoueur())
                  {
                       if(_skeletonPosition.X < _positionPerso.X)
                       {
@@ -117,11 +125,12 @@ namespace SAE
                   }*/
 
                 //FANTOME
-                  /*if(Collision())
+                 /*do
                   {
                     ghost.Play("fantomeInvoque");
-
-                  }*/
+                    _ghostPosition = _positionPerso;
+                  }
+                 //while(CollisionJoueur(avec la zone) && )*/
 
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
@@ -142,11 +151,11 @@ namespace SAE
 
                 base.Draw(gameTime);
             }
-            public bool Collision(int xObjetA, int yObjetA, int largeurObjetA, int hauteurObjetA, int xObjetB, int yObjetB, int largeurObjetB, int hauteurObjetB)
+            public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
             {
-             Rectangle rectObjetA = new Rectangle(xObjetA, yObjetA, largeurObjetA, hauteurObjetA);
-             Rectangle rectObjetB = new Rectangle(xObjetB, yObjetB, largeurObjetB, hauteurObjetB);
-             return rectObjetA.Intersects(rectObjetB);
+             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+             Rectangle rectObjet = new Rectangle(xObjet, yObjet, largeurObjet, hauteurObjet);
+             return rectJoueur.Intersects(rectObjet);
             }
         }
     }
