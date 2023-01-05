@@ -141,8 +141,8 @@ namespace SAE
 
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
-                base.Update(gameTime);
-            }*/
+                base.Update(gameTime);*/
+            }
 
             protected override void Draw(GameTime gameTime)
             {
