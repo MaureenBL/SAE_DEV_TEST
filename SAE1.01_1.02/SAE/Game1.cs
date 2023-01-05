@@ -108,7 +108,7 @@ namespace SAE
             //jouer
             _jouer = "JOUER";
             _policeJouer = Content.Load<SpriteFont>("Font");
-            _positionJouer = new Vector2(400, 300);
+            _positionJouer = new Vector2(400, 330);
             //régle
             _regle = "Regles du jeu";
             _policeRegle = Content.Load<SpriteFont>("Font");
