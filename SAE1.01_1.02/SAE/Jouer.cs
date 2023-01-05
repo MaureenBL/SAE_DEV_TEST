@@ -91,14 +91,14 @@ namespace SAE
 
                 // TODO: Add your update logic here
                 float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                /*
-                if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
+                
+               /* if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
                     _nbDebattage += 1;
-                }*/
+                }
 
                 //SQUELETTE
-                 /*if(VoirJoueur())
+                 if(VoirJoueur())
                  {
                       if(_skeletonPosition.X < _positionPerso.X)
                       {
@@ -126,15 +126,17 @@ namespace SAE
                       //attendre 5 secondes
                       _skeletonOrientationX = -1;
                       //attendre 5 secondes
-                  }*/
+                  }
 
                 //FANTOME
-                 /*do
+                 do
                   {
                     ghost.Play("fantomeInvoque");
                     _ghostPosition = _positionPerso;
                   }
-                 //while(CollisionJoueur(avec la zone) && )*/
+                 while(CollisionJoueur(avec la zone) && _nbDebattage < 25)
+                 
+                 if*/
 
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
@@ -161,6 +163,13 @@ namespace SAE
              Rectangle rectObjet = new Rectangle(xObjet, yObjet, largeurObjet, hauteurObjet);
              return rectJoueur.Intersects(rectObjet);
             }
+            /*public bool VoirJoueur(int xMonstre, int yMonstre)
+            {
+                Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+                if()
+                Rectangle rectVision = new Rectangle(xMonstre, yMonstre, 200, 50);
+                return rectJoueur.Intersects(rectObjet);
+            }*/
         }
     }
 }
