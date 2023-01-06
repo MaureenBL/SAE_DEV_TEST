@@ -56,11 +56,13 @@ namespace SAE
         public const int SKELETON_LARGEUR = 64;
         public const int SKELETON_HAUTEUR = 64;
         //vitesse
-        private int _vitesseBat;
-        private int _vitesseGhost;
-        private int _vitesseSkeleton;
+        private int _batVitesse;
+        private int _ghostVitesse;
+        private int _skeletonVitesse;
         //zone
-        public int[,] _zoneFantome;
+        public int[,] _ghostZone;
+        //commportement
+        private bool _ghostAttaque;
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
@@ -74,10 +76,11 @@ namespace SAE
         {
             // TODO: Add your initialization logic here
             //vitesse des monstres
-            _vitesseBat = 0;
-            _vitesseGhost = 0;
-            _vitesseSkeleton = 100;
+            _batVitesse = 0;
+            _ghostVitesse = 0;
+            _skeletonVitesse = 100;
             _nbVie = 3;
+            _ghostAttaque = false;
             base.Initialize();
         }
         public override void LoadContent()
@@ -103,10 +106,26 @@ namespace SAE
             
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            /*if(CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR) && Keyboard.GetState().IsKeyDown(Keys.Space))
+            //FANTOME
+            //le fantome attaque
+            /*if(/*CollisionJoueur(avec zone))
+            {
+                _ghostAttaque = true;
+                //effacer la zone dans le tableau
+            }
+            //Le héros se défend
+if (Keyboard.GetState().GetPressedKeys(Keys.Space))
              {
-                 _nbDebattage += 1;
+                _nbDebattage ++;
              }*/
+            //le fantome est en train d'attaquer
+            do
+            {
+                _ghost.Play("fantomeInvoque");
+                _ghostPosition = _positionPerso;
+            }
+            while (_ghostAttaque == true);
+
 
             //SQUELETTE
             /* if(VoirJoueur())
@@ -139,17 +158,9 @@ namespace SAE
                   //attendre 5 secondes
               }*/
 
-            //FANTOME
-            do
-            {
-                _ghost.Play("fantomeInvoque");
-                _ghostPosition = _positionPerso;
-            }
-            while (/*CollisionJoueur(avec la zone) &&*/_nbDebattage < 25);
 
-
-            _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
-            _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
+            _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
+            _skeletonPosition.Y += _skeletonOrientationY * _skeletonVitesse * deltaTime;
             //ANIMATION
             //Personnage
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
@@ -169,7 +180,7 @@ namespace SAE
                 _perso.Play("gGauche");
             }
             //Squelette
-            if (_vitesseSkeleton != 0)
+            if (_skeletonVitesse != 0)
             {
                 _skeleton.Play("squeletteEnMarche");
             }
