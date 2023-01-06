@@ -86,6 +86,10 @@ namespace SAE
         private bool espaceEtat;
 
 
+
+        //CLE
+        private Texture2D _textureCle;
+
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
         // défini dans Game1
@@ -115,6 +119,9 @@ namespace SAE
         }
         public override void LoadContent()
         {
+            //TEXTURE CLE
+            _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
+            _textureCle = Content.Load<Texture2D>("cle");
 
             //Chargement de la map
             _tiledMap = Content.Load<TiledMap>("map/mapGenerale");
@@ -308,12 +315,14 @@ namespace SAE
         {
             _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
             _tiledMapRenderer.Draw();
-           /* _myGame.SpriteBatch.Begin();
-            _myGame.SpriteBatch.Draw(_perso, _positionPerso);
-            _myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
-            _myGame.SpriteBatch.Draw(_bat, _batPosition);
-            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
-            _myGame.SpriteBatch.End();*/
+           _myGame.SpriteBatch.Begin();
+
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(200, 600, 50, 50), Color.White);
+            //_myGame.SpriteBatch.Draw(_perso, _positionPerso);
+            //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
+            //_myGame.SpriteBatch.Draw(_bat, _batPosition);
+            //_myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
+            _myGame.SpriteBatch.End();
         }
         public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
         {
