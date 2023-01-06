@@ -35,6 +35,7 @@ namespace SAE
             private AnimatedSprite _bat;
             private AnimatedSprite _ghost;
             private AnimatedSprite _skeleton;
+
             //position
             private Vector2 _batPosition;
             private Vector2 _ghostPosition;
@@ -87,6 +88,9 @@ namespace SAE
                 _bat = new AnimatedSprite(batTexture);
                 SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
                 _skeleton = new AnimatedSprite(skeletonTexture);
+                SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
+                _ghost = new AnimatedSprite(ghostTexture);
+
                 // TODO: use this.Content to load your game content here
             }
 
@@ -98,15 +102,13 @@ namespace SAE
                 // TODO: Add your update logic here
                 float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                /*
-                
-                if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
-                {
-                    _nbDebattage += 1;
-                }
+                /*if(CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR) && Keyboard.GetState().IsKeyDown(Keys.Space))
+                 {
+                     _nbDebattage += 1;
+                 }*/
 
                 //SQUELETTE
-                 if(VoirJoueur())
+                /* if(VoirJoueur())
                  {
                       if(_skeletonPosition.X < _positionPerso.X)
                       {
@@ -134,41 +136,36 @@ namespace SAE
                       //attendre 5 secondes
                       _skeletonOrientationX = -1;
                       //attendre 5 secondes
-                  }
+                  }*/
 
                 //FANTOME
-                 do
-                  {
-                    ghost.Play("fantomeInvoque");
+                do
+                {
+                    _ghost.Play("fantomeInvoque");
                     _ghostPosition = _positionPerso;
-                  }
-                 //while(CollisionJoueur(avec la zone) && _nbDebattage < 25)
-                 
-                 //if
+                }
+                while (/*CollisionJoueur(avec la zone) &&*/_nbDebattage < 25);
+
 
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
-            _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;*/
+            _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;
                 //ANIMATION
                 //Personnage
                 if (Keyboard.GetState().IsKeyDown(Keys.Down))
                 {
                     _perso.Play("gBas");
-                    _perso.Update(deltaTime);
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Up))
                 {
                     _perso.Play("gHaut");
-                    _perso.Update(deltaTime);
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
                     _perso.Play("gDroite");
-                    _perso.Update(deltaTime);
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
                     _perso.Play("gGauche");
-                    _perso.Update(deltaTime);
                 }
                 //Squelette
                 if(_vitesseSkeleton!=0)
@@ -190,20 +187,27 @@ namespace SAE
                 if (_batOrientationY==1)
                 {
                     _bat.Play("batVolFace");
-                    _bat.Update(deltaTime);
                 }
                 else if (_batOrientationY == -1)
                 {
                     _bat.Play("batVolDos");
-                    _bat.Update(deltaTime);
                 }
                 else
                 {
                     _bat.Play("batVolFace");
                 }
-
+                //Fantome
+                if(_ghostOrientationX != 0 || _ghostOrientationY != 0)
+                {
+                    _ghost.Play("fantomeEnVol");
+                }
                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+
+                _bat.Update(deltaTime);
+                _skeleton.Update(deltaTime);
+                _perso.Update(deltaTime);
+                _ghost.Update(deltaTime);
 
                 base.Update(gameTime);
             }
@@ -216,6 +220,7 @@ namespace SAE
                 _spriteBatch.Draw(_perso, _positionPerso);
                 _spriteBatch.Draw(_skeleton, _skeletonPosition);
                 _spriteBatch.Draw(_bat, _batPosition);
+                _spriteBatch.Draw(_ghost, _ghostPosition);
                 _spriteBatch.End();
                 // TODO: Add your drawing code here
 
