@@ -1,18 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Content;
-using MonoGame.Extended.Tiled.Renderers;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Screens;
-using MonoGame.Extended.Screens.Transitions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE
 {
@@ -26,6 +15,9 @@ namespace SAE
         //fond ecran
         private Texture2D _textureFond;
         private Vector2 _positionFond;
+        private Texture2D _textureJouer;
+        private Texture2D _textureRegle;
+        private Texture2D _textureCommande;
         //jouer
         private string _jouer;
         private SpriteFont _policeJouer;
@@ -85,7 +77,7 @@ namespace SAE
             _policeJouer = Content.Load<SpriteFont>("Font");
             _positionJouer = new Vector2(400, 330);
             //régle
-            _regle = "Regles du jeu";
+            _regle = "Regles du j eu";
             _policeRegle = Content.Load<SpriteFont>("Font");
             _positionRegle = new Vector2(600, 550);
             //commande
@@ -100,37 +92,18 @@ namespace SAE
 
         public override void LoadContent()
         {
+           //TEXTURE
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             _textureFond = Content.Load<Texture2D>("accueil");
-
+            _textureJouer = Content.Load<Texture2D>("J");
+            _textureRegle = Content.Load<Texture2D>("R");
+            _textureCommande = Content.Load<Texture2D>("C");
             //TRANSITION
 
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
         {
-            //ACCUEIL
-            _mouseState = Mouse.GetState();
-
-            if (_mouseState.LeftButton == ButtonState.Pressed)
-            {
-                if (_mouseState.X >= _positionCommande.X && _mouseState.Y >= _positionCommande.Y && _mouseState.X <= _positionCommande.X + TAILLE_COMMANDE && _mouseState.Y <= _positionCommande.Y + TAILLE_COMMANDE)
-                {
-                    _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-                }
-                else if (_mouseState.X >= _positionRegle.X && _mouseState.Y >= _positionRegle.Y && _mouseState.X <= _positionRegle.X + TAILLE_REGLE && _mouseState.Y <= _positionRegle.Y + TAILLE_REGLE)
-                {
-                    _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-                }
-                else if (_mouseState.X >= _positionJouer.X && _mouseState.Y >= _positionJouer.Y && _mouseState.X <= _positionJouer.X + TAILLE_JOUER && _mouseState.Y <= _positionJouer.Y + TAILLE_JOUER)
-                {
-                    _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-                }
-                else if (_mouseState.X >= _positionQuitter.X && _mouseState.Y >= _positionQuitter.Y && _mouseState.X <= _positionQuitter.X + TAILLE_QUITTER && _mouseState.Y <= _positionQuitter.Y + TAILLE_QUITTER)
-                {
-                   
-                }
-            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -145,8 +118,11 @@ namespace SAE
             _myGame.SpriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
             _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
             _myGame.SpriteBatch.DrawString(_policeJouer, $"{_jouer}", _positionJouer, Color.White);
+            _myGame.SpriteBatch.Draw(_textureJouer, new Rectangle(430, 380, 50, 50), Color.White);
             _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+            _myGame.SpriteBatch.Draw(_textureRegle, new Rectangle(680, 600, 50, 50), Color.White);
             _myGame.SpriteBatch.DrawString(_policeCommande, $"{_commande}", _positionCommande, Color.White);
+            _myGame.SpriteBatch.Draw(_textureCommande, new Rectangle(200, 600, 50, 50), Color.White);
             _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
 
             //GEORGE
