@@ -104,28 +104,30 @@ namespace SAE
             _nbVie = 3;
 
             //FENETRE
-            _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+            /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
             _graphics.ApplyChanges();
             //camera
-            //var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            //_camera = new OrthographicCamera(viewportadapter);
+            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            _camera = new OrthographicCamera(viewportadapter);*/
             _ghostAttaque = false;
             base.Initialize();
         }
         public override void LoadContent()
         {
 
-
+            //Chargement de la map
+            _tiledMap = Content.Load<TiledMap>("map/mapGenerale");
+            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
-            SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
+            /*SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(persoTexture);
             SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
             _bat = new AnimatedSprite(batTexture);
             SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
             _skeleton = new AnimatedSprite(skeletonTexture);
             SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
-            _ghost = new AnimatedSprite(ghostTexture);
+            _ghost = new AnimatedSprite(ghostTexture);*/
 
             base.LoadContent(); 
         }
@@ -170,7 +172,7 @@ namespace SAE
                 _ghostPosition = _positionPerso;
                 _vitessePerso = 0;
             }
-            while (_ghostAttaque == true);
+            while (_ghostAttaque == true);*/
 
 
             //SQUELETTE
@@ -206,11 +208,11 @@ namespace SAE
               }*/
 
 
-            _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
-            _skeletonPosition.Y += _skeletonOrientationY * _skeletonVitesse * deltaTime;
+           /* _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
+            _skeletonPosition.Y += _skeletonOrientationY * _skeletonVitesse * deltaTime;*/
             //ANIMATION
             //Personnage
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+           /* if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
                 _perso.Play("gBas");
             }
@@ -239,11 +241,11 @@ namespace SAE
             {
                 _nbVie--;
                 _skeleton.Play("squeletteAttaque");
-            }
+            }*/
 
 
             //Chauve-souris
-            if (_batOrientationY == 1)
+           /* if (_batOrientationY == 1)
             {
                 _bat.Play("batVolFace");
             }
@@ -260,8 +262,8 @@ namespace SAE
             {
                 _ghost.Play("fantomeEnVol");
             }
-            //_positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            //_positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+            _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
 
             _tiledMapRenderer.Update(gameTime);
 
@@ -291,7 +293,7 @@ namespace SAE
                 _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
             }
             //Camera
-            _camera.LookAt(_positionPerso);
+            /*_camera.LookAt(_positionPerso);
             //_cameraPosition = _positionPerso;
             const float movementSpeed = 200;
             _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
@@ -299,18 +301,19 @@ namespace SAE
             _bat.Update(deltaTime);
             _skeleton.Update(deltaTime);
             _perso.Update(deltaTime);
-            _ghost.Update(deltaTime);
+            _ghost.Update(deltaTime);*/
 
         }
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
-            _myGame.SpriteBatch.Begin();
+            _tiledMapRenderer.Draw();
+           /* _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
             _myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             _myGame.SpriteBatch.Draw(_bat, _batPosition);
             _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
-            _myGame.SpriteBatch.End();
+            _myGame.SpriteBatch.End();*/
         }
         public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
         {
