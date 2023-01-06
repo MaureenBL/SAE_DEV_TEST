@@ -106,8 +106,8 @@ namespace SAE
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
             _graphics.ApplyChanges();
             //camera
-            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            _camera = new OrthographicCamera(viewportadapter);
+         //   var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+          //  _camera = new OrthographicCamera(viewportadapter);
             _ghostAttaque = false;
             base.Initialize();
         }
