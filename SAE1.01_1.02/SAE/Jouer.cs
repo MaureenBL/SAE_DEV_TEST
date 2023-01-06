@@ -142,9 +142,52 @@ namespace SAE
 
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;*/
-
+                if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                {
+                    _perso.Play("gBas");
+                    _perso.Update(deltaTime);
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    _perso.Play("gHaut");
+                    _perso.Update(deltaTime);
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                {
+                    _perso.Play("gDroite");
+                    _perso.Update(deltaTime);
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                {
+                    _perso.Play("gGauche");
+                    _perso.Update(deltaTime);
+                }
                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+                switch (Keyboard.GetState().IsKeyDown())
+                {
+                    case (Keys.Down) :
+                        _perso.Play("gBas");
+                        _perso.Update(deltaTime);
+                        break;
+                    case (Keys.Up):
+                        _perso.Play("gHaut");
+                        _perso.Update(deltaTime);
+                        break;
+                    case (Keys.Right):
+                        _perso.Play("gDroite");
+                        _perso.Update(deltaTime);
+                        break;
+                    case (Keys.Left):
+                        _perso.Play("gGauche");
+                        _perso.Update(deltaTime);
+                        break;
+                    default:
+                        Console.WriteLine("erreur !");
+                        break;
+                }
+
+
                 base.Update(gameTime);
             }
 
@@ -152,11 +195,8 @@ namespace SAE
             {
                 
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                var batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
-                var bat = new AnimatedSprite(batTexture);
-                bat.Play("batVolFace");
-                var ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
-                var ghost = new AnimatedSprite(ghostTexture);
+                _spriteBatch.Begin();
+                _spriteBatch.Draw(_perso, _positionPerso);
                 _spriteBatch.End();
                 // TODO: Add your drawing code here
 
