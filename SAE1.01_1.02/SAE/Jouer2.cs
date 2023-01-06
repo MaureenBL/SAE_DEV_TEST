@@ -165,15 +165,15 @@ namespace SAE
                 _nbDebattage = 0;
             }
 
-          //le fantome est en train d'attaquer
+          /*  //le fantome est en train d'attaquer
             do
             {
                 _ghost.Play("fantomeInvoque");
                 _ghostPosition = _positionPerso;
                 _vitessePerso = 0;
             }
-            while (_ghostAttaque == true);*/
-
+            while (_ghostAttaque == true);
+          */
 
             //SQUELETTE
             /* if(VoirJoueur())
