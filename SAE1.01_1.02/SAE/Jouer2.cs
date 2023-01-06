@@ -315,7 +315,7 @@ namespace SAE
             {
                 //animation droite
                 _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            }
+            }  
             //flèche gauche
             if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
             {
