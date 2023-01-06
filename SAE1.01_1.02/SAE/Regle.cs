@@ -43,19 +43,20 @@ namespace SAE
 
         private SpriteFont _police;
 
+        //titre
+        private string _titre;
+        private SpriteFont _policeTitre;
+        private Vector2 _positionTitre;
+
+        //Regle
+        private string _regle;
+        private SpriteFont _policeRegle;
+        private Vector2 _positionRegle;
+
+        private Texture2D _textureFond;
 
 
-
-
-
-
-        private string _quitter;
-        private SpriteFont _policeQuitter;
-        private Vector2 _positionQuitter;
-        public const int TAILLE_QUITTER = 100;
-
-
-
+        public SpriteBatch SpriteBatch { get; set; }
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
@@ -78,23 +79,34 @@ namespace SAE
             _rejouer = "REJOUER";
             _positionRejouer = new Vector2((TAILLE_FENETRE_L * 1 / 4) - TAILLE_POLICE * _rejouer.Length / 2, TAILLE_FENETRE_H * 3 / 4);
             _rectRejouer = new Rectangle((int)_positionRejouer.X, (int)_positionRejouer.Y, TAILLE_POLICE * _rejouer.Length, TAILLE_POLICE * 2);
-          /*  //QUITTER 
-            _quitter = "QUITTER";
-            _positionQuitter = new Vector2((TAILLE_FENETRE_L * 3 / 4) - TAILLE_POLICE * _quitter.Length / 2, TAILLE_FENETRE_H * 3 / 4);
-            _rectQuitter = new Rectangle((int)_positionQuitter.X, (int)_positionQuitter.Y, TAILLE_POLICE * _quitter.Length, TAILLE_POLICE * 2);
-            //SCORE FIN DE PARTIE
-            _positionScorePartie = new Vector2((TAILLE_FENETRE_L / 2) - 145, TAILLE_FENETRE_H / 2);
-*/
-            //quitter
-            _quitter = "Quitter";
-            _policeQuitter = Content.Load<SpriteFont>("quitter");
-            _positionQuitter = new Vector2(870, 675);
+            /*  //QUITTER 
+              _quitter = "QUITTER";
+              _positionQuitter = new Vector2((TAILLE_FENETRE_L * 3 / 4) - TAILLE_POLICE * _quitter.Length / 2, TAILLE_FENETRE_H * 3 / 4);
+              _rectQuitter = new Rectangle((int)_positionQuitter.X, (int)_positionQuitter.Y, TAILLE_POLICE * _quitter.Length, TAILLE_POLICE * 2);
+              //SCORE FIN DE PARTIE
+              _positionScorePartie = new Vector2((TAILLE_FENETRE_L / 2) - 145, TAILLE_FENETRE_H / 2);
+  */
+            //accueil
+            _regle = "Le but est simple. Si tu veux pouvoir sortir d'ici, il ne faut pas mourir. \n" +
+                "Ce manoir est maudit." +
+                "Des monstres vont t'attaquer lorsque tu seras \n dedans. \n" +
+                "Pour sortir il n y a qu'un seul moyen : \n" + 
+                "Trouver toutes les clefs qui permettront d'ouvrir les portes. \n" +
+                "\n Attention : Plus tu avances plus il y aura de clefs, mais aussi plus de \n monstres qui vont t'attaquer. \n" +
+                "Je te souhaite bonne chance, il te faudra du courage pour sortir ici !";
+            _policeRegle = Content.Load<SpriteFont>("regles");
+            _positionRegle = new Vector2(50, 200);
 
-            base.Initialize();
+            //titre
+            _titre = "Haunted Manor";
+            _policeTitre = Content.Load<SpriteFont>("Titre");
+            _positionTitre = new Vector2(265, 50);
+
         }
 
         public override void LoadContent()
         {
+            _textureFond = Content.Load<Texture2D>("accueil");
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
@@ -121,10 +133,12 @@ namespace SAE
                                                      // Game1 pour changer le graphisme
 
             // TODO: Add your drawing code here
-            
-              _myGame.SpriteBatch.Begin();
-              _myGame.SpriteBatch.DrawString(_police, _quitter, _positionQuitter, Color.Blue);
-              _myGame.SpriteBatch.End();
+
+            _myGame.SpriteBatch.Begin();
+            _myGame.SpriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
+            _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+            _myGame.SpriteBatch.End();
             /*
              if (_finPartie)
              {
