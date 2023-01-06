@@ -26,6 +26,14 @@ namespace SAE
         private SpriteFont _policeCongr;
         private Vector2 _positionCongr;
 
+        //retour
+        private string _rejouer;
+        private SpriteFont _policeRejouer;
+        private Vector2 _positionRejouer;
+        //quitter
+        private string _quitter;
+        private SpriteFont _policeQuitter;
+        private Vector2 _positionQuitter;
 
         //titre
         private string _titre;
@@ -33,6 +41,9 @@ namespace SAE
         private Vector2 _positionTitre;
 
         private Texture2D _textureFin;
+
+        private Texture2D _textureRejouer;
+        private Texture2D _textureEsc;
         public SpriteBatch SpriteBatch { get; set; }
 
 
@@ -56,14 +67,26 @@ namespace SAE
 
             _congr = " Congratulations !! ";
             _policeCongr = Content.Load<SpriteFont>("End");
-            _positionCongr = new Vector2(240, 560);
+            _positionCongr = new Vector2(345, 270);
             base.Initialize();
+
+            //Retour
+            _rejouer = "Rejouer ";
+            _policeRejouer = Content.Load<SpriteFont>("End");
+            _positionRejouer = new Vector2(110, 620);
+            //Quitter
+            _quitter = "Quitter ";
+            _policeQuitter = Content.Load<SpriteFont>("End");
+            _positionQuitter = new Vector2(710, 620);
         }
 
         public override void LoadContent()
         {
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             _textureFin = Content.Load<Texture2D>("fin");
+
+            _textureRejouer = Content.Load<Texture2D>("G");
+            _textureEsc = Content.Load<Texture2D>("esc");
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
@@ -78,6 +101,12 @@ namespace SAE
             _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
             _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.LightBlue);
             _myGame.SpriteBatch.DrawString(_policeCongr, $"{_congr}", _positionCongr, Color.LightBlue);
+
+            _myGame.SpriteBatch.DrawString(_policeRejouer, $"{_rejouer}", _positionRejouer, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
+
+            _myGame.SpriteBatch.Draw(_textureRejouer, new Rectangle(250, 620, 50, 45), Color.White);
+            _myGame.SpriteBatch.Draw(_textureEsc, new Rectangle(650, 620, 50, 50), Color.White);
             _myGame.SpriteBatch.End();
         }
     }

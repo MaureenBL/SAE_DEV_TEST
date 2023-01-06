@@ -175,6 +175,10 @@ namespace SAE
             {
                 _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.G))
+            {
+                _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.C))
             {
                 _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));                
