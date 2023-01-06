@@ -102,10 +102,13 @@ namespace SAE
                 // TODO: Add your update logic here
                 float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                /*if(CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR) && Keyboard.GetState().IsKeyDown(Keys.Space))
+                if(CollisionJoueur((int)_ghostPosition.X, (int)_ghostPosition.Y, GHOST_LARGEUR, GHOST_HAUTEUR) && Keyboard.GetState().IsKeyDown(Keys.Space))
                  {
+                    
                      _nbDebattage += 1;
-                 }*/
+
+
+                 }
 
                 //SQUELETTE
                 /* if(VoirJoueur())
