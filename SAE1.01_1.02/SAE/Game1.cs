@@ -153,25 +153,25 @@ namespace SAE
 
             if (Keyboard.GetState().IsKeyDown(Keys.R))
             {
-                _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+                _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.J))
             {
-                _screenManager.LoadScreen(_jeuTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+                _screenManager.LoadScreen(_jeuTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
-                _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+                _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
                 MediaPlayer.Stop();
                 MediaPlayer.Play(_gameSong);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
-                _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+                _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Back))
             {
-                _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+                _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.C))
             {

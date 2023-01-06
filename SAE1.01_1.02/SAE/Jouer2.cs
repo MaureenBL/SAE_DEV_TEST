@@ -287,7 +287,7 @@ if (Keyboard.GetState().GetPressedKeys(Keys.Space))
         }
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.LightYellow); // on utilise la reference vers Game1 pour changer le graphisme
+            _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
             _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
             _myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
