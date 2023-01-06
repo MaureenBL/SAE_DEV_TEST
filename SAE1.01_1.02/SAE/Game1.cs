@@ -61,6 +61,7 @@ namespace SAE
 
         //musique / son
         private Song _song;
+        private Song _gameSong;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
@@ -127,13 +128,15 @@ namespace SAE
 
             //MUSIQUE
             _song = Content.Load<Song>("SongAccueil");
+            _gameSong = Content.Load<Song>("GameSong");
+
             MediaPlayer.Play(_song);
         }
 
         void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
         {
             // 0.0f is silent, 1.0f is full volume
-            MediaPlayer.Volume = 0.5f;
+            MediaPlayer.Volume = 0.2f;
         }
         protected override void Update(GameTime gameTime)
         {
@@ -155,16 +158,16 @@ namespace SAE
             if (Keyboard.GetState().IsKeyDown(Keys.J))
             {
                 _screenManager.LoadScreen(_jeuTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+               
             }
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-                MediaPlayer.Stop();
+                
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
                 _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-                
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Back))
             {
@@ -173,6 +176,8 @@ namespace SAE
             if (Keyboard.GetState().IsKeyDown(Keys.C))
             {
                 _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+                MediaPlayer.Stop();
+                MediaPlayer.Play(_gameSong);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
