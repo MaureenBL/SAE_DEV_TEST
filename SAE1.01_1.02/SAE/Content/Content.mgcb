@@ -195,6 +195,12 @@
 /processorParam:TextureFormat=Compressed
 /build:regles.spritefont
 
+#begin SongAccueil.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:SongAccueil.mp3
+
 #begin Titre.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
