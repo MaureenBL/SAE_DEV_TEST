@@ -56,6 +56,7 @@ namespace SAE
         private Regle _reglesTrans;
         private Jouer2 _jouerTrans;
         private Jeu _jeuTrans;
+        private Fin _finTrans;
         private Accueil _accueilTrans;
         public SpriteBatch SpriteBatch { get; set; }
 
@@ -121,6 +122,7 @@ namespace SAE
             _jouerTrans = new Jouer2(this);
             _jeuTrans = new Jeu(this);
             _accueilTrans = new Accueil(this);
+            _finTrans = new Fin(this);
 
             //GEORGE            
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
@@ -173,37 +175,23 @@ namespace SAE
             {
                 _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.G))
+            {
+                _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.C))
             {
                 _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));                
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            {
+                _screenManager.LoadScreen(_finTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));                
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
             }
             
-
-      /*      _mouseState = Mouse.GetState();
-
-            if (_mouseState.LeftButton == ButtonState.Pressed)
-            {
-                if (_mouseState.X >= _positionCommande.X && _mouseState.Y >= _positionCommande.Y && _mouseState.X <= _positionCommande.X + TAILLE_COMMANDE && _mouseState.Y <= _positionCommande.Y + TAILLE_COMMANDE)
-                {
-                    _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
-                }
-                else if (_mouseState.X >= _positionRegle.X && _mouseState.Y >= _positionRegle.Y && _mouseState.X <= _positionRegle.X + TAILLE_REGLE && _mouseState.Y <= _positionRegle.Y + TAILLE_REGLE)
-                {
-                    _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice,Color.LightGoldenrodYellow));
-                }
-                else if (_mouseState.X >= _positionJouer.X && _mouseState.Y >= _positionJouer.Y && _mouseState.X <= _positionJouer.X + TAILLE_JOUER && _mouseState.Y <= _positionJouer.Y + TAILLE_JOUER)
-                {
-                    _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-                }
-                else if(_mouseState.X >= _positionQuitter.X && _mouseState.Y >= _positionQuitter.Y && _mouseState.X <= _positionQuitter.X + TAILLE_QUITTER && _mouseState.Y <= _positionQuitter.Y + TAILLE_QUITTER)
-                {
-                    Exit();
-                } 
-            } */
 
 
           //GEORGE
