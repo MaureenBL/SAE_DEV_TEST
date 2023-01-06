@@ -54,7 +54,12 @@ namespace SAE
         private Vector2 _positionRegle;
 
         private Texture2D _textureFond;
+        private Texture2D _textureRetour;
 
+        //retour
+        private string _retour;
+        private SpriteFont _policeRetour;
+        private Vector2 _positionRetour;
 
         public SpriteBatch SpriteBatch { get; set; }
 
@@ -69,6 +74,10 @@ namespace SAE
 
         public override void Initialize()
         {
+            //titre
+            _titre = "Haunted Manor";
+            _policeTitre = Content.Load<SpriteFont>("Titre");
+            _positionTitre = new Vector2(265, 50);
 
             _finPartie = false;
             //GAME OVER 
@@ -97,16 +106,18 @@ namespace SAE
             _policeRegle = Content.Load<SpriteFont>("regles");
             _positionRegle = new Vector2(50, 200);
 
-            //titre
-            _titre = "Haunted Manor";
-            _policeTitre = Content.Load<SpriteFont>("Titre");
-            _positionTitre = new Vector2(265, 50);
+            //Retour
+            _retour = "Retour ";
+            _policeRetour = Content.Load<SpriteFont>("Font");
+            _positionRetour = new Vector2(115, 630);
+
 
         }
 
         public override void LoadContent()
         {
             _textureFond = Content.Load<Texture2D>("accueil");
+            _textureRetour = Content.Load<Texture2D>("retour");
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
@@ -136,8 +147,10 @@ namespace SAE
 
             _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
+            _myGame.SpriteBatch.Draw(_textureRetour, new Rectangle(50, 630, 50, 45), Color.White);
             _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
             _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeRetour, $"{_retour}", _positionRetour, Color.White);
             _myGame.SpriteBatch.End();
             /*
              if (_finPartie)

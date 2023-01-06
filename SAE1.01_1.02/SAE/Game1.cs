@@ -7,6 +7,7 @@ using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
+using Microsoft.Xna.Framework.Media;
 
 namespace SAE
 {
@@ -58,6 +59,8 @@ namespace SAE
         private Accueil _accueilTrans;
         public SpriteBatch SpriteBatch { get; set; }
 
+        //musique / son
+        private Song _song;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
@@ -122,9 +125,16 @@ namespace SAE
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
                 _perso = new AnimatedSprite(spriteSheet);*/
 
-            // TODO: use this.Content to load your game content here
+            //MUSIQUE
+            _song = Content.Load<Song>("SongAccueil");
+            MediaPlayer.Play(_song);
         }
 
+        void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
+        {
+            // 0.0f is silent, 1.0f is full volume
+            MediaPlayer.Volume = 0.5f;
+        }
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -149,10 +159,12 @@ namespace SAE
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+                MediaPlayer.Stop();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
                 _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+                
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Back))
             {
