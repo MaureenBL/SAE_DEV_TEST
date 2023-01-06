@@ -12,17 +12,17 @@
     },
     "batVolDroite": {
       "frames": [3,4,5],
-      "isLooping": false,
+      "isLooping": true,
       "frameDuration": 0.15
     },
     "batVolFace": {
       "frames": [6,7,8],
-      "isLooping": false,
+      "isLooping": true,
       "frameDuration": 0.15
     },
     "batVolGauche": {
       "frames": [9,10,11],
-      "isLooping": false,
+      "isLooping": true,
       "frameDuration": 0.15
     }
   }

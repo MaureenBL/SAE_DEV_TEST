@@ -58,7 +58,7 @@ namespace SAE
             private int _vitesseGhost;
             private int _vitesseSkeleton;
             //zone
-            public int[,] zoneFantome;
+            public int[,] _zoneFantome;
 
             public Game2()
             {
@@ -74,6 +74,7 @@ namespace SAE
                 _vitesseBat = 0;
                 _vitesseGhost = 0;
                 _vitesseSkeleton = 100;
+                _nbVie = 3;
                 base.Initialize();
             }
 
@@ -82,6 +83,10 @@ namespace SAE
                 _spriteBatch = new SpriteBatch(GraphicsDevice);
                 SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
                 _perso = new AnimatedSprite(persoTexture);
+                SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
+                _bat = new AnimatedSprite(batTexture);
+                SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
+                _skeleton = new AnimatedSprite(skeletonTexture);
                 // TODO: use this.Content to load your game content here
             }
 
@@ -93,8 +98,9 @@ namespace SAE
                 // TODO: Add your update logic here
                 float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-
-                /*if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
+                /*
+                
+                if(CollisionJoueur(avec la zone) && Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
                     _nbDebattage += 1;
                 }
@@ -165,6 +171,36 @@ namespace SAE
                     _perso.Update(deltaTime);
                 }
                 //Squelette
+                if(_vitesseSkeleton!=0)
+                {
+                    _skeleton.Play("squeletteEnMarche");
+                }
+                else
+                {
+                    _skeleton.Play("squeletteEnPose");
+                }
+                if (CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR))
+                {
+                    _nbVie--;
+                    _skeleton.Play("squeletteAttaque");
+                }
+                
+
+                //Chauve-souris
+                if (_batOrientationY==1)
+                {
+                    _bat.Play("batVolFace");
+                    _bat.Update(deltaTime);
+                }
+                else if (_batOrientationY == -1)
+                {
+                    _bat.Play("batVolDos");
+                    _bat.Update(deltaTime);
+                }
+                else
+                {
+                    _bat.Play("batVolFace");
+                }
 
                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
@@ -178,17 +214,19 @@ namespace SAE
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 _spriteBatch.Begin();
                 _spriteBatch.Draw(_perso, _positionPerso);
+                _spriteBatch.Draw(_skeleton, _skeletonPosition);
+                _spriteBatch.Draw(_bat, _batPosition);
                 _spriteBatch.End();
                 // TODO: Add your drawing code here
 
                 base.Draw(gameTime);
             }
-            /*public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
+            public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
             {
              Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
              Rectangle rectObjet = new Rectangle(xObjet, yObjet, largeurObjet, hauteurObjet);
              return rectJoueur.Intersects(rectObjet);
-            }*/
+            }
            /* public bool VoirJoueur(int xMonstre, int yMonstre)
             {
                 Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
