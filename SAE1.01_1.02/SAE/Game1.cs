@@ -56,6 +56,7 @@ namespace SAE
         private Regle _reglesTrans;
         private Jouer2 _jouerTrans;
         private Jeu _jeuTrans;
+        private Fin _finTrans;
         private Accueil _accueilTrans;
         public SpriteBatch SpriteBatch { get; set; }
 
@@ -121,6 +122,7 @@ namespace SAE
             _jouerTrans = new Jouer2(this);
             _jeuTrans = new Jeu(this);
             _accueilTrans = new Accueil(this);
+            _finTrans = new Fin(this);
 
             //GEORGE            
             /*     SpriteSheet spriteSheet = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader()); //NE MARCHE PAS
@@ -176,6 +178,10 @@ namespace SAE
             if (Keyboard.GetState().IsKeyDown(Keys.C))
             {
                 _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));                
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            {
+                _screenManager.LoadScreen(_finTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));                
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {

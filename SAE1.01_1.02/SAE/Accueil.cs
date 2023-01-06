@@ -120,7 +120,7 @@ namespace SAE
             _myGame.SpriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
             _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
             _myGame.SpriteBatch.DrawString(_policeJouer, $"{_jouer}", _positionJouer, Color.White);
-            _myGame.SpriteBatch.Draw(_textureJouer, new Rectangle(430, 380, 50, 50), Color.White);
+            _myGame.SpriteBatch.Draw(_textureJouer, new Rectangle(415, 380, 50, 50), Color.White);
             _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
             _myGame.SpriteBatch.Draw(_textureRegle, new Rectangle(680, 600, 50, 50), Color.White);
             _myGame.SpriteBatch.DrawString(_policeCommande, $"{_commande}", _positionCommande, Color.White);
