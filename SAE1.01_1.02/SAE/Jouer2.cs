@@ -14,6 +14,7 @@ using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
 using MonoGame.Extended.ViewportAdapters;
+using MonoGame.Extended;
 
 
 
@@ -24,6 +25,9 @@ namespace SAE
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        //TAILLE FENETRE
+        public const int TAILLE_FENETRE_L = 1600;
+        public const int TAILLE_FENETRE_H = 900;
         //MAP
         private TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
@@ -94,6 +98,10 @@ namespace SAE
             _vitesseSkeleton = 100;
             _nbVie = 3;
 
+            //FENETRE
+            _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+            _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
+            _graphics.ApplyChanges();
             //camera
             var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
             _camera = new OrthographicCamera(viewportadapter);
