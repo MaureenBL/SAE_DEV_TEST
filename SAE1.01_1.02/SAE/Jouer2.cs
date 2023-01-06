@@ -80,7 +80,9 @@ namespace SAE
         private int _skeletonVitesse;
         public const int VITESSE_PERSO = 100;
         //zone
-        public int[,] _ghostZone;
+        public Vector2[] _ghostZone;
+        public Vector2[] _batZone;
+        
         //commportement
         private bool _ghostAttaque;
         private bool espaceEtat;
@@ -146,8 +148,9 @@ namespace SAE
             // TODO: Add your update logic here
             
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //COMPORTEMENT
 
-            //FANTOME
+            //Fantome
             //le fantome attaque
             /*if(CollisionJoueur(avec zone))
             {
@@ -182,7 +185,8 @@ namespace SAE
             while (_ghostAttaque == true);
           */
 
-            //SQUELETTE
+
+            //Squelette
             /* if(VoirJoueur())
              {
                   if(_skeletonPosition.X < _positionPerso.X)
@@ -213,10 +217,39 @@ namespace SAE
                 if(Collision avec un bur de droite)
                     _skeletonOrientationX = -1;
               }*/
+            //Chauve-souris
+            /*if (CollisionJoueur(_batZone))
+            {
+                if (_batPosition.X < _positionPerso.X)
+                {
+                    _batOrientationX = 1;
+                }
+                else
+                {
+                    _batOrientationX = 1;
+                }
+                if (_batPosition.Y < _positionPerso.Y)
+                {
+                    _batOrientationY = 1;
+                }
+                else
+                {
+                    _batOrientationY = -1;
+                }
+                _batSkeleton = 250;
+            }
+            else
+            {
+                //retourner au centre
+            
+            }*/
 
 
-           /* _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
-            _skeletonPosition.Y += _skeletonOrientationY * _skeletonVitesse * deltaTime;*/
+            _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
+            _skeletonPosition.Y += _skeletonOrientationY * _skeletonVitesse * deltaTime;
+            _batPosition.X += _batOrientationX * _batVitesse * deltaTime;
+            _batPosition.Y += _batOrientationY * _batVitesse * deltaTime;
+
             //ANIMATION
             //Personnage
            /* if (Keyboard.GetState().IsKeyDown(Keys.Down))
@@ -264,6 +297,7 @@ namespace SAE
             {
                 _bat.Play("batVolFace");
             }
+
             //Fantome
             if (_ghostOrientationX != 0 || _ghostOrientationY != 0)
             {
