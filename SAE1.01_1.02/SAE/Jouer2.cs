@@ -78,10 +78,12 @@ namespace SAE
         private int _batVitesse;
         private int _ghostVitesse;
         private int _skeletonVitesse;
+        public const int VITESSE_PERSO = 100;
         //zone
         public int[,] _ghostZone;
         //commportement
         private bool _ghostAttaque;
+        private bool espaceEtat;
 
 
         private Game1 _myGame;
@@ -98,7 +100,7 @@ namespace SAE
             //vitesse des monstres
             _batVitesse = 0;
             _ghostVitesse = 0;
-            _skeletonVitesse = 100;
+            _skeletonVitesse = 25;
             _nbVie = 3;
 
             //FENETRE
@@ -138,21 +140,35 @@ namespace SAE
 
             //FANTOME
             //le fantome attaque
-            /*if(/*CollisionJoueur(avec zone))
+            /*if(CollisionJoueur(avec zone))
             {
                 _ghostAttaque = true;
                 //effacer la zone dans le tableau
-            }
+            }*/
+            
             //Le héros se défend
-if (Keyboard.GetState().GetPressedKeys(Keys.Space))
-             {
-                _nbDebattage ++;
-             }*/
-            //le fantome est en train d'attaquer
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
+            {
+                espaceEtat = true;
+                _nbDebattage++;
+            }
+            if (!(Keyboard.GetState().IsKeyDown(Keys.Space)))
+                espaceEtat = false;
+
+            if(_nbDebattage>=25)
+            {
+                _ghostAttaque = false;
+                _vitessePerso = VITESSE_PERSO;
+                _ghost.Play("fantomeMort");
+                _nbDebattage = 0;
+            }
+
+          //le fantome est en train d'attaquer
             do
             {
                 _ghost.Play("fantomeInvoque");
                 _ghostPosition = _positionPerso;
+                _vitessePerso = 0;
             }
             while (_ghostAttaque == true);
 
@@ -183,9 +199,10 @@ if (Keyboard.GetState().GetPressedKeys(Keys.Space))
                   _vitesseSkeleton = 100;
                   _skeletonOrientationY = 0;
                   _skeletonOrientationX = 1;
-                  //attendre 5 secondes
-                  _skeletonOrientationX = -1;
-                  //attendre 5 secondes
+                if(Collision avec un mur de gauche)
+                    _skeletonOrientationX = 1;
+                if(Collision avec un bur de droite)
+                    _skeletonOrientationX = -1;
               }*/
 
 
