@@ -158,12 +158,12 @@ namespace SAE
             if (Keyboard.GetState().IsKeyDown(Keys.J))
             {
                 _screenManager.LoadScreen(_jeuTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-               
             }
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-                
+                MediaPlayer.Stop();
+                MediaPlayer.Play(_gameSong);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
@@ -175,9 +175,7 @@ namespace SAE
             }
             if (Keyboard.GetState().IsKeyDown(Keys.C))
             {
-                _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-                MediaPlayer.Stop();
-                MediaPlayer.Play(_gameSong);
+                _screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));                
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
