@@ -54,6 +54,7 @@ namespace SAE
         private Commande _commandesTrans;
         private Regle _reglesTrans;
         private Jouer2 _jouerTrans;
+        private Jeu _jeuTrans;
         private Accueil _accueilTrans;
         public SpriteBatch SpriteBatch { get; set; }
 
@@ -114,6 +115,7 @@ namespace SAE
             _commandesTrans = new Commande(this); // en leur donnant une référence au Game
             _reglesTrans = new Regle(this);
             _jouerTrans = new Jouer2(this);
+            _jeuTrans = new Jeu(this);
             _accueilTrans = new Accueil(this);
 
             //GEORGE            
@@ -141,6 +143,10 @@ namespace SAE
                 _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.J))
+            {
+                _screenManager.LoadScreen(_jeuTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
             }
