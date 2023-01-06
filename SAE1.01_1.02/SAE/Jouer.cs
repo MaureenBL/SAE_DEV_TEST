@@ -142,6 +142,8 @@ namespace SAE
 
             _skeletonPosition.X += _skeletonOrientationX * _vitesseSkeleton * deltaTime;
             _skeletonPosition.Y += _skeletonOrientationY * _vitesseSkeleton * deltaTime;*/
+                //ANIMATION
+                //Personnage
                 if (Keyboard.GetState().IsKeyDown(Keys.Down))
                 {
                     _perso.Play("gBas");
@@ -162,31 +164,10 @@ namespace SAE
                     _perso.Play("gGauche");
                     _perso.Update(deltaTime);
                 }
+                //Squelette
+
                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
-                switch (Keyboard.GetState().IsKeyDown())
-                {
-                    case (Keys.Down) :
-                        _perso.Play("gBas");
-                        _perso.Update(deltaTime);
-                        break;
-                    case (Keys.Up):
-                        _perso.Play("gHaut");
-                        _perso.Update(deltaTime);
-                        break;
-                    case (Keys.Right):
-                        _perso.Play("gDroite");
-                        _perso.Update(deltaTime);
-                        break;
-                    case (Keys.Left):
-                        _perso.Play("gGauche");
-                        _perso.Update(deltaTime);
-                        break;
-                    default:
-                        Console.WriteLine("erreur !");
-                        break;
-                }
-
 
                 base.Update(gameTime);
             }
