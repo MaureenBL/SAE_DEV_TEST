@@ -140,6 +140,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
+#begin GameSong.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GameSong.mp3
+
 #begin P.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -177,6 +183,12 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:regles.spritefont
+
+#begin SongAccueil.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:SongAccueil.mp3
 
 #begin Titre.spritefont
 /importer:FontDescriptionImporter

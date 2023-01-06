@@ -13,6 +13,10 @@ using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
+using MonoGame.Extended.ViewportAdapters;
+using MonoGame.Extended;
+using Microsoft.Xna.Framework.Media;
+
 
 
 namespace SAE
@@ -21,11 +25,26 @@ namespace SAE
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        //TAILLE FENETRE
+        public const int TAILLE_FENETRE_L = 1600;
+        public const int TAILLE_FENETRE_H = 900;
+        //MAP
+        private TiledMap _tiledMap;
+        private TiledMapRenderer _tiledMapRenderer;
+        //Collisions map
+        private TiledMapTileLayer mapLayer;
+        //acces
+        private KeyboardState _keyboardState;
+        //camera
+        private OrthographicCamera _camera;
+        private Vector2 _cameraPosition;
+        private Vector2 _cameraOrigin;
+
         //PERSONNAGE - GEORGE
         private AnimatedSprite _perso;
         private Vector2 _positionPerso;
-        private int _sensPersoHorizontal;
-        private int _sensPersoVertical;
+        private Vector2 _sensPersoHorizontal;
+        private Vector2 _sensPersoVertical;
         private int _vitessePerso;
         private int _nbVie;
         private int _nbDebattage;
@@ -64,6 +83,7 @@ namespace SAE
         //commportement
         private bool _ghostAttaque;
 
+
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
         // défini dans Game1
@@ -80,12 +100,22 @@ namespace SAE
             _ghostVitesse = 0;
             _skeletonVitesse = 100;
             _nbVie = 3;
+
+            //FENETRE
+            _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+            _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
+            _graphics.ApplyChanges();
+            //camera
+            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            _camera = new OrthographicCamera(viewportadapter);
             _ghostAttaque = false;
             base.Initialize();
         }
         public override void LoadContent()
         {
-            _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
+            
+
+           /* _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(persoTexture);
             SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
@@ -213,8 +243,41 @@ if (Keyboard.GetState().GetPressedKeys(Keys.Space))
             {
                 _ghost.Play("fantomeEnVol");
             }
-            _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+            //_positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            //_positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+
+            _tiledMapRenderer.Update(gameTime);
+
+            //Déplacement
+            
+            _keyboardState = Keyboard.GetState();
+            if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+            {
+                //animation droite
+                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche gauche
+            if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
+            {
+                //animation gauche
+                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
+            }
+            //flèche haut
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+            {
+                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+            //flèche bas
+            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+            {
+                //animation bas
+                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
+            }
+            //Camera
+            _camera.LookAt(_positionPerso);
+            //_cameraPosition = _positionPerso;
+            const float movementSpeed = 200;
+            _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
 
             _bat.Update(deltaTime);
             _skeleton.Update(deltaTime);
@@ -238,6 +301,43 @@ if (Keyboard.GetState().GetPressedKeys(Keys.Space))
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
             Rectangle rectObjet = new Rectangle(xObjet, yObjet, largeurObjet, hauteurObjet);
             return rectJoueur.Intersects(rectObjet);
+        }
+        //méthode détection de collision avec la map
+        /*private bool IsCollision(ushort x, ushort y)
+        {
+
+            TiledMapTile? tile;
+            if (mapLayer.TryGetTile(x, y, out tile) == false)
+            {
+                return false;
+            }
+            if (!tile.Value.IsBlank)
+            {
+                return true;
+            }
+            return false;
+        }*/
+        private Vector2 GetMovementDirection()
+        {
+            var movementDirection = Vector2.Zero;
+            var state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Down))
+            {
+                movementDirection += Vector2.UnitY;
+            }
+            if (state.IsKeyDown(Keys.Up))
+            {
+                movementDirection -= Vector2.UnitY;
+            }
+            if (state.IsKeyDown(Keys.Left))
+            {
+                movementDirection -= Vector2.UnitX;
+            }
+            if (state.IsKeyDown(Keys.Right))
+            {
+                movementDirection += Vector2.UnitX;
+            }
+            return movementDirection;
         }
     }
 }

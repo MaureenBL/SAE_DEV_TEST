@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended.Screens;
 
 namespace SAE
@@ -14,7 +15,6 @@ namespace SAE
         private Vector2 _positionTitre;
         //fond ecran
         private Texture2D _textureFond;
-        private Vector2 _positionFond;
         private Texture2D _textureJouer;
         private Texture2D _textureRegle;
         private Texture2D _textureCommande;
@@ -38,15 +38,12 @@ namespace SAE
         private SpriteFont _policeQuitter;
         private Vector2 _positionQuitter;
         public const int TAILLE_QUITTER = 100;
-        //acces
-        private MouseState _mouseState;
-        private KeyboardState _keyboardState;
+
+        //musique / son
+        private Song _song;
+
 
         //transition
-        private readonly ScreenManager _screenManager;
-        private Commande _commandesTrans;
-        private Regle _reglesTrans;
-        private Jouer2 _jouerTrans;
         public SpriteBatch SpriteBatch { get; set; }
 
 
@@ -64,16 +61,13 @@ namespace SAE
 
 
         public override void Initialize()
-        {
-
-            //ACCUEIL
-            _positionFond = new Vector2(700, 900);
+        {            
             //titre
             _titre = "Haunted Manor";
             _policeTitre = Content.Load<SpriteFont>("Titre");
             _positionTitre = new Vector2(265, 150);
             //jouer
-            _jouer = "JOUER";
+            _jouer = "Jouer";
             _policeJouer = Content.Load<SpriteFont>("Font");
             _positionJouer = new Vector2(400, 330);
             //régle
@@ -98,18 +92,26 @@ namespace SAE
             _textureJouer = Content.Load<Texture2D>("J");
             _textureRegle = Content.Load<Texture2D>("R");
             _textureCommande = Content.Load<Texture2D>("C");
-            //TRANSITION
+
+            //MUSIQUE
+            _song = Content.Load<Song>("SongAccueil");
 
             base.LoadContent();
         }
+
+        void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
+        {
+            // 0.0f is silent, 1.0f is full volume
+            MediaPlayer.Volume = 0.5f;
+        }
+
         public override void Update(GameTime gameTime)
         {
+            
         }
 
         public override void Draw(GameTime gameTime)
         {
-             // on utilise la reference vers
-                                                     // Game1 pour changer le graphisme
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
