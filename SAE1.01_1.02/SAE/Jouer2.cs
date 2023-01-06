@@ -113,7 +113,7 @@ namespace SAE
         }
         public override void LoadContent()
         {
-            
+
 
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
@@ -125,7 +125,7 @@ namespace SAE
             SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
             _ghost = new AnimatedSprite(ghostTexture);
 
-            base.LoadContent();
+            base.LoadContent(); 
         }
         public override void Update(GameTime gameTime)
         {
@@ -287,14 +287,13 @@ if (Keyboard.GetState().GetPressedKeys(Keys.Space))
         }
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.LightYellow); // on utilise la reference vers Game1 pour changer le graphisme
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_perso, _positionPerso);
-            _spriteBatch.Draw(_skeleton, _skeletonPosition);
-            _spriteBatch.Draw(_bat, _batPosition);
-            _spriteBatch.Draw(_ghost, _ghostPosition);
-            _spriteBatch.End();
+            _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
+            _myGame.SpriteBatch.Begin();
+            _myGame.SpriteBatch.Draw(_perso, _positionPerso);
+            _myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
+            _myGame.SpriteBatch.Draw(_bat, _batPosition);
+            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
+            _myGame.SpriteBatch.End();
         }
         public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
         {
