@@ -359,7 +359,7 @@ namespace SAE
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(660, 245, 25, 25), Color.White); // 4: piece verte - haut / angle
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(950, 20, 25, 25), Color.White); // 5: piece rouge - angle en haut à droite
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            //_myGame.SpriteBatch.Draw(_perso, _positionPerso);
+            _myGame.SpriteBatch.Draw(_perso, _positionPerso);
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
             //_myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
