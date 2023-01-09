@@ -91,9 +91,27 @@ namespace SAE
         private int _score;
         private SpriteFont _police;
         private Vector2 _positionScore;
+        
+        //Vie
+        private int _vie;
+        private SpriteFont _policeVie;
+        private Vector2 _positionVie;
 
         //CLE
         private Texture2D _textureCle;
+
+        //Game Over
+        private string _gameOver;
+        private SpriteFont _policeGameOver;
+        private Vector2 _positionGameOver;
+        //retour
+        private string _rejouer;
+        private SpriteFont _policeRejouer;
+        private Vector2 _positionRejouer;
+        //quitter
+        private string _quitter;
+        private SpriteFont _policeQuitter;
+        private Vector2 _positionQuitter;
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
@@ -109,6 +127,24 @@ namespace SAE
             _score = 0;
             _police = Content.Load<SpriteFont>("Font");
             _positionScore = new Vector2(15, 10);
+            
+            //Vie
+            _vie = 3;
+            _policeVie = Content.Load<SpriteFont>("Font");
+            _positionVie = new Vector2(15, 50);
+
+            //game over
+            _gameOver = "Game Over";
+            _policeGameOver = Content.Load<SpriteFont>("Titre");
+            _positionGameOver = new Vector2(350, 210);
+            //Retour
+            _rejouer = "Rejouer ";
+            _policeRejouer = Content.Load<SpriteFont>("End");
+            _positionRejouer = new Vector2(210, 420);
+            //Quitter
+            _quitter = "Quitter ";
+            _policeQuitter = Content.Load<SpriteFont>("End");
+            _positionQuitter = new Vector2(610, 420);
 
             // TODO: Add your initialization logic here
             //vitesse des monstres
@@ -273,7 +309,7 @@ namespace SAE
             }
             if (CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR))
             {
-                _nbVie--;
+                _vie--;
                 _skeleton.Play("squeletteAttaque");
             }*/
 
@@ -346,6 +382,17 @@ namespace SAE
                 _score += 1;
             }*/
 
+             //Vie
+            /*if (/*position personnage / collision clép)
+            {
+                _vie -= 1;
+            }*/
+
+            if(_vie == 0)
+            {
+                this.Initialize();
+            }
+
         }
         public override void Draw(GameTime gameTime)
         {
@@ -359,6 +406,10 @@ namespace SAE
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(660, 245, 25, 25), Color.White); // 4: piece verte - haut / angle
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(950, 20, 25, 25), Color.White); // 5: piece rouge - angle en haut à droite
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeGameOver, $"{_gameOver}", _positionGameOver, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeRejouer, $"{_rejouer}", _positionRejouer, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
