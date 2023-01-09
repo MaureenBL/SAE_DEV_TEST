@@ -58,7 +58,7 @@ namespace SAE
             //titre
             _titre = "~ FIN ~";
             _policeTitre = Content.Load<SpriteFont>("Titre");
-            _positionTitre = new Vector2(350, 45);
+            _positionTitre = new Vector2(350, 5);
 
             _regle = "Woaw ! Je n'en attendais pas moins de toi. Tu as eu toutes \n les clefs  et tu ne t'aies pas " +
                 "fais avoir  par les monstres. \n Bravo tu es sorti sans soucis. \n Tu peux choisir de rejouer ou bien de quitter." +
@@ -68,7 +68,7 @@ namespace SAE
 
             _congr = " Congratulations !! ";
             _policeCongr = Content.Load<SpriteFont>("End");
-            _positionCongr = new Vector2(325, 180);
+            _positionCongr = new Vector2(325, 80);
             base.Initialize();
 
             //Retour

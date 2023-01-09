@@ -96,6 +96,7 @@ namespace SAE
         private SpriteFont _policeRegle;
         private Vector2 _positionRegle;
 
+        private bool _pause;
 
         //Vie
         private int _vie;
@@ -132,6 +133,8 @@ namespace SAE
 
         public override void Initialize()
         {
+            _pause = false;
+
             //game over
             _gameOver = "Game Over";
             _policeGameOver = Content.Load<SpriteFont>("Titre");
@@ -207,8 +210,9 @@ namespace SAE
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Game.Exit();
 
-            // TODO: Add your update logic here
+
             
+
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //COMPORTEMENT
 
