@@ -55,11 +55,11 @@ namespace SAE
             _positionRegle = new Vector2(50, 250);
             base.Initialize();
         }
-
+        
         public override void LoadContent()
         {
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
-            _textureFond = Content.Load<Texture2D>("accueil");
+            _textureFond = Content.Load<Texture2D>("accueil"); 
             _texturePlay = Content.Load<Texture2D>("P");
             base.LoadContent();
         }
