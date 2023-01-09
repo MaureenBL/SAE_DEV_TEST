@@ -18,6 +18,7 @@ namespace SAE
         private Texture2D _textureJouer;
         private Texture2D _textureRegle;
         private Texture2D _textureCommande;
+        private Texture2D _textureEsc;
         //jouer
         private string _jouer;
         private SpriteFont _policeJouer;
@@ -92,6 +93,7 @@ namespace SAE
             _textureJouer = Content.Load<Texture2D>("J");
             _textureRegle = Content.Load<Texture2D>("R");
             _textureCommande = Content.Load<Texture2D>("C");
+            _textureEsc = Content.Load<Texture2D>("esc");
 
             //MUSIQUE
             _song = Content.Load<Song>("SongAccueil");
@@ -126,6 +128,7 @@ namespace SAE
             _myGame.SpriteBatch.DrawString(_policeCommande, $"{_commande}", _positionCommande, Color.White);
             _myGame.SpriteBatch.Draw(_textureCommande, new Rectangle(200, 600, 50, 50), Color.White);
             _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
+            _myGame.SpriteBatch.Draw(_textureEsc, new Rectangle(830, 670, 30, 30), Color.White);
 
             //GEORGE
 
