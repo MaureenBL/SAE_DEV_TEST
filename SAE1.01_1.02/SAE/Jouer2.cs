@@ -87,7 +87,10 @@ namespace SAE
         private bool _ghostAttaque;
         private bool espaceEtat;
 
-
+        //Score
+        private int _score;
+        private SpriteFont _police;
+        private Vector2 _positionScore;
 
         //CLE
         private Texture2D _textureCle;
@@ -102,6 +105,11 @@ namespace SAE
 
         public override void Initialize()
         {
+            //Score
+            _score = 0;
+            _police = Content.Load<SpriteFont>("Font");
+            _positionScore = new Vector2(15, 10);
+
             // TODO: Add your initialization logic here
             //vitesse des monstres
             _batVitesse = 0;
@@ -332,6 +340,12 @@ namespace SAE
             _ghost.Update(deltaTime);*/
             _perso.Update(deltaTime);
 
+            //SCORE
+            /*if (/*position personnage / collision clép)
+            {
+                _score += 1;
+            }*/
+
         }
         public override void Draw(GameTime gameTime)
         {
@@ -339,8 +353,13 @@ namespace SAE
             _tiledMapRenderer.Draw();
            _myGame.SpriteBatch.Begin();
 
-            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(150, 650, 30, 30), Color.White);
-            _myGame.SpriteBatch.Draw(_perso, _positionPerso);
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(770, 570, 25, 25), Color.White); // 2: piece rouge - bas
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(380, 120, 25, 25), Color.White); // 3: piece bleu - milieu
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(660, 245, 25, 25), Color.White); // 4: piece verte - haut / angle
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(950, 20, 25, 25), Color.White); // 5: piece rouge - angle en haut à droite
+            _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+            //_myGame.SpriteBatch.Draw(_perso, _positionPerso);
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
             //_myGame.SpriteBatch.Draw(_ghost, _ghostPosition);

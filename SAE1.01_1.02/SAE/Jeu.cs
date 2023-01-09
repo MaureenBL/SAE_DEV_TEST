@@ -49,7 +49,7 @@ namespace SAE
                 "Pour cela, c'est facile, il faut que trouver 5 clefs qui sont un peu partout \n" +
                 "Je te rappel que des monstres t'attaqueront pour ne pas que tu gagnes \n" +
                 "\n Rappel des commandes : pour bouger utilise les fleches directionnelles." +
-                "\n Bon courage ! Je crois en toi, ne meurs pas ! \n" +
+                "\nIl te faut 5 clefs ! Bon courage ! Je crois en toi et surtout ne meurs pas ! \n" +
                 "\n Pour commencer clique sur : ";
             _policeRegle = Content.Load<SpriteFont>("regles");
             _positionRegle = new Vector2(50, 250);
