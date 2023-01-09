@@ -91,7 +91,12 @@ namespace SAE
         private int _score;
         private SpriteFont _police;
         private Vector2 _positionScore;
-        
+        //Regle
+        private string _regle;
+        private SpriteFont _policeRegle;
+        private Vector2 _positionRegle;
+
+
         //Vie
         private int _vie;
         private SpriteFont _policeVie;
@@ -115,6 +120,7 @@ namespace SAE
 
         private Texture2D _textureRejouer;
         private Texture2D _textureEsc;
+        private Texture2D _textureFin;
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
@@ -143,7 +149,11 @@ namespace SAE
             _score = 0;
             _police = Content.Load<SpriteFont>("Font");
             _positionScore = new Vector2(15, 10);
-            
+            _regle = " Bravo tu as toutes les clefs ! \n Clique sur : ";
+            _policeRegle = Content.Load<SpriteFont>("regles");
+            _positionRegle = new Vector2(350, 250);
+
+
             //Vie
             _vie = 3;
             _policeVie = Content.Load<SpriteFont>("Font");
@@ -181,6 +191,7 @@ namespace SAE
             _perso = new AnimatedSprite(persoTexture);
             _textureRejouer = Content.Load<Texture2D>("G");
             _textureEsc = Content.Load<Texture2D>("esc");
+            _textureFin = Content.Load<Texture2D>("F");
 
             /*SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
             _bat = new AnimatedSprite(batTexture);
@@ -398,6 +409,11 @@ namespace SAE
                 this.Initialize();               
             }
 
+            if(_score == 5)
+            {
+                this.Initialize();
+            }
+
         }
         public override void Draw(GameTime gameTime)
         {
@@ -422,6 +438,12 @@ namespace SAE
 
                 _myGame.SpriteBatch.Draw(_textureRejouer, new Rectangle(350, 420, 50, 45), Color.White);
                 _myGame.SpriteBatch.Draw(_textureEsc, new Rectangle(750, 420, 50, 50), Color.White);
+            }
+
+            if(_score == 5)
+            {
+                _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+                _myGame.SpriteBatch.Draw(_textureFin, new Rectangle(510, 285, 50, 50), Color.White);
             }
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
