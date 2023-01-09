@@ -43,13 +43,13 @@ namespace SAE
         //PERSONNAGE - GEORGE
         private AnimatedSprite _perso;
         private Vector2 _positionPerso;
-        private Vector2 _sensPersoHorizontal;
-        private Vector2 _sensPersoVertical;
+        private int _sensPersoHorizontal;
+        private int _sensPersoVertical;
         private int _vitessePerso;
         private int _nbVie;
         private int _nbDebattage;
-        public const int LARGEUR_PERSO = 200;
-        public const int HAUTEUR_PERSO = 154;
+        public const int LARGEUR_PERSO = 48;
+        public const int HAUTEUR_PERSO = 64;
         //MONSTRES
         //animation
         private AnimatedSprite _bat;
@@ -117,6 +117,7 @@ namespace SAE
             var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
             _camera = new OrthographicCamera(viewportadapter);*/
             _ghostAttaque = false;
+            _positionPerso = new Vector2(200, 200);
             base.Initialize();
         }
         public override void LoadContent()
@@ -129,9 +130,10 @@ namespace SAE
             _tiledMap = Content.Load<TiledMap>("map/mapGenerale");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
-            /*SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
+            SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(persoTexture);
-            SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
+            
+            /*SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
             _bat = new AnimatedSprite(batTexture);
             SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
             _skeleton = new AnimatedSprite(skeletonTexture);
@@ -252,23 +254,7 @@ namespace SAE
 
             //ANIMATION
             //Personnage
-           /* if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                _perso.Play("gBas");
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                _perso.Play("gHaut");
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                _perso.Play("gDroite");
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                _perso.Play("gGauche");
-            }
-            //Squelette
+            /*//Squelette
             if (_skeletonVitesse != 0)
             {
                 _skeleton.Play("squeletteEnMarche");
@@ -303,36 +289,38 @@ namespace SAE
             {
                 _ghost.Play("fantomeEnVol");
             }
-            _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
-
+            */
             _tiledMapRenderer.Update(gameTime);
 
-            //Déplacement
+            //Déplacement et Animation
             
             _keyboardState = Keyboard.GetState();
             if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
             {
-                //animation droite
-                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
+                _perso.Play("gDroite");
+                _sensPersoHorizontal = 1;
             }  
             //flèche gauche
             if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
             {
-                //animation gauche
-                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
+                _perso.Play("gGauche");
+                _sensPersoHorizontal = -1;
             }
             //flèche haut
             if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
             {
-                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
+                _perso.Play("gHaut");
+                _sensPersoVertical = -1;
             }
             //flèche bas
             if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
             {
-                //animation bas
-                _positionPerso += _sensPersoVertical * _vitessePerso * deltaTime;
+                _perso.Play("gBas");
+                _sensPersoVertical = 1;
             }
+            _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+
             //Camera
             /*_camera.LookAt(_positionPerso);
             //_cameraPosition = _positionPerso;
@@ -341,8 +329,8 @@ namespace SAE
 
             _bat.Update(deltaTime);
             _skeleton.Update(deltaTime);
-            _perso.Update(deltaTime);
             _ghost.Update(deltaTime);*/
+            _perso.Update(deltaTime);
 
         }
         public override void Draw(GameTime gameTime)
@@ -352,7 +340,7 @@ namespace SAE
            _myGame.SpriteBatch.Begin();
 
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(150, 650, 30, 30), Color.White);
-            //_myGame.SpriteBatch.Draw(_perso, _positionPerso);
+            _myGame.SpriteBatch.Draw(_perso, _positionPerso);
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
             //_myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
