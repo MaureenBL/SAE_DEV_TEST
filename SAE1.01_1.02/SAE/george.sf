@@ -1,8 +1,8 @@
 {
   "textureAtlas": {
-    "texture": "P:\\SAE 1.01 1.02\\Personnage\\george.png",
-    "regionWidth": 47,
-    "regionHeight": 47
+    "texture": "george.png",
+    "regionWidth": 48,
+    "regionHeight": 48
   },
   "cycles": {
     "gBas": {
@@ -22,6 +22,26 @@
     },
     "gDroite": {
       "frames": [3,7,11,15],
+      "isLooping": false,
+      "frameDuration": 0.15
+    },
+	"gBasImo": {
+      "frames": [0],
+      "isLooping": false,
+      "frameDuration": 0.15
+    },
+    "gGaucheImo": {
+      "frames": [1],
+      "isLooping": false,
+      "frameDuration": 0.15
+    },
+    "gHautImo": {
+      "frames": [2],
+      "isLooping": false,
+      "frameDuration": 0.15
+    },
+    "gDroiteImo": {
+      "frames": [3],
       "isLooping": false,
       "frameDuration": 0.15
     }
