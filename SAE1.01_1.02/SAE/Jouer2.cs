@@ -351,7 +351,11 @@ namespace SAE
             _tiledMapRenderer.Draw();
            _myGame.SpriteBatch.Begin();
 
-            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(150, 650, 30, 30), Color.White);
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(770, 570, 25, 25), Color.White); // 2: piece rouge - bas
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(380, 120, 25, 25), Color.White); // 3: piece bleu - milieu
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(660, 245, 25, 25), Color.White); // 4: piece verte - haut / angle
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(950, 20, 25, 25), Color.White); // 5: piece rouge - angle en haut à droite
             //_myGame.SpriteBatch.Draw(_perso, _positionPerso);
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
