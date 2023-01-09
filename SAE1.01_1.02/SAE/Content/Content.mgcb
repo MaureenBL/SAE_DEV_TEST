@@ -109,7 +109,7 @@
 /processorParam:TextureFormat=Color
 /build:esc.jpg
 
-#begin fin.jpg
+#begin fin.jpeg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -119,7 +119,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:fin.jpg
+/build:fin.jpeg
 
 #begin flecheBas.png
 /importer:TextureImporter

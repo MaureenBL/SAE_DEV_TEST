@@ -351,7 +351,7 @@ namespace SAE
             _tiledMapRenderer.Draw();
            _myGame.SpriteBatch.Begin();
 
-            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(200, 600, 50, 50), Color.White);
+            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(150, 650, 30, 30), Color.White);
             //_myGame.SpriteBatch.Draw(_perso, _positionPerso);
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);

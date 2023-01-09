@@ -61,13 +61,14 @@ namespace SAE
             _positionTitre = new Vector2(350, 45);
 
             _regle = "Woaw ! Je n'en attendais pas moins de toi. Tu as eu toutes \n les clefs  et tu ne t'aies pas " +
-                "fais avoir  par les monstres. ";
+                "fais avoir  par les monstres. \n Bravo tu es sorti sans soucis. \n Tu peux choisir de rejouer ou bien de quitter." +
+                "\n            Bonne continuation !";
             _policeRegle = Content.Load<SpriteFont>("End");
-            _positionRegle = new Vector2(2, 350);
+            _positionRegle = new Vector2(2, 300);
 
             _congr = " Congratulations !! ";
             _policeCongr = Content.Load<SpriteFont>("End");
-            _positionCongr = new Vector2(345, 270);
+            _positionCongr = new Vector2(325, 180);
             base.Initialize();
 
             //Retour
@@ -100,7 +101,7 @@ namespace SAE
             _myGame.SpriteBatch.Draw(_textureFin, new Rectangle(0, 0, 1000, 700), Color.White);
             _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
             _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.LightBlue);
-            _myGame.SpriteBatch.DrawString(_policeCongr, $"{_congr}", _positionCongr, Color.LightBlue);
+            _myGame.SpriteBatch.DrawString(_policeCongr, $"{_congr}", _positionCongr, Color.White);
 
             _myGame.SpriteBatch.DrawString(_policeRejouer, $"{_rejouer}", _positionRejouer, Color.White);
             _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
