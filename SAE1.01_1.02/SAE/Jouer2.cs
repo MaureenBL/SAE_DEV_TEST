@@ -217,6 +217,11 @@ namespace SAE
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Game.Exit();
 
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float walkSpeed = deltaTime * _vitessePerso; // Vitesse de déplacement du sprite
+            _keyboardState = Keyboard.GetState();
+
+
             //Déplacement et Animation + Collision
             
             _keyboardState = Keyboard.GetState();
@@ -323,9 +328,6 @@ namespace SAE
             _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
             
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            float walkSpeed = deltaTime * _vitessePerso; // Vitesse de déplacement du sprite
-            _keyboardState = Keyboard.GetState();
             //COMPORTEMENT
 
             //Fantome
