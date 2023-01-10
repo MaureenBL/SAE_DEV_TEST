@@ -38,8 +38,7 @@ namespace SAE
         private KeyboardState _keyboardState;
         //camera
         private OrthographicCamera _camera;
-        private Vector2 _cameraPosition;
-        private Vector2 _cameraOrigin;
+        
 
         //PERSONNAGE - GEORGE
         private AnimatedSprite _perso;
@@ -157,6 +156,7 @@ namespace SAE
             _policeRegle = Content.Load<SpriteFont>("regles");
             _positionRegle = new Vector2(350, 250);
 
+            //Perso
             _sensPersoHorizontal = 0;
             _sensPersoVertical = 0;
             _vitessePerso = VITESSE_PERSO;
@@ -165,6 +165,7 @@ namespace SAE
             _vie = 3;
             _policeVie = Content.Load<SpriteFont>("Font");
             _positionVie = new Vector2(15, 50);
+            _positionPerso = new Vector2(400, TAILLE_FENETRE_H - 2 * HAUTEUR_PERSO);
 
 
             // TODO: Add your initialization logic here
@@ -194,6 +195,8 @@ namespace SAE
             //Chargement de la map
             _tiledMap = Content.Load<TiledMap>("map/mapGenerale");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
+            //Couche collision de la map
+            mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("murs");
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(persoTexture);
@@ -217,8 +220,9 @@ namespace SAE
 
 
             
-
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float walkSpeed = deltaTime * _vitessePerso; // Vitesse de déplacement du sprite
+            _keyboardState = Keyboard.GetState();
             //COMPORTEMENT
 
             //Fantome
@@ -228,7 +232,7 @@ namespace SAE
                 _ghostAttaque = true;
                 //effacer la zone dans le tableau
             }*/
-            
+
             //Le héros se défend
             /*if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
             {
@@ -246,15 +250,15 @@ namespace SAE
                 _nbDebattage = 0;
             }*/
 
-          /*  //le fantome est en train d'attaquer
-            do
-            {
-                _ghost.Play("fantomeInvoque");
-                _ghostPosition = _positionPerso;
-                _vitessePerso = 0;
-            }
-            while (_ghostAttaque == true);
-          */
+            /*  //le fantome est en train d'attaquer
+              do
+              {
+                  _ghost.Play("fantomeInvoque");
+                  _ghostPosition = _positionPerso;
+                  _vitessePerso = 0;
+              }
+              while (_ghostAttaque == true);
+            */
 
 
             //Squelette
@@ -361,7 +365,7 @@ namespace SAE
             */
             _tiledMapRenderer.Update(gameTime);
 
-            //Déplacement et Animation
+            //Déplacement et Animation + Collision
             
             _keyboardState = Keyboard.GetState();
             if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
@@ -370,20 +374,55 @@ namespace SAE
                 {
                     _perso.Play("gDroite");
                     _sensPersoHorizontal = 1;
-                    _sensPersoVertical = 0;
+                    ushort tx1 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                    ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty2 = (ushort)((_positionPerso.Y + (HAUTEUR_PERSO / 2)) / _tiledMap.TileHeight);
+                    ushort tx3 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty3 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
+                    //animation = "walkNorth";
+                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
+                        _positionPerso.X += walkSpeed;
+                    else
+                    {
+                        _positionPerso.X -= 1;
+                    }
                 }
                 else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
                 {
                     _perso.Play("gGauche");
                     _sensPersoHorizontal = -1;
-                    _sensPersoVertical = 0;
+                    ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                    ushort tx2 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty2 = (ushort)((_positionPerso.Y + (HAUTEUR_PERSO / 2)) / _tiledMap.TileHeight);
+                    ushort tx3 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty3 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
+                    //animation = "walkNorth";
+                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
+                        _positionPerso.X -= walkSpeed;
+                    else
+                    {
+                        _positionPerso.X += 1;
+
+                    }
                 }
                 //flèche haut
                 else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
                 {
                     _perso.Play("gHaut");
                     _sensPersoVertical = -1;
-                    _sensPersoHorizontal = 0;
+                    ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                    ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty2 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                    //animation = "walkNorth";
+                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
+                        _positionPerso.Y -= walkSpeed;
+                    else
+                    {
+                        _positionPerso.Y += 1;
+                    }
                 }
                 //flèche bas
                 else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
@@ -391,6 +430,19 @@ namespace SAE
                     _perso.Play("gBas");
                     _sensPersoVertical = 1;
                     _sensPersoHorizontal = 0;
+                    _sensPersoVertical = 1;
+
+                    ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty1 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
+                    ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty2 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
+                    //animation = "walkNorth";
+                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
+                        _positionPerso.Y += walkSpeed;
+                    else
+                    {
+                        _positionPerso.Y -= 1;
+                    }
                 }
             }
             else
@@ -419,14 +471,13 @@ namespace SAE
             _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
             //Camera
-            /*_camera.LookAt(_positionPerso);
-            //_cameraPosition = _positionPerso;
-            const float movementSpeed = 200;
-            _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
+            _camera.LookAt(_positionPerso);        
+            
+            
 
             _bat.Update(deltaTime);
             _skeleton.Update(deltaTime);
-            _ghost.Update(deltaTime);*/
+            _ghost.Update(deltaTime);
             _perso.Update(deltaTime);
 
             //SCORE
@@ -455,8 +506,10 @@ namespace SAE
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
-            _tiledMapRenderer.Draw();
-           _myGame.SpriteBatch.Begin();
+            //_tiledMapRenderer.Draw();
+            _tiledMapRenderer.Draw(_camera.GetViewMatrix());
+            var transformMatrix = _camera.GetViewMatrix();
+            _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);
 
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(770, 570, 25, 25), Color.White); // 2: piece rouge - bas
@@ -508,27 +561,23 @@ namespace SAE
             }
             return false;
         }*/
-        private Vector2 GetMovementDirection()
+
+        //méthode détection de collision avec la map
+        private bool IsCollision(ushort x, ushort y)
         {
-            var movementDirection = Vector2.Zero;
-            var state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Down))
+
+            TiledMapTile? tile;
+            if (mapLayer.TryGetTile(x, y, out tile) == false)
             {
-                movementDirection += Vector2.UnitY;
+                return false;
             }
-            if (state.IsKeyDown(Keys.Up))
+            if (!tile.Value.IsBlank)
             {
-                movementDirection -= Vector2.UnitY;
+
+
+                return true;
             }
-            if (state.IsKeyDown(Keys.Left))
-            {
-                movementDirection -= Vector2.UnitX;
-            }
-            if (state.IsKeyDown(Keys.Right))
-            {
-                movementDirection += Vector2.UnitX;
-            }
-            return movementDirection;
+            return false;
         }
     }
 }
