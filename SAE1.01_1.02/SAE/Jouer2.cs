@@ -185,14 +185,13 @@ namespace SAE
             _batVitesse = 0;
             _ghostVitesse = 0;
             _skeletonVitesse = 25;
-
             //FENETRE
             /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-            _graphics.ApplyChanges();
+            _graphics.ApplyChanges();*/
             //camera
-            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            _camera = new OrthographicCamera(viewportadapter);*/
+            //var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            _camera = new OrthographicCamera(viewportadapter);
 
             _ghostAttaque = false;
             _positionPerso = new Vector2(420, 670);
@@ -218,9 +217,9 @@ namespace SAE
             /*SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
             _bat = new AnimatedSprite(batTexture);
             SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
-            _skeleton = new AnimatedSprite(skeletonTexture);
+            _skeleton = new AnimatedSprite(skeletonTexture);*/
             SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
-            _ghost = new AnimatedSprite(ghostTexture);*/
+            _ghost = new AnimatedSprite(ghostTexture);
 
             base.LoadContent(); 
         }
@@ -344,10 +343,10 @@ namespace SAE
 
             //Fantome
             //le fantome attaque
-            /*if(CollisionJoueur(avec zone))
+            /*if ((Keyboard.GetState().IsKeyDown(Keys.G)) && _ghostAttaque==false)
             {
                 _ghostAttaque = true;
-                //effacer la zone dans le tableau
+               //effacer la zone dans le tableau
             }*/
 
             //Le héros se défend
@@ -355,11 +354,14 @@ namespace SAE
             {
                 espaceEtat = true;
                 _nbDebattage++;
-            }
-            if (!(Keyboard.GetState().IsKeyDown(Keys.Space)))
+            }*/
+            
+            /*if (!(_keyboardState.IsKeyDown(Keys.Space)))
+            {
                 espaceEtat = false;
+            }
 
-            if(_nbDebattage>=25)
+            if(_nbDebattage>=25 && _ghostAttaque==true)
             {
                 _ghostAttaque = false;
                 _vitessePerso = VITESSE_PERSO;
@@ -367,15 +369,14 @@ namespace SAE
                 _nbDebattage = 0;
             }*/
 
-            /*  //le fantome est en train d'attaquer
-              do
-              {
-                  _ghost.Play("fantomeInvoque");
-                  _ghostPosition = _positionPerso;
-                  _vitessePerso = 0;
-              }
-              while (_ghostAttaque == true);
-            */
+          //le fantome est en train d'attaquer
+            /*do
+            {
+                _ghost.Play("fantomeInvoque");
+                _ghostPosition = _positionPerso;
+                _vitessePerso = 0;
+            }
+            while (_ghostAttaque == true);*/
 
 
             //Squelette
@@ -472,21 +473,21 @@ namespace SAE
             else
             {
                 _bat.Play("batVolFace");
-            }
-
-            //Fantome
-            if (_ghostOrientationX != 0 || _ghostOrientationY != 0)
-            {
-                _ghost.Play("fantomeEnVol");
-            }
-            */
+            }*/
             _tiledMapRenderer.Update(gameTime);
 
 
             //Camera
-          //  _camera.LookAt(_positionPerso);        
-            
-            
+            //  _camera.LookAt(_positionPerso);        
+
+            _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+
+            //Camera
+            /*_camera.LookAt(_positionPerso);
+            //_cameraPosition = _positionPerso;
+            const float movementSpeed = 200;
+            _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
 
          //   _bat.Update(deltaTime);
            // _skeleton.Update(deltaTime);
@@ -607,7 +608,7 @@ namespace SAE
 
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
-            //_myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
+            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
             _myGame.SpriteBatch.End();
         }
         public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
@@ -631,6 +632,7 @@ namespace SAE
             }
             return false;
         }*/
+        
 
         //méthode détection de collision avec la map
         private bool IsCollision(ushort x, ushort y)
