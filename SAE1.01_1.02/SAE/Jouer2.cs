@@ -110,6 +110,7 @@ namespace SAE
         private Rectangle _positionCle3;
         private Rectangle _positionCle4;
         private Rectangle _positionCle5;
+        private Rectangle collisionRect;
 
         //Game Over
         private string _gameOver;
@@ -127,6 +128,8 @@ namespace SAE
         private Texture2D _textureRejouer;
         private Texture2D _textureEsc;
         private Texture2D _textureFin;
+
+        bool persoCle = false;
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
@@ -195,6 +198,10 @@ namespace SAE
 
             _ghostAttaque = false;
             _positionPerso = new Vector2(420, 670);
+
+
+            
+
             base.Initialize();
         }
         public override void LoadContent()
@@ -388,174 +395,173 @@ namespace SAE
                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
 
-                //COMPORTEMENT
+            //pour collision clé
+            collisionRect = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO + 1, HAUTEUR_PERSO + 1);     
 
-                //Fantome
-                //le fantome attaque
-                /*if ((Keyboard.GetState().IsKeyDown(Keys.G)) && _ghostAttaque==false)
-                {
-                    _ghostAttaque = true;
-                   //effacer la zone dans le tableau
-                }*/
+            //COMPORTEMENT
 
-                //Le héros se défend
-                /*if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
-                {
-                    espaceEtat = true;
-                    _nbDebattage++;
-                }*/
+            //Fantome
+            //le fantome attaque
+            /*if ((Keyboard.GetState().IsKeyDown(Keys.G)) && _ghostAttaque==false)
+            {
+                _ghostAttaque = true;
+               //effacer la zone dans le tableau
+            }*/
 
-                /*if (!(_keyboardState.IsKeyDown(Keys.Space)))
-                {
-                    espaceEtat = false;
-                }
+            //Le héros se défend
+            /*if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
+            {
+                espaceEtat = true;
+                _nbDebattage++;
+            }*/
 
-                if(_nbDebattage>=25 && _ghostAttaque==true)
-                {
-                    _ghostAttaque = false;
-                    _vitessePerso = VITESSE_PERSO;
-                    _ghost.Play("fantomeMort");
-                    _nbDebattage = 0;
-                }*/
+            /*if (!(_keyboardState.IsKeyDown(Keys.Space)))
+            {
+                espaceEtat = false;
+            }
 
-                //le fantome est en train d'attaquer
-                /*do
-                {
-                    _ghost.Play("fantomeInvoque");
-                    _ghostPosition = _positionPerso;
-                    _vitessePerso = 0;
-                }
-                while (_ghostAttaque == true);*/
+            if(_nbDebattage>=25 && _ghostAttaque==true)
+            {
+                _ghostAttaque = false;
+                _vitessePerso = VITESSE_PERSO;
+                _ghost.Play("fantomeMort");
+                _nbDebattage = 0;
+            }*/
+
+            //le fantome est en train d'attaquer
+            /*do
+            {
+                _ghost.Play("fantomeInvoque");
+                _ghostPosition = _positionPerso;
+                _vitessePerso = 0;
+            }
+            while (_ghostAttaque == true);*/
 
 
-                //Squelette
-                /* if(VoirJoueur())
-                 {
-                      if(_skeletonPosition.X < _positionPerso.X)
-                      {
-                          _skeletonOrientationX = 1;
-                      }
-                      else
-                      {
-                          _skeletonOrientationX = 1;
-                      }
-                      if(_skeletonPosition.Y < _positionPerso.Y)
-                      {
-                          _skeletonOrientationY = 1;
-                      }
-                      else
-                      {
-                          _skeletonOrientationY = -1;
-                      }
-                  _vitesseSkeleton = 250;
-                 }
-                 else
-                 {
-                      _vitesseSkeleton = 100;
-                      _skeletonOrientationY = 0;
+            //Squelette
+            /* if(VoirJoueur())
+             {
+                  if(_skeletonPosition.X < _positionPerso.X)
+                  {
                       _skeletonOrientationX = 1;
-                    if(Collision avec un mur de gauche)
-                        _skeletonOrientationX = 1;
-                    if(Collision avec un bur de droite)
-                        _skeletonOrientationX = -1;
-                  }*/
-                //Chauve-souris
-                /*if (CollisionJoueur(_batZone))
+                  }
+                  else
+                  {
+                      _skeletonOrientationX = 1;
+                  }
+                  if(_skeletonPosition.Y < _positionPerso.Y)
+                  {
+                      _skeletonOrientationY = 1;
+                  }
+                  else
+                  {
+                      _skeletonOrientationY = -1;
+                  }
+              _vitesseSkeleton = 250;
+             }
+             else
+             {
+                  _vitesseSkeleton = 100;
+                  _skeletonOrientationY = 0;
+                  _skeletonOrientationX = 1;
+                if(Collision avec un mur de gauche)
+                    _skeletonOrientationX = 1;
+                if(Collision avec un bur de droite)
+                    _skeletonOrientationX = -1;
+              }*/
+            //Chauve-souris
+            /*if (CollisionJoueur(_batZone))
+            {
+                if (_batPosition.X < _positionPerso.X)
                 {
-                    if (_batPosition.X < _positionPerso.X)
-                    {
-                        _batOrientationX = 1;
-                    }
-                    else
-                    {
-                        _batOrientationX = 1;
-                    }
-                    if (_batPosition.Y < _positionPerso.Y)
-                    {
-                        _batOrientationY = 1;
-                    }
-                    else
-                    {
-                        _batOrientationY = -1;
-                    }
-                    _batSkeleton = 250;
+                    _batOrientationX = 1;
                 }
                 else
                 {
-                    //retourner au centre
+                    _batOrientationX = 1;
+                }
+                if (_batPosition.Y < _positionPerso.Y)
+                {
+                    _batOrientationY = 1;
+                }
+                else
+                {
+                    _batOrientationY = -1;
+                }
+                _batSkeleton = 250;
+            }
+            else
+            {
+                //retourner au centre
 
-                }*/
+            }*/
 
 
-                _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
+            _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
                 _skeletonPosition.Y += _skeletonOrientationY * _skeletonVitesse * deltaTime;
                 _batPosition.X += _batOrientationX * _batVitesse * deltaTime;
                 _batPosition.Y += _batOrientationY * _batVitesse * deltaTime;
 
-                //ANIMATION
-                //Personnage
-                /*//Squelette
-                if (_skeletonVitesse != 0)
-                {
-                    _skeleton.Play("squeletteEnMarche");
-                }
-                else
-                {
-                    _skeleton.Play("squeletteEnPose");
-                }
-                if (CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR))
-                {
-                    _vie--;
-                    _skeleton.Play("squeletteAttaque");
-                }*/
+            //ANIMATION
+            //Personnage
+            /*//Squelette
+            if (_skeletonVitesse != 0)
+            {
+                _skeleton.Play("squeletteEnMarche");
+            }
+            else
+            {
+                _skeleton.Play("squeletteEnPose");
+            }
+            if (CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR))
+            {
+                _vie--;
+                _skeleton.Play("squeletteAttaque");
+            }*/
 
-
-                //Chauve-souris
-                /* if (_batOrientationY == 1)
-                 {
-                     _bat.Play("batVolFace");
-                 }
-                 else if (_batOrientationY == -1)
-                 {
-                     _bat.Play("batVolDos");
-                 }
-                 else
-                 {
-                     _bat.Play("batVolFace");
-                 }*/
-                _tiledMapRenderer.Update(gameTime);
+            //Chauve-souris
+            /* if (_batOrientationY == 1)
+             {
+                 _bat.Play("batVolFace");
+             }
+             else if (_batOrientationY == -1)
+             {
+                 _bat.Play("batVolDos");
+             }
+             else
+             {
+                 _bat.Play("batVolFace");
+             }*/
+            _tiledMapRenderer.Update(gameTime);
                 _perso.Update(gameTime);
 
                 //Camera
                 //  _camera.LookAt(_positionPerso);        
 
-                _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+            //Camera
+            /*_camera.LookAt(_positionPerso);
+            //_cameraPosition = _positionPerso;
+            const float movementSpeed = 200;
+            _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
 
-                //Camera
-                /*_camera.LookAt(_positionPerso);
-                //_cameraPosition = _positionPerso;
-                const float movementSpeed = 200;
-                _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
+         //   _bat.Update(deltaTime);
+           // _skeleton.Update(deltaTime);
+            //_ghost.Update(deltaTime);
+            _perso.Update(deltaTime);
+            */
+            //SCORE
+            if (pers)
+            {
+                _score += 1;    
+            }
 
-             //   _bat.Update(deltaTime);
-               // _skeleton.Update(deltaTime);
-                //_ghost.Update(deltaTime);
-                _perso.Update(deltaTime);
+            //Vie
+            /*if (/*position personnage / collision monstres)
+            {
+                _vie -= 1;
+            }*/
 
-                //SCORE
-                /*if (/*position personnage / collision clép)
-                {
-                    _score += 1;
-                }*/
-
-                //Vie
-                /*if (/*position personnage / collision monstres)
-                {
-                    _vie -= 1;
-                }*/
-
-                if (_vie == 0)
+            if (_vie == 0)
                 {
                     this.Initialize();
                 }
@@ -575,26 +581,26 @@ namespace SAE
                _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);*/
 
             _myGame.SpriteBatch.Begin();
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche
+            _myGame.SpriteBatch.Draw(_perso, _positionPerso);
+           // _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
             _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
-            _myGame.SpriteBatch.Draw(_perso, _positionPerso);
 
             //Affichage clé 1
-            /*
-            if(_positionPerso = _positionCle1)
+            
+            if (_positionCle1 == collisionRect)
             {
                 _score += 1;
-                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+                
             }
             else
             {
                 _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
-            }
+            }/*
             //Affichage clé 2
             if()
             {
@@ -638,7 +644,7 @@ namespace SAE
 
 
             //Affichage vie
-            if(_vie == 0)
+            if (_vie == 0)
             {
                 _myGame.SpriteBatch.DrawString(_policeGameOver, $"{_gameOver}", _positionGameOver, Color.White);
                 _myGame.SpriteBatch.DrawString(_policeRejouer, $"{_rejouer}", _positionRejouer, Color.White);
