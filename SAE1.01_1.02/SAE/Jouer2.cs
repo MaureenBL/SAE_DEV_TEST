@@ -135,7 +135,13 @@ namespace SAE
 
         public override void Initialize()
         {
-            _cle = true;
+
+            //FENETRE
+            _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+            _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
+            _graphics.ApplyChanges();
+
+
 
             //game over
             _gameOver = "Game Over";
@@ -159,6 +165,7 @@ namespace SAE
             _positionRegle = new Vector2(350, 250);
 
             //Cle
+            _cle = true;
             _rectCle = new Rectangle[5];
             _rectCle = new Rectangle[] {new Rectangle(45, 670, 25, 25),new Rectangle(770, 570, 25, 25),new Rectangle(380, 120, 25, 25),new Rectangle(660, 245, 25, 25),new Rectangle(950, 20, 25, 25) };
 
@@ -721,6 +728,22 @@ namespace SAE
             return rectJoueur.Intersects(rectCle[i]);
         }*/
     
+     private bool IsCollision(ushort x, ushort y)
+      {
+
+          TiledMapTile? tile;
+          if (mapLayer.TryGetTile(x, y, out tile) == false)
+          {
+              return false;
+          }
+          if (!tile.Value.IsBlank)
+          {
+
+
+              return true;
+          }
+          return false;
+      }
 
     }
 
@@ -742,21 +765,5 @@ namespace SAE
 
 
     //méthode détection de collision avec la map
-    /*  private bool IsCollision(ushort x, ushort y)
-      {
-
-          TiledMapTile? tile;
-          if (mapLayer.TryGetTile(x, y, out tile) == false)
-          {
-              return false;
-          }
-          if (!tile.Value.IsBlank)
-          {
-
-
-              return true;
-          }
-          return false;
-      }*/
 }
 
