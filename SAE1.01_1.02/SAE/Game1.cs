@@ -26,8 +26,8 @@ namespace SAE
         public const int HAUTEUR_PERSO = 154;
 
         //TAILLE FENETRE
-        public const int TAILLE_FENETRE_L = 950;
-        public const int TAILLE_FENETRE_H = 700;
+        public const int TAILLE_FENETRE_L = 1120;
+        public const int TAILLE_FENETRE_H = 800;
 
 
         //ECRAN ACCUEIL
