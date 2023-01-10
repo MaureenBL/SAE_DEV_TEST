@@ -177,7 +177,8 @@ namespace SAE
             }
             if (Keyboard.GetState().IsKeyDown(Keys.G))
             {
-                _screenManager.LoadScreen(_jeuTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
+                _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
+                MediaPlayer.Play(_song);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.C))
             {
@@ -185,7 +186,8 @@ namespace SAE
             }
             if (Keyboard.GetState().IsKeyDown(Keys.F))
             {
-                _screenManager.LoadScreen(_finTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));                
+                _screenManager.LoadScreen(_finTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
+                MediaPlayer.Stop();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
