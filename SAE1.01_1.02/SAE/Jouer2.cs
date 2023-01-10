@@ -104,11 +104,7 @@ namespace SAE
 
         //CLE
         private Texture2D _textureCle;
-        private Rectangle _positionCle1;
-        private Rectangle _positionCle2;
-        private Rectangle _positionCle3;
-        private Rectangle _positionCle4;
-        private Rectangle _positionCle5;
+        private Rectangle[] _rectCle;
         private bool _cle;
 
         //Game Over
@@ -163,15 +159,11 @@ namespace SAE
             _positionRegle = new Vector2(350, 250);
 
             //Cle
-            _positionCle1 = new Rectangle(45, 670, 25, 25);
-            _positionCle2 = new Rectangle(770, 570, 25, 25);
-            _positionCle3 = new Rectangle(380, 120, 25, 25);
-            _positionCle4 = new Rectangle(660, 245, 25, 25);
-            _positionCle5 = new Rectangle(950, 20, 25, 25);
-
+            _rectCle = new Rectangle[5];
+            _rectCle = new Rectangle[] {new Rectangle(45, 670, 25, 25),new Rectangle(770, 570, 25, 25),new Rectangle(380, 120, 25, 25),new Rectangle(660, 245, 25, 25),new Rectangle(950, 20, 25, 25) };
 
             
-            //Fausse Cle
+            //Fausse Cle;
 
 
             //Perso
@@ -558,35 +550,14 @@ namespace SAE
             
             
             //SCORE
-            if (CollisionCle1())
+            for (int i =0; i < _rectCle.Length; i++)
             {
-                _score += 1;
-                _positionCle1 = new Rectangle(0, 0, 0, 0);
-                _cle = false;
-            }
-          if (CollisionCle2())
-            {
-                _score += 1;
-                _positionCle2 = new Rectangle(0, 0, 0, 0);
-                _cle = false;
-            } 
-            if (CollisionCle3())
-            {
-                _score += 1;
-                _positionCle3 = new Rectangle(0, 0, 0, 0);
-                _cle = false;
-            } 
-            if (CollisionCle4())
-            {
-                _score += 1;
-                _positionCle4 = new Rectangle(0, 0, 0, 0);
-                _cle = false;
-            } 
-            if (CollisionCle5())
-            {
-                _score += 1;
-                _positionCle5 = new Rectangle(0, 0, 0, 0);
-                _cle = false;
+                Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+                if (rectJoueur.Intersects(_rectCle[i]))
+                {
+                    _cle = false;
+                    _score += 1;                    
+                }
             }
 
             //Vie
@@ -616,16 +587,24 @@ namespace SAE
 
             _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
-            /* _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche*/
+            /* _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite 
+            _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite */
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
             _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
 
-            //Affichage clé 1
+            for(int i = 0; i<_rectCle.Length; i++)
+            {
+                if(_cle == true)
+                {
+                    _myGame.SpriteBatch.Draw(_textureCle, _rectCle[i], Color.White); 
+                }
+            }
 
+            //Affichage clé 1
+/*
             if(_cle == true)
             {
                 _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
@@ -634,7 +613,7 @@ namespace SAE
                 _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
                 _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
             }
-
+*/
             /*
             //Affichage clé 2
             if()
@@ -720,37 +699,17 @@ namespace SAE
             return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleSkeleton);
         }
 
-        public bool CollisionCle1()
+        /*public bool CollisionCle()
         {
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            Rectangle rectCle1 = _positionCle1;
-            return rectJoueur.Intersects(rectCle1);
-        }
-        public bool CollisionCle2()
-        {
-            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            Rectangle rectCle2 = _positionCle2;
-            return rectJoueur.Intersects(rectCle2);
-        }
-        public bool CollisionCle3()
-        {
-            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            Rectangle rectCle3 = _positionCle3;
-            return rectJoueur.Intersects(rectCle3);
-        }
-        public bool CollisionCle4()
-        {
-            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            Rectangle rectCle4 = _positionCle4;
-            return rectJoueur.Intersects(rectCle4);
-        }
-        public bool CollisionCle5()
-        {
-            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            Rectangle rectCle5 = _positionCle5;
-            return rectJoueur.Intersects(rectCle5);
-        }
-
+            for(int i = 0; i<_rectCle.Length; i++)
+            {
+                Rectangle rectCle = _rectCle[i];
+               
+            }
+            return rectJoueur.Intersects(rectCle[i]);
+        }*/
+    
 
     }
 
