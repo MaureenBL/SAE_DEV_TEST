@@ -179,7 +179,7 @@ namespace SAE
             _graphics.ApplyChanges();*/
             //camera
             //var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            _camera = new OrthographicCamera(viewportadapter);
+            //_camera = new OrthographicCamera(viewportadapter);
 
             _ghostAttaque = false;
             _positionPerso = new Vector2(420, 670);
@@ -224,7 +224,7 @@ namespace SAE
             //Déplacement et Animation + Collision
             
             _keyboardState = Keyboard.GetState();
-            if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
+            /*if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
             {
                 if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
                 {
@@ -321,190 +321,239 @@ namespace SAE
                 }
             _sensPersoVertical = 0;
              _sensPersoHorizontal = 0;
-            }
-
-            _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
-
-            
-            //COMPORTEMENT
-
-            //Fantome
-            //le fantome attaque
-            /*if ((Keyboard.GetState().IsKeyDown(Keys.G)) && _ghostAttaque==false)
-            {
-                _ghostAttaque = true;
-               //effacer la zone dans le tableau
             }*/
-
-            //Le héros se défend
-            /*if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
+            if (_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
             {
-                espaceEtat = true;
-                _nbDebattage++;
-            }*/
-            
-            /*if (!(_keyboardState.IsKeyDown(Keys.Space)))
-            {
-                espaceEtat = false;
-            }
-
-            if(_nbDebattage>=25 && _ghostAttaque==true)
-            {
-                _ghostAttaque = false;
-                _vitessePerso = VITESSE_PERSO;
-                _ghost.Play("fantomeMort");
-                _nbDebattage = 0;
-            }*/
-
-          //le fantome est en train d'attaquer
-            /*do
-            {
-                _ghost.Play("fantomeInvoque");
-                _ghostPosition = _positionPerso;
-                _vitessePerso = 0;
-            }
-            while (_ghostAttaque == true);*/
-
-
-            //Squelette
-            /* if(VoirJoueur())
-             {
-                  if(_skeletonPosition.X < _positionPerso.X)
-                  {
-                      _skeletonOrientationX = 1;
-                  }
-                  else
-                  {
-                      _skeletonOrientationX = 1;
-                  }
-                  if(_skeletonPosition.Y < _positionPerso.Y)
-                  {
-                      _skeletonOrientationY = 1;
-                  }
-                  else
-                  {
-                      _skeletonOrientationY = -1;
-                  }
-              _vitesseSkeleton = 250;
-             }
-             else
-             {
-                  _vitesseSkeleton = 100;
-                  _skeletonOrientationY = 0;
-                  _skeletonOrientationX = 1;
-                if(Collision avec un mur de gauche)
-                    _skeletonOrientationX = 1;
-                if(Collision avec un bur de droite)
-                    _skeletonOrientationX = -1;
-              }*/
-            //Chauve-souris
-            /*if (CollisionJoueur(_batZone))
-            {
-                if (_batPosition.X < _positionPerso.X)
+                if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
                 {
-                    _batOrientationX = 1;
+                    _perso.Play("gGauche");
+                    _sensPersoHorizontal = -1;
+                    _sensPersoVertical = 0;
+                }
+                //flèche haut
+                else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+                {
+                    _perso.Play("gHaut");
+                    _sensPersoVertical = -1;
+                    _sensPersoHorizontal = 0;
+                }
+                //flèche bas
+                else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+                {
+                    _perso.Play("gBas");
+                    _sensPersoVertical = 1;
+                    _sensPersoHorizontal = 0;
+                }
+                else if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+                {
+                    _perso.Play("gDroite");
+                    _sensPersoVertical = 0;
+                    _sensPersoHorizontal = 1;
+                }
+            }
+            else
+            {
+                if (_sensPersoHorizontal == 1)
+                {
+                    _perso.Play("gDroiteImo");
+                }
+                else if (_sensPersoHorizontal == -1)
+                {
+                    _perso.Play("gGaucheImo");
+                }
+                else if (_sensPersoVertical == 1)
+                {
+                    _perso.Play("gBasImo");
+                }
+                else if (_sensPersoVertical == -1)
+                {
+                    _perso.Play("gHautImo");
+                }
+                _sensPersoVertical = 0;
+                _sensPersoHorizontal = 0;
+            }
+                _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+
+
+                //COMPORTEMENT
+
+                //Fantome
+                //le fantome attaque
+                /*if ((Keyboard.GetState().IsKeyDown(Keys.G)) && _ghostAttaque==false)
+                {
+                    _ghostAttaque = true;
+                   //effacer la zone dans le tableau
+                }*/
+
+                //Le héros se défend
+                /*if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
+                {
+                    espaceEtat = true;
+                    _nbDebattage++;
+                }*/
+
+                /*if (!(_keyboardState.IsKeyDown(Keys.Space)))
+                {
+                    espaceEtat = false;
+                }
+
+                if(_nbDebattage>=25 && _ghostAttaque==true)
+                {
+                    _ghostAttaque = false;
+                    _vitessePerso = VITESSE_PERSO;
+                    _ghost.Play("fantomeMort");
+                    _nbDebattage = 0;
+                }*/
+
+                //le fantome est en train d'attaquer
+                /*do
+                {
+                    _ghost.Play("fantomeInvoque");
+                    _ghostPosition = _positionPerso;
+                    _vitessePerso = 0;
+                }
+                while (_ghostAttaque == true);*/
+
+
+                //Squelette
+                /* if(VoirJoueur())
+                 {
+                      if(_skeletonPosition.X < _positionPerso.X)
+                      {
+                          _skeletonOrientationX = 1;
+                      }
+                      else
+                      {
+                          _skeletonOrientationX = 1;
+                      }
+                      if(_skeletonPosition.Y < _positionPerso.Y)
+                      {
+                          _skeletonOrientationY = 1;
+                      }
+                      else
+                      {
+                          _skeletonOrientationY = -1;
+                      }
+                  _vitesseSkeleton = 250;
+                 }
+                 else
+                 {
+                      _vitesseSkeleton = 100;
+                      _skeletonOrientationY = 0;
+                      _skeletonOrientationX = 1;
+                    if(Collision avec un mur de gauche)
+                        _skeletonOrientationX = 1;
+                    if(Collision avec un bur de droite)
+                        _skeletonOrientationX = -1;
+                  }*/
+                //Chauve-souris
+                /*if (CollisionJoueur(_batZone))
+                {
+                    if (_batPosition.X < _positionPerso.X)
+                    {
+                        _batOrientationX = 1;
+                    }
+                    else
+                    {
+                        _batOrientationX = 1;
+                    }
+                    if (_batPosition.Y < _positionPerso.Y)
+                    {
+                        _batOrientationY = 1;
+                    }
+                    else
+                    {
+                        _batOrientationY = -1;
+                    }
+                    _batSkeleton = 250;
                 }
                 else
                 {
-                    _batOrientationX = 1;
-                }
-                if (_batPosition.Y < _positionPerso.Y)
+                    //retourner au centre
+
+                }*/
+
+
+                _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
+                _skeletonPosition.Y += _skeletonOrientationY * _skeletonVitesse * deltaTime;
+                _batPosition.X += _batOrientationX * _batVitesse * deltaTime;
+                _batPosition.Y += _batOrientationY * _batVitesse * deltaTime;
+
+                //ANIMATION
+                //Personnage
+                /*//Squelette
+                if (_skeletonVitesse != 0)
                 {
-                    _batOrientationY = 1;
+                    _skeleton.Play("squeletteEnMarche");
                 }
                 else
                 {
-                    _batOrientationY = -1;
+                    _skeleton.Play("squeletteEnPose");
                 }
-                _batSkeleton = 250;
+                if (CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR))
+                {
+                    _vie--;
+                    _skeleton.Play("squeletteAttaque");
+                }*/
+
+
+                //Chauve-souris
+                /* if (_batOrientationY == 1)
+                 {
+                     _bat.Play("batVolFace");
+                 }
+                 else if (_batOrientationY == -1)
+                 {
+                     _bat.Play("batVolDos");
+                 }
+                 else
+                 {
+                     _bat.Play("batVolFace");
+                 }*/
+                _tiledMapRenderer.Update(gameTime);
+                _perso.Update(gameTime);
+
+                //Camera
+                //  _camera.LookAt(_positionPerso);        
+
+                _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+
+                //Camera
+                /*_camera.LookAt(_positionPerso);
+                //_cameraPosition = _positionPerso;
+                const float movementSpeed = 200;
+                _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
+
+             //   _bat.Update(deltaTime);
+               // _skeleton.Update(deltaTime);
+                //_ghost.Update(deltaTime);
+                _perso.Update(deltaTime);
+
+                //SCORE
+                /*if (/*position personnage / collision clép)
+                {
+                    _score += 1;
+                }*/
+
+                //Vie
+                /*if (/*position personnage / collision monstres)
+                {
+                    _vie -= 1;
+                }*/
+
+                if (_vie == 0)
+                {
+                    this.Initialize();
+                }
+
+                if (_score == 5)
+                {
+                    this.Initialize();
+                }
+
             }
-            else
-            {
-                //retourner au centre
-            
-            }*/
-
-
-            _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
-            _skeletonPosition.Y += _skeletonOrientationY * _skeletonVitesse * deltaTime;
-            _batPosition.X += _batOrientationX * _batVitesse * deltaTime;
-            _batPosition.Y += _batOrientationY * _batVitesse * deltaTime;
-
-            //ANIMATION
-            //Personnage
-            /*//Squelette
-            if (_skeletonVitesse != 0)
-            {
-                _skeleton.Play("squeletteEnMarche");
-            }
-            else
-            {
-                _skeleton.Play("squeletteEnPose");
-            }
-            if (CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR))
-            {
-                _vie--;
-                _skeleton.Play("squeletteAttaque");
-            }*/
-
-
-            //Chauve-souris
-           /* if (_batOrientationY == 1)
-            {
-                _bat.Play("batVolFace");
-            }
-            else if (_batOrientationY == -1)
-            {
-                _bat.Play("batVolDos");
-            }
-            else
-            {
-                _bat.Play("batVolFace");
-            }*/
-            _tiledMapRenderer.Update(gameTime);
-
-
-            //Camera
-            //  _camera.LookAt(_positionPerso);        
-
-            _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
-
-            //Camera
-            /*_camera.LookAt(_positionPerso);
-            //_cameraPosition = _positionPerso;
-            const float movementSpeed = 200;
-            _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
-
-         //   _bat.Update(deltaTime);
-           // _skeleton.Update(deltaTime);
-            //_ghost.Update(deltaTime);
-            _perso.Update(deltaTime);
-
-            //SCORE
-            /*if (/*position personnage / collision clép)
-            {
-                _score += 1;
-            }*/
-
-             //Vie
-            /*if (/*position personnage / collision monstres)
-            {
-                _vie -= 1;
-            }*/
-
-            if(_vie == 0)
-            {
-                this.Initialize();               
-            }
-
-            if(_score == 5)
-            {
-                this.Initialize();
-            }
-
-        }
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
