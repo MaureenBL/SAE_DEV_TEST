@@ -26,8 +26,8 @@ namespace SAE
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         //TAILLE FENETRE
-        public const int TAILLE_FENETRE_L = 1600;
-        public const int TAILLE_FENETRE_H = 900;
+        public const int TAILLE_FENETRE_L = 1120;
+        public const int TAILLE_FENETRE_H = 800;
         //MAP
         private TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
@@ -47,8 +47,8 @@ namespace SAE
         private int _vitessePerso;
         private int _nbVie;
         private int _nbDebattage;
-        public const int LARGEUR_PERSO = 48;
-        public const int HAUTEUR_PERSO = 64;
+        public const int LARGEUR_PERSO = 14;
+        public const int HAUTEUR_PERSO = 14;
         //MONSTRES
         //animation
         private AnimatedSprite _bat;
@@ -185,11 +185,11 @@ namespace SAE
             _ghostVitesse = 0;
             _skeletonVitesse = 25;
             //FENETRE
-            /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+           /* _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-            _graphics.ApplyChanges();
+            _graphics.ApplyChanges();*/
             //camera
-            //var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            /*var viewportadapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 480);
             _camera = new OrthographicCamera(viewportadapter);*/
 
             _ghostAttaque = false;
@@ -205,6 +205,7 @@ namespace SAE
             {
                 _batZone[i] = new Rectangle((int)(_batPosition[i].X - 25), (int)(_batPosition[i].Y - 25), 50, 50);
             }
+            _positionPerso = new Vector2(400, 770);
             base.Initialize();
         }
         public override void LoadContent()
@@ -249,12 +250,12 @@ namespace SAE
             //Déplacement et Animation + Collision
             
             _keyboardState = Keyboard.GetState();
-            /*if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
+            if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
             {
                 if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
                 {
                     _perso.Play("gDroite");
-                    _sensPersoHorizontal = 1;
+                  //  _sensPersoHorizontal = 1;
                     ushort tx1 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
@@ -264,15 +265,12 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
                         _positionPerso.X += walkSpeed;
-                    else
-                    {
-                        _positionPerso.X -= 1;
-                    }
+                    
                 }
                 else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
                 {
                     _perso.Play("gGauche");
-                    _sensPersoHorizontal = -1;
+                 //   _sensPersoHorizontal = -1;
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
@@ -282,17 +280,13 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
                         _positionPerso.X -= walkSpeed;
-                    else
-                    {
-                        _positionPerso.X += 1;
-
-                    }
+                    
                 }
                 //flèche haut
                 else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
                 {
                     _perso.Play("gHaut");
-                    _sensPersoVertical = -1;
+                  //  _sensPersoVertical = -1;
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
@@ -300,18 +294,15 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
                         _positionPerso.Y -= walkSpeed;
-                    else
-                    {
-                        _positionPerso.Y += 1;
-                    }
+                    
                 }
                 //flèche bas
                 else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
                 {
                     _perso.Play("gBas");
-                    _sensPersoVertical = 1;
-                    _sensPersoHorizontal = 0;
-                    _sensPersoVertical = 1;
+                  //  _sensPersoVertical = 1;
+                  //  _sensPersoHorizontal = 0;
+                  //  _sensPersoVertical = 1;
 
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
@@ -320,13 +311,10 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
                         _positionPerso.Y += walkSpeed;
-                    else
-                    {
-                        _positionPerso.Y -= 1;
-                    }
+                    
                 }
             }
-            else
+            /*else
             {
             if (_sensPersoHorizontal==1)
                 {
@@ -347,58 +335,58 @@ namespace SAE
             _sensPersoVertical = 0;
              _sensPersoHorizontal = 0;
             }*/
-            if (_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
-            {
-                if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
-                {
-                    _perso.Play("gGauche");
-                    _sensPersoHorizontal = -1;
-                    _sensPersoVertical = 0;
-                }
-                //flèche haut
-                else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-                {
-                    _perso.Play("gHaut");
-                    _sensPersoVertical = -1;
-                    _sensPersoHorizontal = 0;
-                }
-                //flèche bas
-                else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-                {
-                    _perso.Play("gBas");
-                    _sensPersoVertical = 1;
-                    _sensPersoHorizontal = 0;
-                }
-                else if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-                {
-                    _perso.Play("gDroite");
-                    _sensPersoVertical = 0;
-                    _sensPersoHorizontal = 1;
-                }
-            }
-            else
-            {
-                if (_sensPersoHorizontal == 1)
-                {
-                    _perso.Play("gDroiteImo");
-                }
-                else if (_sensPersoHorizontal == -1)
-                {
-                    _perso.Play("gGaucheImo");
-                }
-                else if (_sensPersoVertical == 1)
-                {
-                    _perso.Play("gBasImo");
-                }
-                else if (_sensPersoVertical == -1)
-                {
-                    _perso.Play("gHautImo");
-                }
-                _sensPersoVertical = 0;
-                _sensPersoHorizontal = 0;
-            }
-                _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+            /* if (_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
+             {
+                 if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
+                 {
+                     _perso.Play("gGauche");
+                     _sensPersoHorizontal = -1;
+                     _sensPersoVertical = 0;
+                 }
+                 //flèche haut
+                 else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+                 {
+                     _perso.Play("gHaut");
+                     _sensPersoVertical = -1;
+                     _sensPersoHorizontal = 0;
+                 }
+                 //flèche bas
+                 else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+                 {
+                     _perso.Play("gBas");
+                     _sensPersoVertical = 1;
+                     _sensPersoHorizontal = 0;
+                 }
+                 else if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+                 {
+                     _perso.Play("gDroite");
+                     _sensPersoVertical = 0;
+                     _sensPersoHorizontal = 1;
+                 }
+             }
+             else
+             {
+                 if (_sensPersoHorizontal == 1)
+                 {
+                     _perso.Play("gDroiteImo");
+                 }
+                 else if (_sensPersoHorizontal == -1)
+                 {
+                     _perso.Play("gGaucheImo");
+                 }
+                 else if (_sensPersoVertical == 1)
+                 {
+                     _perso.Play("gBasImo");
+                 }
+                 else if (_sensPersoVertical == -1)
+                 {
+                     _perso.Play("gHautImo");
+                 }
+                 _sensPersoVertical = 0;
+                 _sensPersoHorizontal = 0;
+             }
+                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
 
 
             //pour collision clé
@@ -406,9 +394,9 @@ namespace SAE
 
             //COMPORTEMENT
 
-                //Fantome
-                //le fantome attaque
-                if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque==false)
+            //Fantome
+            //le fantome attaque
+            if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque==false)
                 {
                     _ghostAttaque = true;
                    //effacer la zone dans le tableau
@@ -603,9 +591,11 @@ namespace SAE
         {
             _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
             _tiledMapRenderer.Draw();
-            /*   _tiledMapRenderer.Draw(_camera.GetViewMatrix());
+              /* _tiledMapRenderer.Draw(_camera.GetViewMatrix());
                var transformMatrix = _camera.GetViewMatrix();
-               _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);*/
+               _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);
+            _myGame.SpriteBatch.End();*/
+
 
             _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
