@@ -109,6 +109,9 @@ namespace SAE
             _score = 0;
             _police = Content.Load<SpriteFont>("Font");
             _positionScore = new Vector2(15, 10);
+            _sensPersoHorizontal = 0;
+            _sensPersoVertical = 0;
+            _vitessePerso = VITESSE_PERSO;
 
             // TODO: Add your initialization logic here
             //vitesse des monstres
@@ -125,7 +128,7 @@ namespace SAE
             var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
             _camera = new OrthographicCamera(viewportadapter);*/
             _ghostAttaque = false;
-            _positionPerso = new Vector2(200, 200);
+            _positionPerso = new Vector2(200, 250);
             base.Initialize();
         }
         public override void LoadContent()
@@ -169,7 +172,7 @@ namespace SAE
             }*/
             
             //Le héros se défend
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
+            /*if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
             {
                 espaceEtat = true;
                 _nbDebattage++;
@@ -183,7 +186,7 @@ namespace SAE
                 _vitessePerso = VITESSE_PERSO;
                 _ghost.Play("fantomeMort");
                 _nbDebattage = 0;
-            }
+            }*/
 
           /*  //le fantome est en train d'attaquer
             do
@@ -303,29 +306,57 @@ namespace SAE
             //Déplacement et Animation
             
             _keyboardState = Keyboard.GetState();
-            if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+            if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
             {
-                _perso.Play("gDroite");
-                _sensPersoHorizontal = 1;
-            }  
-            //flèche gauche
-            if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
-            {
-                _perso.Play("gGauche");
-                _sensPersoHorizontal = -1;
+                if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+                {
+                    _perso.Play("gDroite");
+                    _sensPersoVertical = 0;
+                    _sensPersoHorizontal = 1;
+                }
+                else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
+                {
+                    _perso.Play("gGauche");
+                    _sensPersoVertical = 0;
+                    _sensPersoHorizontal = -1;
+                }
+                //flèche haut
+                else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+                {
+                    _perso.Play("gHaut");
+                    _sensPersoHorizontal = 0;
+                    _sensPersoVertical = -1;
+                }
+                //flèche bas
+                else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+                {
+                    _perso.Play("gBas");
+                    _sensPersoHorizontal = 0;
+                    _sensPersoVertical = 1;
+                }
             }
-            //flèche haut
-            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+            else
             {
-                _perso.Play("gHaut");
-                _sensPersoVertical = -1;
+            if (_sensPersoHorizontal==1)
+                {
+                    _perso.Play("gDroiteImo");
+                }
+            else
+                {
+                    _perso.Play("gGaucheImo");
+                }
+            if(_sensPersoVertical==1)
+                {
+                    _perso.Play("gBasImo");
+                }
+                else
+                {
+                    _perso.Play("gHautImo");
+                }
+            _sensPersoVertical = 0;
+             _sensPersoHorizontal = 0;
             }
-            //flèche bas
-            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-            {
-                _perso.Play("gBas");
-                _sensPersoVertical = 1;
-            }
+
             _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
             _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
