@@ -167,6 +167,9 @@ namespace SAE
             _positionCle3 = new Rectangle(380, 120, 25, 25);
             _positionCle4 = new Rectangle(660, 245, 25, 25);
             _positionCle5 = new Rectangle(950, 20, 25, 25);
+            
+            //Fausse Cle
+
 
             //Perso
             _sensPersoHorizontal = 0;
@@ -393,40 +396,40 @@ namespace SAE
 
                 //Fantome
                 //le fantome attaque
-                /*if ((Keyboard.GetState().IsKeyDown(Keys.G)) && _ghostAttaque==false)
+                if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque==false)
                 {
                     _ghostAttaque = true;
                    //effacer la zone dans le tableau
-                }*/
+                }
 
                 //Le héros se défend
-                /*if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
+                if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
                 {
                     espaceEtat = true;
                     _nbDebattage++;
-                }*/
+                }
 
-                /*if (!(_keyboardState.IsKeyDown(Keys.Space)))
+                if (!(_keyboardState.IsKeyDown(Keys.Space)))
                 {
                     espaceEtat = false;
                 }
 
-                if(_nbDebattage>=25 && _ghostAttaque==true)
+                if(_nbDebattage>=10 && _ghostAttaque==true)
                 {
-                    _ghostAttaque = false;
                     _vitessePerso = VITESSE_PERSO;
+                    float t1 = deltaTime;
                     _ghost.Play("fantomeMort");
+                    _ghostAttaque = false;
                     _nbDebattage = 0;
-                }*/
+                }
 
-                //le fantome est en train d'attaquer
-                /*do
+            //le fantome est en train d'attaquer
+            if (_ghostAttaque==true)
                 {
                     _ghost.Play("fantomeInvoque");
                     _ghostPosition = _positionPerso;
                     _vitessePerso = 0;
                 }
-                while (_ghostAttaque == true);*/
 
 
                 //Squelette
@@ -526,6 +529,7 @@ namespace SAE
                  }*/
                 _tiledMapRenderer.Update(gameTime);
                 _perso.Update(gameTime);
+            _ghost.Update(gameTime);
 
                 //Camera
                 //  _camera.LookAt(_positionPerso);        
