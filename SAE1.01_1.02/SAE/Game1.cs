@@ -192,39 +192,7 @@ namespace SAE
                 Exit();
             }
             
-
-
-          //GEORGE
-            //  _perso.Play("gBas"); // une des animations définies dans « george.sf »
-
-         /*
-            //Déplacement
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _keyboardState = Keyboard.GetState();
-            //flèche droite
-            if(_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-            {
-                //animation droite
-                _positionPerso += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            }
-            //flèche gauche
-            if(_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
-            {
-                //animation gauche
-                _positionPerso -= _sensPersoHorizontal * _vitessePerso * deltaTime;
-            }
-            //flèche haut
-            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-            {
-                _vitesseSkeleton = 100;
-            }
-            //flèche bas
-            if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-            {
-                //animation bas
-                _positionPerso -= _sensPersoVertical * _vitessePerso * deltaTime;
-            }
-            */
+                      
             base.Update(gameTime);
         }
 

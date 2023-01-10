@@ -197,7 +197,6 @@ namespace SAE
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             //Couche collision de la map
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("murs");
-            _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(persoTexture);
             _textureRejouer = Content.Load<Texture2D>("G");
@@ -218,6 +217,110 @@ namespace SAE
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Game.Exit();
 
+            //Déplacement et Animation + Collision
+            
+            _keyboardState = Keyboard.GetState();
+            if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
+            {
+                if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+                {
+                    _perso.Play("gDroite");
+                    _sensPersoHorizontal = 1;
+                    ushort tx1 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                    ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty2 = (ushort)((_positionPerso.Y + (HAUTEUR_PERSO / 2)) / _tiledMap.TileHeight);
+                    ushort tx3 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty3 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
+                    //animation = "walkNorth";
+                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
+                        _positionPerso.X += walkSpeed;
+                    else
+                    {
+                        _positionPerso.X -= 1;
+                    }
+                }
+                else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
+                {
+                    _perso.Play("gGauche");
+                    _sensPersoHorizontal = -1;
+                    ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                    ushort tx2 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty2 = (ushort)((_positionPerso.Y + (HAUTEUR_PERSO / 2)) / _tiledMap.TileHeight);
+                    ushort tx3 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty3 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
+                    //animation = "walkNorth";
+                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
+                        _positionPerso.X -= walkSpeed;
+                    else
+                    {
+                        _positionPerso.X += 1;
+
+                    }
+                }
+                //flèche haut
+                else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+                {
+                    _perso.Play("gHaut");
+                    _sensPersoVertical = -1;
+                    ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                    ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty2 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
+                    //animation = "walkNorth";
+                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
+                        _positionPerso.Y -= walkSpeed;
+                    else
+                    {
+                        _positionPerso.Y += 1;
+                    }
+                }
+                //flèche bas
+                else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+                {
+                    _perso.Play("gBas");
+                    _sensPersoVertical = 1;
+                    _sensPersoHorizontal = 0;
+                    _sensPersoVertical = 1;
+
+                    ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
+                    ushort ty1 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
+                    ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
+                    ushort ty2 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
+                    //animation = "walkNorth";
+                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
+                        _positionPerso.Y += walkSpeed;
+                    else
+                    {
+                        _positionPerso.Y -= 1;
+                    }
+                }
+            }
+            else
+            {
+            if (_sensPersoHorizontal==1)
+                {
+                    _perso.Play("gDroiteImo");
+                }
+            else if (_sensPersoHorizontal == -1)
+                {
+                    _perso.Play("gGaucheImo");
+                }
+            else if(_sensPersoVertical==1)
+                {
+                    _perso.Play("gBasImo");
+                }
+            else if (_sensPersoVertical == -1)
+                {
+                    _perso.Play("gHautImo");
+                }
+            _sensPersoVertical = 0;
+             _sensPersoHorizontal = 0;
+            }
+
+            _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+            _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
             
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -365,119 +468,15 @@ namespace SAE
             */
             _tiledMapRenderer.Update(gameTime);
 
-            //Déplacement et Animation + Collision
-            
-            _keyboardState = Keyboard.GetState();
-            if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
-            {
-                if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-                {
-                    _perso.Play("gDroite");
-                    _sensPersoHorizontal = 1;
-                    ushort tx1 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
-                    ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
-                    ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
-                    ushort ty2 = (ushort)((_positionPerso.Y + (HAUTEUR_PERSO / 2)) / _tiledMap.TileHeight);
-                    ushort tx3 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
-                    ushort ty3 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
-                    //animation = "walkNorth";
-                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
-                        _positionPerso.X += walkSpeed;
-                    else
-                    {
-                        _positionPerso.X -= 1;
-                    }
-                }
-                else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
-                {
-                    _perso.Play("gGauche");
-                    _sensPersoHorizontal = -1;
-                    ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
-                    ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
-                    ushort tx2 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
-                    ushort ty2 = (ushort)((_positionPerso.Y + (HAUTEUR_PERSO / 2)) / _tiledMap.TileHeight);
-                    ushort tx3 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
-                    ushort ty3 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
-                    //animation = "walkNorth";
-                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
-                        _positionPerso.X -= walkSpeed;
-                    else
-                    {
-                        _positionPerso.X += 1;
-
-                    }
-                }
-                //flèche haut
-                else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-                {
-                    _perso.Play("gHaut");
-                    _sensPersoVertical = -1;
-                    ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
-                    ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
-                    ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
-                    ushort ty2 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
-                    //animation = "walkNorth";
-                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
-                        _positionPerso.Y -= walkSpeed;
-                    else
-                    {
-                        _positionPerso.Y += 1;
-                    }
-                }
-                //flèche bas
-                else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-                {
-                    _perso.Play("gBas");
-                    _sensPersoVertical = 1;
-                    _sensPersoHorizontal = 0;
-                    _sensPersoVertical = 1;
-
-                    ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
-                    ushort ty1 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
-                    ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
-                    ushort ty2 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
-                    //animation = "walkNorth";
-                    if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
-                        _positionPerso.Y += walkSpeed;
-                    else
-                    {
-                        _positionPerso.Y -= 1;
-                    }
-                }
-            }
-            else
-            {
-            if (_sensPersoHorizontal==1)
-                {
-                    _perso.Play("gDroiteImo");
-                }
-            else if (_sensPersoHorizontal == -1)
-                {
-                    _perso.Play("gGaucheImo");
-                }
-            else if(_sensPersoVertical==1)
-                {
-                    _perso.Play("gBasImo");
-                }
-            else if (_sensPersoVertical == -1)
-                {
-                    _perso.Play("gHautImo");
-                }
-            _sensPersoVertical = 0;
-             _sensPersoHorizontal = 0;
-            }
-
-            _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-            _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
             //Camera
-            _camera.LookAt(_positionPerso);        
+          //  _camera.LookAt(_positionPerso);        
             
             
 
-            _bat.Update(deltaTime);
-            _skeleton.Update(deltaTime);
-            _ghost.Update(deltaTime);
+         //   _bat.Update(deltaTime);
+           // _skeleton.Update(deltaTime);
+            //_ghost.Update(deltaTime);
             _perso.Update(deltaTime);
 
             //SCORE
@@ -506,11 +505,12 @@ namespace SAE
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
-            //_tiledMapRenderer.Draw();
-            _tiledMapRenderer.Draw(_camera.GetViewMatrix());
-            var transformMatrix = _camera.GetViewMatrix();
-            _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);
+            _tiledMapRenderer.Draw();
+            /*   _tiledMapRenderer.Draw(_camera.GetViewMatrix());
+               var transformMatrix = _camera.GetViewMatrix();
+               _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);*/
 
+            _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(770, 570, 25, 25), Color.White); // 2: piece rouge - bas
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(380, 120, 25, 25), Color.White); // 3: piece bleu - milieu
