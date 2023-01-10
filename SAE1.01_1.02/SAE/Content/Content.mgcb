@@ -230,6 +230,12 @@
 /processorParam:TextureFormat=Color
 /build:george.png
 
+#begin keySound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:keySound.wav
+
 #begin map/mapGenerale.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor

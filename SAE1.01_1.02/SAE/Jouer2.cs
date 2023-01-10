@@ -17,8 +17,7 @@ using MonoGame.Extended.Screens.Transitions;
 using MonoGame.Extended.ViewportAdapters;
 using MonoGame.Extended;
 using Microsoft.Xna.Framework.Media;
-
-
+using Microsoft.Xna.Framework.Audio;
 
 namespace SAE
 {
@@ -124,6 +123,7 @@ namespace SAE
         private Texture2D _textureEsc;
         private Texture2D _textureFin;
 
+        private SoundEffect _sound;
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
@@ -136,7 +136,13 @@ namespace SAE
 
         public override void Initialize()
         {
-            _cle = true;
+
+            //FENETRE
+            _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+            _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
+            _graphics.ApplyChanges();
+
+
 
             //game over
             _gameOver = "Game Over";
@@ -160,6 +166,7 @@ namespace SAE
             _positionRegle = new Vector2(350, 250);
 
             //Cle
+            _cle = true;
             _rectCle = new Rectangle[5];
             _rectCle = new Rectangle[] {new Rectangle(45, 670, 25, 25),new Rectangle(770, 570, 25, 25),new Rectangle(380, 120, 25, 25),new Rectangle(660, 245, 25, 25),new Rectangle(950, 20, 25, 25) };
 
@@ -215,6 +222,9 @@ namespace SAE
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             _textureCle = Content.Load<Texture2D>("cle");
 
+            //SoundEffect
+            _sound = Content.Load<SoundEffect>("keySound");
+
             //Chargement de la map
             _tiledMap = Content.Load<TiledMap>("map/mapGenerale");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
@@ -226,13 +236,13 @@ namespace SAE
             _textureEsc = Content.Load<Texture2D>("esc");
             _textureFin = Content.Load<Texture2D>("F");
 
-            SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
-            _bat = new AnimatedSprite(batTexture);
-            /*SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
-            _skeleton = new AnimatedSprite(skeletonTexture);*/
-            SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
-            _ghost = new AnimatedSprite(ghostTexture);
-
+            /*  SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
+              _bat = new AnimatedSprite(batTexture);
+              SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
+              _skeleton = new AnimatedSprite(skeletonTexture);
+              SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
+              _ghost = new AnimatedSprite(ghostTexture);
+              */
             base.LoadContent(); 
         }
         public override void Update(GameTime gameTime)
@@ -538,7 +548,7 @@ namespace SAE
              }*/
             _tiledMapRenderer.Update(gameTime);
                 _perso.Update(gameTime);
-                _ghost.Update(gameTime);
+               // _ghost.Update(gameTime);
 
             //Camera
               _camera.LookAt(_positionPerso);        
@@ -560,10 +570,10 @@ namespace SAE
             //SCORE
             for (int i =0; i < _rectCle.Length; i++)
             {
-                Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-                if (rectJoueur.Intersects(_rectCle[i]))
+                if (CollisionJoueur(_rectCle[i]))
                 {
-                    _cle = false;
+                    _rectCle[i] = new Rectangle(0,0,0,0);
+                    _sound.Play();
                     _score += 1;                    
                 }
             }
@@ -705,7 +715,7 @@ namespace SAE
         {
 
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            //Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
+         //   Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
             Rectangle rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
             return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleSkeleton);
         }*/
