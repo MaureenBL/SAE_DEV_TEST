@@ -138,9 +138,9 @@ namespace SAE
         {
 
             //FENETRE
-            _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+            /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-            _graphics.ApplyChanges();
+            _graphics.ApplyChanges();*/
 
 
 
