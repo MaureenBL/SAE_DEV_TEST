@@ -57,7 +57,7 @@ namespace SAE
         private AnimatedSprite _skeleton;
 
         //position
-        private Vector2 _batPosition;
+        private Vector2[] _batPosition;
         private Vector2 _ghostPosition;
         private Vector2 _skeletonPosition;
         //orientation
@@ -81,7 +81,7 @@ namespace SAE
         public const int VITESSE_PERSO = 100;
         //zone
         public Vector2[] _ghostZone;
-        public Vector2[] _batZone;
+        public Rectangle[] _batZone;
         
         //commportement
         private bool _ghostAttaque;
@@ -186,7 +186,7 @@ namespace SAE
 
             // TODO: Add your initialization logic here
             //vitesse des monstres
-            _batVitesse = 0;
+            _batVitesse = 50;
             _ghostVitesse = 0;
             _skeletonVitesse = 25;
             //FENETRE
@@ -199,6 +199,17 @@ namespace SAE
 
             _ghostAttaque = false;
             _positionPerso = new Vector2(420, 670);
+            _ghostPosition = new Vector2(-GHOST_LARGEUR, -GHOST_HAUTEUR);
+            _batPosition = new Vector2[3];
+            _batZone = new Rectangle[3];
+            _batPosition[0] = new Vector2(175, 575);
+            _batPosition[1] = new Vector2(530, 100);
+            _batPosition[2] = new Vector2(950, 520);
+
+            for(int i=0; i<_batPosition.Length; i++)
+            {
+                _batZone[i] = new Rectangle((int)(_batPosition[i].X - 25), (int)(_batPosition[i].Y - 25), 50, 50);
+            }
             base.Initialize();
         }
         public override void LoadContent()
@@ -218,9 +229,9 @@ namespace SAE
             _textureEsc = Content.Load<Texture2D>("esc");
             _textureFin = Content.Load<Texture2D>("F");
 
-            /*SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
+            SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
             _bat = new AnimatedSprite(batTexture);
-            SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
+            /*SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
             _skeleton = new AnimatedSprite(skeletonTexture);*/
             SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
             _ghost = new AnimatedSprite(ghostTexture);
@@ -463,42 +474,54 @@ namespace SAE
                     if(Collision avec un bur de droite)
                         _skeletonOrientationX = -1;
                   }*/
-                //Chauve-souris
-                /*if (CollisionJoueur(_batZone))
+            //Chauve-souris
+            /*for(int i=0; i<_batZone.Length; i++)
+            {
+                if (CollisionJoueur(_batZone[i]))
                 {
-                    if (_batPosition.X < _positionPerso.X)
+                    _bat.Play("batVolFace");
+                    _bat.Update(gameTime);
+                    _batVitesse = 250;
+                    if (_batPosition[i].X < _positionPerso.X)
                     {
                         _batOrientationX = 1;
+                        _batPosition[i].X += _batOrientationX * _batVitesse * deltaTime;
                     }
                     else
                     {
-                        _batOrientationX = 1;
+                        //_batOrientationX = 1;
+                        //_batPosition[i].X += _batOrientationX * _batVitesse * deltaTime;
                     }
-                    if (_batPosition.Y < _positionPerso.Y)
+
+                    if (_batPosition[i].Y < _positionPerso.Y)
                     {
-                        _batOrientationY = 1;
+                        //_batOrientationY = 1;
+                        //_batPosition[i].Y += _batOrientationY * _batVitesse * deltaTime;
                     }
                     else
                     {
-                        _batOrientationY = -1;
+                        //_batOrientationY = -1;
+                        //_batPosition[i].Y += _batOrientationY * _batVitesse * deltaTime;
                     }
-                    _batSkeleton = 250;
                 }
                 else
                 {
-                    //retourner au centre
+                    _bat.Play("batVolDos");
+                    _batVitesse = 0;
+                    _batPosition[0] = new Vector2(175, 575);
+                    _batPosition[1] = new Vector2(530, 100);
+                    _batPosition[2] = new Vector2(950, 520);
+                }
+            }*/
 
-                }*/
 
 
                 _skeletonPosition.X += _skeletonOrientationX * _skeletonVitesse * deltaTime;
                 _skeletonPosition.Y += _skeletonOrientationY * _skeletonVitesse * deltaTime;
-                _batPosition.X += _batOrientationX * _batVitesse * deltaTime;
-                _batPosition.Y += _batOrientationY * _batVitesse * deltaTime;
 
                 //ANIMATION
                 //Personnage
-                /*//Squelette
+                /* //Squelette
                 if (_skeletonVitesse != 0)
                 {
                     _skeleton.Play("squeletteEnMarche");
@@ -529,7 +552,7 @@ namespace SAE
                  }*/
                 _tiledMapRenderer.Update(gameTime);
                 _perso.Update(gameTime);
-            _ghost.Update(gameTime);
+                _ghost.Update(gameTime);
 
                 //Camera
                 //  _camera.LookAt(_positionPerso);        
@@ -542,11 +565,6 @@ namespace SAE
                 //_cameraPosition = _positionPerso;
                 const float movementSpeed = 200;
                 _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
-
-             //   _bat.Update(deltaTime);
-               // _skeleton.Update(deltaTime);
-                //_ghost.Update(deltaTime);
-                _perso.Update(deltaTime);
 
                 //SCORE
                 /*if (/*position personnage / collision clép)
@@ -661,27 +679,26 @@ namespace SAE
             }
 
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
-            //_myGame.SpriteBatch.Draw(_bat, _batPosition);
+            for(int i=0; i<_batPosition.Length; i++)
+            {
+            _myGame.SpriteBatch.Draw(_bat, _batPosition[i]);
+            }
             _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
             _myGame.SpriteBatch.End();
         }
-       /* public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
+       public bool CollisionJoueur(Rectangle objet)
         {
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            Rectangle rectObjet = new Rectangle(xObjet, yObjet, largeurObjet, hauteurObjet);
-            return rectJoueur.Intersects(rectObjet);
-            _rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);
-            _rectangleGhost = new Rectangle((int)_ghostPosition.X, (int)_ghostPosition.Y, GHOST_LARGEUR, GHOST_HAUTEUR);
-            _rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
+            return rectJoueur.Intersects(objet);
+        }
 
-        }*/
         public bool CollisionJoueur()
         {
 
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
+            //Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
             Rectangle rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
-            return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleSkeleton);
+            return /*rectJoueur.Intersects(rectangleBat) || */rectJoueur.Intersects(rectangleSkeleton);
             
 
         }
