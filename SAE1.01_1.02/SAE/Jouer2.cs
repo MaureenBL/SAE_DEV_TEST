@@ -96,7 +96,6 @@ namespace SAE
         private SpriteFont _policeRegle;
         private Vector2 _positionRegle;
 
-        private bool _pause;
 
         //Vie
         private int _vie;
@@ -110,11 +109,7 @@ namespace SAE
         private Rectangle _positionCle3;
         private Rectangle _positionCle4;
         private Rectangle _positionCle5;
-        private bool _cle1;
-        private bool _cle2;
-        private bool _cle3;
-        private bool _cle4;
-        private bool _cle5;
+        private bool _cle;
 
         //Game Over
         private string _gameOver;
@@ -133,7 +128,6 @@ namespace SAE
         private Texture2D _textureEsc;
         private Texture2D _textureFin;
 
-        bool persoCle = false;
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
@@ -145,12 +139,7 @@ namespace SAE
 
         public override void Initialize()
         {
-            _pause = false;
-            _cle1 = true;
-            _cle2 = true;
-            _cle3 = true;
-            _cle4 = true;
-            _cle5 = true;
+            _cle = true;
 
             //game over
             _gameOver = "Game Over";
@@ -573,31 +562,31 @@ namespace SAE
             {
                 _score += 1;
                 _positionCle1 = new Rectangle(0, 0, 0, 0);
-                _cle1 = false;
+                _cle = false;
             }
           if (CollisionCle2())
             {
                 _score += 1;
                 _positionCle2 = new Rectangle(0, 0, 0, 0);
-                _cle2 = false;
+                _cle = false;
             } 
             if (CollisionCle3())
             {
                 _score += 1;
                 _positionCle3 = new Rectangle(0, 0, 0, 0);
-                _cle3 = false;
+                _cle = false;
             } 
             if (CollisionCle4())
             {
                 _score += 1;
                 _positionCle4 = new Rectangle(0, 0, 0, 0);
-                _cle4 = false;
+                _cle = false;
             } 
             if (CollisionCle5())
             {
                 _score += 1;
                 _positionCle5 = new Rectangle(0, 0, 0, 0);
-                _cle5 = false;
+                _cle = false;
             }
 
             //Vie
@@ -637,7 +626,7 @@ namespace SAE
 
             //Affichage clé 1
 
-            if(_cle1 == true)
+            if(_cle == true)
             {
                 _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
                 _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
@@ -645,24 +634,6 @@ namespace SAE
                 _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
                 _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
             }
-         /*   if (_cle2 == true)
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
-            }
-            if (_cle3 == true)
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
-            }
-            if (_cle4 == true)
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
-            }
-            if (_cle5 == true)
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
-            }
-
-            */
 
             /*
             //Affichage clé 2
