@@ -675,10 +675,9 @@ namespace SAE
         {
 
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);
-            Rectangle rectangleGhost = new Rectangle((int)_ghostPosition.X, (int)_ghostPosition.Y, GHOST_LARGEUR, GHOST_HAUTEUR);
+            Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
             Rectangle rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
-            return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleGhost) || rectJoueur.Intersects(rectangleSkeleton);
+            return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleSkeleton);
             
 
         }
