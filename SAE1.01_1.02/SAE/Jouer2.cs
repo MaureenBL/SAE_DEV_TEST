@@ -110,7 +110,11 @@ namespace SAE
         private Rectangle _positionCle3;
         private Rectangle _positionCle4;
         private Rectangle _positionCle5;
-        private Rectangle collisionRect;
+        private bool _cle1;
+        private bool _cle2;
+        private bool _cle3;
+        private bool _cle4;
+        private bool _cle5;
 
         //Game Over
         private string _gameOver;
@@ -142,6 +146,11 @@ namespace SAE
         public override void Initialize()
         {
             _pause = false;
+            _cle1 = true;
+            _cle2 = true;
+            _cle3 = true;
+            _cle4 = true;
+            _cle5 = true;
 
             //game over
             _gameOver = "Game Over";
@@ -170,6 +179,8 @@ namespace SAE
             _positionCle3 = new Rectangle(380, 120, 25, 25);
             _positionCle4 = new Rectangle(660, 245, 25, 25);
             _positionCle5 = new Rectangle(950, 20, 25, 25);
+
+
             
             //Fausse Cle
 
@@ -400,7 +411,7 @@ namespace SAE
 
 
             //pour collision clé
-            collisionRect = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO + 1, HAUTEUR_PERSO + 1);     
+            
 
             //COMPORTEMENT
 
@@ -540,8 +551,8 @@ namespace SAE
                 _perso.Update(gameTime);
             _ghost.Update(gameTime);
 
-                //Camera
-                //  _camera.LookAt(_positionPerso);        
+            //Camera
+            //  _camera.LookAt(_positionPerso);        
 
             //Camera
             /*_camera.LookAt(_positionPerso);
@@ -554,13 +565,42 @@ namespace SAE
             //_ghost.Update(deltaTime);
             _perso.Update(deltaTime);
             */
+            
+            
+            
             //SCORE
-            if (pers)
+            if (CollisionCle1())
             {
-                _score += 1;    
+                _score += 1;
+                _positionCle1 = new Rectangle(0, 0, 0, 0);
+                _cle1 = false;
+            }
+          if (CollisionCle2())
+            {
+                _score += 1;
+                _positionCle2 = new Rectangle(0, 0, 0, 0);
+                _cle2 = false;
+            } 
+            if (CollisionCle3())
+            {
+                _score += 1;
+                _positionCle3 = new Rectangle(0, 0, 0, 0);
+                _cle3 = false;
+            } 
+            if (CollisionCle4())
+            {
+                _score += 1;
+                _positionCle4 = new Rectangle(0, 0, 0, 0);
+                _cle4 = false;
+            } 
+            if (CollisionCle5())
+            {
+                _score += 1;
+                _positionCle5 = new Rectangle(0, 0, 0, 0);
+                _cle5 = false;
             }
 
-             //Vie
+            //Vie
             if (CollisionJoueur()) // collision entre le joueur et les monstres
             {
                 _vie -= 1;
@@ -571,10 +611,10 @@ namespace SAE
                     this.Initialize();
                 }
 
-                if (_score == 5)
+                /*if (_score == 5)
                 {
                     this.Initialize();
-                }
+                }*/
 
             }
         public override void Draw(GameTime gameTime)
@@ -587,25 +627,44 @@ namespace SAE
 
             _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
-           // _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche
+            /* _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche*/
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
+            _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite 
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
             _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
 
             //Affichage clé 1
-            
-            if (_positionCle1 == collisionRect)
-            {
-                _score += 1;
-                
-            }
-            else
+
+            if(_cle1 == true)
             {
                 _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
-            }/*
+                _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
+                _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
+                _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
+                _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
+            }
+         /*   if (_cle2 == true)
+            {
+                _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
+            }
+            if (_cle3 == true)
+            {
+                _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
+            }
+            if (_cle4 == true)
+            {
+                _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
+            }
+            if (_cle5 == true)
+            {
+                _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
+            }
+
+            */
+
+            /*
             //Affichage clé 2
             if()
             {
@@ -688,42 +747,75 @@ namespace SAE
             Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
             Rectangle rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
             return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleSkeleton);
-            
-
         }
-        //méthode détection de collision avec la map
-        /*private bool IsCollision(ushort x, ushort y)
+
+        public bool CollisionCle1()
         {
-
-            TiledMapTile? tile;
-            if (mapLayer.TryGetTile(x, y, out tile) == false)
-            {
-                return false;
-            }
-            if (!tile.Value.IsBlank)
-            {
-                return true;
-            }
-            return false;
-        }*/
-
-
-        //méthode détection de collision avec la map
-        private bool IsCollision(ushort x, ushort y)
-        {
-
-            TiledMapTile? tile;
-            if (mapLayer.TryGetTile(x, y, out tile) == false)
-            {
-                return false;
-            }
-            if (!tile.Value.IsBlank)
-            {
-
-
-                return true;
-            }
-            return false;
+            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+            Rectangle rectCle1 = _positionCle1;
+            return rectJoueur.Intersects(rectCle1);
         }
+        public bool CollisionCle2()
+        {
+            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+            Rectangle rectCle2 = _positionCle2;
+            return rectJoueur.Intersects(rectCle2);
+        }
+        public bool CollisionCle3()
+        {
+            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+            Rectangle rectCle3 = _positionCle3;
+            return rectJoueur.Intersects(rectCle3);
+        }
+        public bool CollisionCle5()
+        {
+            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+            Rectangle rectCle5 = _positionCle5;
+            return rectJoueur.Intersects(rectCle5);
+        }
+        public bool CollisionCle4()
+        {
+            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+            Rectangle rectCle4 = _positionCle4;
+            return rectJoueur.Intersects(rectCle4);
+        }
+
+
     }
+
+    //méthode détection de collision avec la map
+    /*private bool IsCollision(ushort x, ushort y)
+    {
+
+        TiledMapTile? tile;
+        if (mapLayer.TryGetTile(x, y, out tile) == false)
+        {
+            return false;
+        }
+        if (!tile.Value.IsBlank)
+        {
+            return true;
+        }
+        return false;
+    }*/
+
+
+    //méthode détection de collision avec la map
+    /*  private bool IsCollision(ushort x, ushort y)
+      {
+
+          TiledMapTile? tile;
+          if (mapLayer.TryGetTile(x, y, out tile) == false)
+          {
+              return false;
+          }
+          if (!tile.Value.IsBlank)
+          {
+
+
+              return true;
+          }
+          return false;
+      }*/
 }
+
