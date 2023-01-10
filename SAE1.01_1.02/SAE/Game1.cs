@@ -177,7 +177,7 @@ namespace SAE
             }
             if (Keyboard.GetState().IsKeyDown(Keys.G))
             {
-                _screenManager.LoadScreen(_accueilTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
+                _screenManager.LoadScreen(_jeuTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.C))
             {

@@ -91,9 +91,37 @@ namespace SAE
         private int _score;
         private SpriteFont _police;
         private Vector2 _positionScore;
+        //Regle
+        private string _regle;
+        private SpriteFont _policeRegle;
+        private Vector2 _positionRegle;
+
+        private bool _pause;
+
+        //Vie
+        private int _vie;
+        private SpriteFont _policeVie;
+        private Vector2 _positionVie;
 
         //CLE
         private Texture2D _textureCle;
+
+        //Game Over
+        private string _gameOver;
+        private SpriteFont _policeGameOver;
+        private Vector2 _positionGameOver;
+        //retour
+        private string _rejouer;
+        private SpriteFont _policeRejouer;
+        private Vector2 _positionRejouer;
+        //quitter
+        private string _quitter;
+        private SpriteFont _policeQuitter;
+        private Vector2 _positionQuitter;
+
+        private Texture2D _textureRejouer;
+        private Texture2D _textureEsc;
+        private Texture2D _textureFin;
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
@@ -105,20 +133,44 @@ namespace SAE
 
         public override void Initialize()
         {
+            _pause = false;
+
+            //game over
+            _gameOver = "Game Over";
+            _policeGameOver = Content.Load<SpriteFont>("Titre");
+            _positionGameOver = new Vector2(350, 210);
+            //Retour
+            _rejouer = "Rejouer ";
+            _policeRejouer = Content.Load<SpriteFont>("End");
+            _positionRejouer = new Vector2(210, 420);
+            //Quitter
+            _quitter = "Quitter ";
+            _policeQuitter = Content.Load<SpriteFont>("End");
+            _positionQuitter = new Vector2(610, 420);
+
             //Score
             _score = 0;
             _police = Content.Load<SpriteFont>("Font");
             _positionScore = new Vector2(15, 10);
+            _regle = " Bravo tu as toutes les clefs ! \n Clique sur : ";
+            _policeRegle = Content.Load<SpriteFont>("regles");
+            _positionRegle = new Vector2(350, 250);
+
             _sensPersoHorizontal = 0;
             _sensPersoVertical = 0;
             _vitessePerso = VITESSE_PERSO;
+
+            //Vie
+            _vie = 3;
+            _policeVie = Content.Load<SpriteFont>("Font");
+            _positionVie = new Vector2(15, 50);
+
 
             // TODO: Add your initialization logic here
             //vitesse des monstres
             _batVitesse = 0;
             _ghostVitesse = 0;
             _skeletonVitesse = 25;
-            _nbVie = 3;
 
             //FENETRE
             /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
@@ -143,7 +195,10 @@ namespace SAE
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(persoTexture);
-            
+            _textureRejouer = Content.Load<Texture2D>("G");
+            _textureEsc = Content.Load<Texture2D>("esc");
+            _textureFin = Content.Load<Texture2D>("F");
+
             /*SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
             _bat = new AnimatedSprite(batTexture);
             SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
@@ -158,8 +213,9 @@ namespace SAE
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Game.Exit();
 
-            // TODO: Add your update logic here
+
             
+
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //COMPORTEMENT
 
@@ -276,7 +332,7 @@ namespace SAE
             }
             if (CollisionJoueur((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR))
             {
-                _nbVie--;
+                _vie--;
                 _skeleton.Play("squeletteAttaque");
             }*/
 
@@ -377,6 +433,22 @@ namespace SAE
                 _score += 1;
             }*/
 
+             //Vie
+            /*if (/*position personnage / collision monstres)
+            {
+                _vie -= 1;
+            }*/
+
+            if(_vie == 0)
+            {
+                this.Initialize();               
+            }
+
+            if(_score == 5)
+            {
+                this.Initialize();
+            }
+
         }
         public override void Draw(GameTime gameTime)
         {
@@ -390,7 +462,24 @@ namespace SAE
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(660, 245, 25, 25), Color.White); // 4: piece verte - haut / angle
             _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(950, 20, 25, 25), Color.White); // 5: piece rouge - angle en haut à droite
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
+
+            if(_vie == 0)
+            {
+                _myGame.SpriteBatch.DrawString(_policeGameOver, $"{_gameOver}", _positionGameOver, Color.White);
+                _myGame.SpriteBatch.DrawString(_policeRejouer, $"{_rejouer}", _positionRejouer, Color.White);
+                _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
+
+                _myGame.SpriteBatch.Draw(_textureRejouer, new Rectangle(350, 420, 50, 45), Color.White);
+                _myGame.SpriteBatch.Draw(_textureEsc, new Rectangle(750, 420, 50, 50), Color.White);
+            }
+
+            if(_score == 5)
+            {
+                _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+                _myGame.SpriteBatch.Draw(_textureFin, new Rectangle(510, 285, 50, 50), Color.White);
+            }
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
             //_myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
