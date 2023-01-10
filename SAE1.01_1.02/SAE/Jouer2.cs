@@ -171,7 +171,6 @@ namespace SAE
             _batVitesse = 0;
             _ghostVitesse = 0;
             _skeletonVitesse = 25;
-
             //FENETRE
             /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
@@ -179,7 +178,6 @@ namespace SAE
             //camera
             var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
             _camera = new OrthographicCamera(viewportadapter);*/
-            _ghostAttaque = false;
             _positionPerso = new Vector2(200, 250);
             base.Initialize();
         }
@@ -202,9 +200,9 @@ namespace SAE
             /*SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
             _bat = new AnimatedSprite(batTexture);
             SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
-            _skeleton = new AnimatedSprite(skeletonTexture);
+            _skeleton = new AnimatedSprite(skeletonTexture);*/
             SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
-            _ghost = new AnimatedSprite(ghostTexture);*/
+            _ghost = new AnimatedSprite(ghostTexture);
 
             base.LoadContent(); 
         }
@@ -213,18 +211,72 @@ namespace SAE
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Game.Exit();
 
-
             
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            //Déplacement et Animation perso
+
+            _keyboardState = Keyboard.GetState();
+            if (_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
+            {
+                if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+                {
+                    _perso.Play("gDroite");
+                    _sensPersoHorizontal = 1;
+                    _sensPersoVertical = 0;
+                }
+                else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
+                {
+                    _perso.Play("gGauche");
+                    _sensPersoHorizontal = -1;
+                    _sensPersoVertical = 0;
+                }
+                //flèche haut
+                else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+                {
+                    _perso.Play("gHaut");
+                    _sensPersoVertical = -1;
+                    _sensPersoHorizontal = 0;
+                }
+                //flèche bas
+                else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+                {
+                    _perso.Play("gBas");
+                    _sensPersoVertical = 1;
+                    _sensPersoHorizontal = 0;
+                }
+            }
+            else
+            {
+                if (_sensPersoHorizontal == 1)
+                {
+                    _perso.Play("gDroiteImo");
+                }
+                else if (_sensPersoHorizontal == -1)
+                {
+                    _perso.Play("gGaucheImo");
+                }
+                else if (_sensPersoVertical == 1)
+                {
+                    _perso.Play("gBasImo");
+                }
+                else if (_sensPersoVertical == -1)
+                {
+                    _perso.Play("gHautImo");
+                }
+                _sensPersoVertical = 0;
+                _sensPersoHorizontal = 0;
+            }
+
             //COMPORTEMENT
 
             //Fantome
             //le fantome attaque
-            /*if(CollisionJoueur(avec zone))
+            /*if ((Keyboard.GetState().IsKeyDown(Keys.G)) && _ghostAttaque==false)
             {
                 _ghostAttaque = true;
-                //effacer la zone dans le tableau
+               //effacer la zone dans le tableau
             }*/
             
             //Le héros se défend
@@ -232,11 +284,14 @@ namespace SAE
             {
                 espaceEtat = true;
                 _nbDebattage++;
-            }
-            if (!(Keyboard.GetState().IsKeyDown(Keys.Space)))
+            }*/
+            
+            /*if (!(_keyboardState.IsKeyDown(Keys.Space)))
+            {
                 espaceEtat = false;
+            }
 
-            if(_nbDebattage>=25)
+            if(_nbDebattage>=25 && _ghostAttaque==true)
             {
                 _ghostAttaque = false;
                 _vitessePerso = VITESSE_PERSO;
@@ -244,15 +299,14 @@ namespace SAE
                 _nbDebattage = 0;
             }*/
 
-          /*  //le fantome est en train d'attaquer
-            do
+          //le fantome est en train d'attaquer
+            /*do
             {
                 _ghost.Play("fantomeInvoque");
                 _ghostPosition = _positionPerso;
                 _vitessePerso = 0;
             }
-            while (_ghostAttaque == true);
-          */
+            while (_ghostAttaque == true);*/
 
 
             //Squelette
@@ -349,69 +403,10 @@ namespace SAE
             else
             {
                 _bat.Play("batVolFace");
-            }
-
-            //Fantome
-            if (_ghostOrientationX != 0 || _ghostOrientationY != 0)
-            {
-                _ghost.Play("fantomeEnVol");
-            }
-            */
+            }*/
             _tiledMapRenderer.Update(gameTime);
+            _ghost.Update(gameTime);
 
-            //Déplacement et Animation
-            
-            _keyboardState = Keyboard.GetState();
-            if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
-            {
-                if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-                {
-                    _perso.Play("gDroite");
-                    _sensPersoHorizontal = 1;
-                    _sensPersoVertical = 0;
-                }
-                else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
-                {
-                    _perso.Play("gGauche");
-                    _sensPersoHorizontal = -1;
-                    _sensPersoVertical = 0;
-                }
-                //flèche haut
-                else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-                {
-                    _perso.Play("gHaut");
-                    _sensPersoVertical = -1;
-                    _sensPersoHorizontal = 0;
-                }
-                //flèche bas
-                else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-                {
-                    _perso.Play("gBas");
-                    _sensPersoVertical = 1;
-                    _sensPersoHorizontal = 0;
-                }
-            }
-            else
-            {
-            if (_sensPersoHorizontal==1)
-                {
-                    _perso.Play("gDroiteImo");
-                }
-            else if (_sensPersoHorizontal == -1)
-                {
-                    _perso.Play("gGaucheImo");
-                }
-            else if(_sensPersoVertical==1)
-                {
-                    _perso.Play("gBasImo");
-                }
-            else if (_sensPersoVertical == -1)
-                {
-                    _perso.Play("gHautImo");
-                }
-            _sensPersoVertical = 0;
-             _sensPersoHorizontal = 0;
-            }
 
             _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
             _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
@@ -482,7 +477,7 @@ namespace SAE
             }
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
-            //_myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
+            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
             _myGame.SpriteBatch.End();
         }
         public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
