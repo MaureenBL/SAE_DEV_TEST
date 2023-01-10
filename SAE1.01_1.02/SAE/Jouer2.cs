@@ -176,6 +176,7 @@ namespace SAE
             _sensPersoVertical = 0;
             _vitessePerso = VITESSE_PERSO;
 
+
             //Vie
             _vie = 3;
             _policeVie = Content.Load<SpriteFont>("Font");
@@ -553,11 +554,11 @@ namespace SAE
                     _score += 1;
                 }*/
 
-                //Vie
-                /*if (/*position personnage / collision monstres)
-                {
-                    _vie -= 1;
-                }*/
+             //Vie
+            if (CollisionJoueur()) // collision entre le joueur et les monstres
+            {
+                _vie -= 1;
+            }
 
                 if (_vie == 0)
                 {
@@ -664,11 +665,26 @@ namespace SAE
             _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
             _myGame.SpriteBatch.End();
         }
-        public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
+       /* public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
         {
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
             Rectangle rectObjet = new Rectangle(xObjet, yObjet, largeurObjet, hauteurObjet);
             return rectJoueur.Intersects(rectObjet);
+            _rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);
+            _rectangleGhost = new Rectangle((int)_ghostPosition.X, (int)_ghostPosition.Y, GHOST_LARGEUR, GHOST_HAUTEUR);
+            _rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
+
+        }*/
+        public bool CollisionJoueur()
+        {
+
+            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+            Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);
+            Rectangle rectangleGhost = new Rectangle((int)_ghostPosition.X, (int)_ghostPosition.Y, GHOST_LARGEUR, GHOST_HAUTEUR);
+            Rectangle rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
+            return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleGhost) || rectJoueur.Intersects(rectangleSkeleton);
+            
+
         }
         //méthode détection de collision avec la map
         /*private bool IsCollision(ushort x, ushort y)
@@ -685,7 +701,7 @@ namespace SAE
             }
             return false;
         }*/
-        
+
 
         //méthode détection de collision avec la map
         private bool IsCollision(ushort x, ushort y)
