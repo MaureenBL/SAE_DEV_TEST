@@ -178,8 +178,8 @@ namespace SAE
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
             _graphics.ApplyChanges();*/
             //camera
-            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            _camera = new OrthographicCamera(viewportadapter);*/
+            //var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            _camera = new OrthographicCamera(viewportadapter);
 
             _ghostAttaque = false;
             _positionPerso = new Vector2(420, 670);
@@ -466,52 +466,7 @@ namespace SAE
 
 
             //Camera
-          //  _camera.LookAt(_positionPerso);        
-            
-            
-                }
-                else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
-                {
-                    _perso.Play("gGauche");
-                    _sensPersoHorizontal = -1;
-                    _sensPersoVertical = 0;
-                }
-                //flèche haut
-                else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-                {
-                    _perso.Play("gHaut");
-                    _sensPersoVertical = -1;
-                    _sensPersoHorizontal = 0;
-                }
-                //flèche bas
-                else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-                {
-                    _perso.Play("gBas");
-                    _sensPersoVertical = 1;
-                    _sensPersoHorizontal = 0;
-                }
-            }
-            else
-            {
-            if (_sensPersoHorizontal==1)
-                {
-                    _perso.Play("gDroiteImo");
-                }
-            else if (_sensPersoHorizontal == -1)
-                {
-                    _perso.Play("gGaucheImo");
-                }
-            else if(_sensPersoVertical==1)
-                {
-                    _perso.Play("gBasImo");
-                }
-            else if (_sensPersoVertical == -1)
-                {
-                    _perso.Play("gHautImo");
-                }
-            _sensPersoVertical = 0;
-             _sensPersoHorizontal = 0;
-            }
+            //  _camera.LookAt(_positionPerso);        
 
             _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
             _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
@@ -609,6 +564,7 @@ namespace SAE
             }
             return false;
         }*/
+        
 
         //méthode détection de collision avec la map
         private bool IsCollision(ushort x, ushort y)
