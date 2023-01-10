@@ -130,6 +130,7 @@ namespace SAE
         // défini dans Game1
         public Jouer2(Game1 game) : base(game)
         {
+           
             _myGame = game;
         }
 
@@ -185,12 +186,12 @@ namespace SAE
             _ghostVitesse = 0;
             _skeletonVitesse = 25;
             //FENETRE
-           /* _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+            /*_myGame.Graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
             _graphics.ApplyChanges();*/
             //camera
-            /*var viewportadapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 480);
-            _camera = new OrthographicCamera(viewportadapter);*/
+            var viewportadapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 550);
+            _camera = new OrthographicCamera(viewportadapter);
 
             _ghostAttaque = false;
             _positionPerso = new Vector2(420, 670);
@@ -540,7 +541,7 @@ namespace SAE
                 _ghost.Update(gameTime);
 
             //Camera
-            //  _camera.LookAt(_positionPerso);        
+              _camera.LookAt(_positionPerso);        
 
             //Camera
             /*_camera.LookAt(_positionPerso);
@@ -568,10 +569,10 @@ namespace SAE
             }
 
             //Vie
-            if (CollisionJoueur()) // collision entre le joueur et les monstres
+            /*if (CollisionJoueur()) // collision entre le joueur et les monstres
             {
                 _vie -= 1;
-            }
+            }*/
 
             if (_vie == 0)
                 {
@@ -586,16 +587,23 @@ namespace SAE
             }
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
-            _tiledMapRenderer.Draw();
-              /* _tiledMapRenderer.Draw(_camera.GetViewMatrix());
+            _myGame.GraphicsDevice.Clear(Color.Black); // on utilise la reference vers Game1 pour changer le graphisme
+            //_tiledMapRenderer.Draw();
+               _tiledMapRenderer.Draw(_camera.GetViewMatrix());
                var transformMatrix = _camera.GetViewMatrix();
                _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);
-            _myGame.SpriteBatch.End();*/
+            _myGame.SpriteBatch.Draw(_perso, _positionPerso);
+            for(int i = 0; i<_rectCle.Length; i++)
+            {
+                if(_cle == true)
+                {
+                    _myGame.SpriteBatch.Draw(_textureCle, _rectCle[i], Color.White); 
+                }
+            }
+            _myGame.SpriteBatch.End();
 
 
             _myGame.SpriteBatch.Begin();
-            _myGame.SpriteBatch.Draw(_perso, _positionPerso);
             /* _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
             _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
@@ -604,13 +612,6 @@ namespace SAE
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
             _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
 
-            for(int i = 0; i<_rectCle.Length; i++)
-            {
-                if(_cle == true)
-                {
-                    _myGame.SpriteBatch.Draw(_textureCle, _rectCle[i], Color.White); 
-                }
-            }
 
             //Affichage clé 1
 /*
@@ -685,27 +686,29 @@ namespace SAE
             }
 
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
-            for(int i=0; i<_batPosition.Length; i++)
+           /* for(int i=0; i<_batPosition.Length; i++)
             {
             _myGame.SpriteBatch.Draw(_bat, _batPosition[i]);
             }
-            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
+            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);*/
             _myGame.SpriteBatch.End();
+            
+
         }
-       public bool CollisionJoueur(Rectangle objet)
+        public bool CollisionJoueur(Rectangle objet)
         {
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
             return rectJoueur.Intersects(objet);
         }
 
-        public bool CollisionJoueur()
+        /*public bool CollisionJoueur()
         {
 
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
             //Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
             Rectangle rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
             return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleSkeleton);
-        }
+        }*/
 
         /*public bool CollisionCle()
         {
@@ -717,7 +720,23 @@ namespace SAE
             }
             return rectJoueur.Intersects(rectCle[i]);
         }*/
-    
+        //méthode détection de collision avec la map
+        private bool IsCollision(ushort x, ushort y)
+        {
+
+            TiledMapTile? tile;
+            if (mapLayer.TryGetTile(x, y, out tile) == false)
+            {
+                return false;
+            }
+            if (!tile.Value.IsBlank)
+            {
+
+
+                return true;
+            }
+            return false;
+        }
 
     }
 
@@ -738,22 +757,6 @@ namespace SAE
     }*/
 
 
-    //méthode détection de collision avec la map
-    /*  private bool IsCollision(ushort x, ushort y)
-      {
-
-          TiledMapTile? tile;
-          if (mapLayer.TryGetTile(x, y, out tile) == false)
-          {
-              return false;
-          }
-          if (!tile.Value.IsBlank)
-          {
-
-
-              return true;
-          }
-          return false;
-      }*/
+    
 }
 
