@@ -170,11 +170,15 @@ namespace SAE
             _positionCle3 = new Rectangle(380, 120, 25, 25);
             _positionCle4 = new Rectangle(660, 245, 25, 25);
             _positionCle5 = new Rectangle(950, 20, 25, 25);
+            
+            //Fausse Cle
+
 
             //Perso
             _sensPersoHorizontal = 0;
             _sensPersoVertical = 0;
             _vitessePerso = VITESSE_PERSO;
+
 
             //Vie
             _vie = 3;
@@ -400,42 +404,42 @@ namespace SAE
 
             //COMPORTEMENT
 
-            //Fantome
-            //le fantome attaque
-            /*if ((Keyboard.GetState().IsKeyDown(Keys.G)) && _ghostAttaque==false)
-            {
-                _ghostAttaque = true;
-               //effacer la zone dans le tableau
-            }*/
+                //Fantome
+                //le fantome attaque
+                if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque==false)
+                {
+                    _ghostAttaque = true;
+                   //effacer la zone dans le tableau
+                }
 
-            //Le héros se défend
-            /*if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
-            {
-                espaceEtat = true;
-                _nbDebattage++;
-            }*/
+                //Le héros se défend
+                if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
+                {
+                    espaceEtat = true;
+                    _nbDebattage++;
+                }
 
-            /*if (!(_keyboardState.IsKeyDown(Keys.Space)))
-            {
-                espaceEtat = false;
-            }
+                if (!(_keyboardState.IsKeyDown(Keys.Space)))
+                {
+                    espaceEtat = false;
+                }
 
-            if(_nbDebattage>=25 && _ghostAttaque==true)
-            {
-                _ghostAttaque = false;
-                _vitessePerso = VITESSE_PERSO;
-                _ghost.Play("fantomeMort");
-                _nbDebattage = 0;
-            }*/
+                if(_nbDebattage>=10 && _ghostAttaque==true)
+                {
+                    _vitessePerso = VITESSE_PERSO;
+                    float t1 = deltaTime;
+                    _ghost.Play("fantomeMort");
+                    _ghostAttaque = false;
+                    _nbDebattage = 0;
+                }
 
             //le fantome est en train d'attaquer
-            /*do
-            {
-                _ghost.Play("fantomeInvoque");
-                _ghostPosition = _positionPerso;
-                _vitessePerso = 0;
-            }
-            while (_ghostAttaque == true);*/
+            if (_ghostAttaque==true)
+                {
+                    _ghost.Play("fantomeInvoque");
+                    _ghostPosition = _positionPerso;
+                    _vitessePerso = 0;
+                }
 
 
             //Squelette
@@ -534,6 +538,7 @@ namespace SAE
              }*/
             _tiledMapRenderer.Update(gameTime);
                 _perso.Update(gameTime);
+            _ghost.Update(gameTime);
 
                 //Camera
                 //  _camera.LookAt(_positionPerso);        
@@ -555,11 +560,11 @@ namespace SAE
                 _score += 1;    
             }
 
-            //Vie
-            /*if (/*position personnage / collision monstres)
+             //Vie
+            if (CollisionJoueur()) // collision entre le joueur et les monstres
             {
                 _vie -= 1;
-            }*/
+            }
 
             if (_vie == 0)
                 {
@@ -666,11 +671,25 @@ namespace SAE
             _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
             _myGame.SpriteBatch.End();
         }
-        public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
+       /* public bool CollisionJoueur(int xObjet, int yObjet, int largeurObjet, int hauteurObjet)
         {
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
             Rectangle rectObjet = new Rectangle(xObjet, yObjet, largeurObjet, hauteurObjet);
             return rectJoueur.Intersects(rectObjet);
+            _rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);
+            _rectangleGhost = new Rectangle((int)_ghostPosition.X, (int)_ghostPosition.Y, GHOST_LARGEUR, GHOST_HAUTEUR);
+            _rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
+
+        }*/
+        public bool CollisionJoueur()
+        {
+
+            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+            Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
+            Rectangle rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
+            return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleSkeleton);
+            
+
         }
         //méthode détection de collision avec la map
         /*private bool IsCollision(ushort x, ushort y)
@@ -687,7 +706,7 @@ namespace SAE
             }
             return false;
         }*/
-        
+
 
         //méthode détection de collision avec la map
         private bool IsCollision(ushort x, ushort y)

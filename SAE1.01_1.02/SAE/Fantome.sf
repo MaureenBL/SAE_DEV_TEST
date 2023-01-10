@@ -16,7 +16,7 @@
       "frameDuration": 0.2
     },
     "fantomeMort": {
-      "frames": [16,17,18,19,20,21,22,23],
+      "frames": [16,17,18,19,20,21,22,23,30],
       "isLooping": false,
       "frameDuration": 0.1
     },
