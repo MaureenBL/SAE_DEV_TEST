@@ -767,17 +767,17 @@ namespace SAE
             Rectangle rectCle3 = _positionCle3;
             return rectJoueur.Intersects(rectCle3);
         }
-        public bool CollisionCle5()
-        {
-            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            Rectangle rectCle5 = _positionCle5;
-            return rectJoueur.Intersects(rectCle5);
-        }
         public bool CollisionCle4()
         {
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
             Rectangle rectCle4 = _positionCle4;
             return rectJoueur.Intersects(rectCle4);
+        }
+        public bool CollisionCle5()
+        {
+            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+            Rectangle rectCle5 = _positionCle5;
+            return rectJoueur.Intersects(rectCle5);
         }
 
 
