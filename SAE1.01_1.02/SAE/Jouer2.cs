@@ -105,6 +105,11 @@ namespace SAE
 
         //CLE
         private Texture2D _textureCle;
+        private Rectangle _positionCle1;
+        private Rectangle _positionCle2;
+        private Rectangle _positionCle3;
+        private Rectangle _positionCle4;
+        private Rectangle _positionCle5;
 
         //Game Over
         private string _gameOver;
@@ -156,6 +161,13 @@ namespace SAE
             _policeRegle = Content.Load<SpriteFont>("regles");
             _positionRegle = new Vector2(350, 250);
 
+            //Cle
+            _positionCle1 = new Rectangle(45, 670, 25, 25);
+            _positionCle2 = new Rectangle(770, 570, 25, 25);
+            _positionCle3 = new Rectangle(380, 120, 25, 25);
+            _positionCle4 = new Rectangle(660, 245, 25, 25);
+            _positionCle5 = new Rectangle(950, 20, 25, 25);
+
             //Perso
             _sensPersoHorizontal = 0;
             _sensPersoVertical = 0;
@@ -176,10 +188,10 @@ namespace SAE
             //FENETRE
             /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-            _graphics.ApplyChanges();*/
+            _graphics.ApplyChanges();
             //camera
             //var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            //_camera = new OrthographicCamera(viewportadapter);
+            _camera = new OrthographicCamera(viewportadapter);*/
 
             _ghostAttaque = false;
             _positionPerso = new Vector2(420, 670);
@@ -563,15 +575,69 @@ namespace SAE
                _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);*/
 
             _myGame.SpriteBatch.Begin();
-            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
-            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(770, 570, 25, 25), Color.White); // 2: piece rouge - bas
-            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(380, 120, 25, 25), Color.White); // 3: piece bleu - milieu
-            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(660, 245, 25, 25), Color.White); // 4: piece verte - haut / angle
-            _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(950, 20, 25, 25), Color.White); // 5: piece rouge - angle en haut à droite
+            _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche
+            _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
+            _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
+            _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
+            _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
             _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
 
+            //Affichage clé 1
+            /*
+            if(_positionPerso = _positionCle1)
+            {
+                _score += 1;
+                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+            }
+            else
+            {
+                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
+            }
+            //Affichage clé 2
+            if()
+            {
+                _score += 1;
+                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+            }
+            else
+            {
+                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(770, 570, 25, 25), Color.White); // 2: piece rouge - bas
+            }
+            //Affichage clé 3
+            if()
+            {
+                _score += 1;
+                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+            }
+            else
+            {
+                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(380, 120, 25, 25), Color.White); // 3: piece bleu - milieu
+            }
+            //Affichage clé 4
+            if()
+            {
+                _score += 1;
+                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+            }
+            else
+            {
+                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(660, 245, 25, 25), Color.White); // 4: piece verte - haut / angle
+            }
+            //Affichage clé 5
+            if()
+            {
+                _score += 1;
+                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+            }
+            else
+            {
+                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(950, 20, 25, 25), Color.White); // 5: piece rouge - angle en haut à droite
+            }*/
+
+
+            //Affichage vie
             if(_vie == 0)
             {
                 _myGame.SpriteBatch.DrawString(_policeGameOver, $"{_gameOver}", _positionGameOver, Color.White);
@@ -582,11 +648,13 @@ namespace SAE
                 _myGame.SpriteBatch.Draw(_textureEsc, new Rectangle(750, 420, 50, 50), Color.White);
             }
 
+            //affichage score
             if(_score == 5)
             {
                 _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
                 _myGame.SpriteBatch.Draw(_textureFin, new Rectangle(510, 285, 50, 50), Color.White);
             }
+
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             //_myGame.SpriteBatch.Draw(_bat, _batPosition);
             _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
