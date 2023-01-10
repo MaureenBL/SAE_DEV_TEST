@@ -371,7 +371,6 @@ namespace SAE
                 if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
                 {
                     _perso.Play("gDroite");
-                    _sensPersoVertical = 0;
                     _sensPersoHorizontal = 1;
                     ushort tx1 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
@@ -390,7 +389,6 @@ namespace SAE
                 else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
                 {
                     _perso.Play("gGauche");
-                    _sensPersoVertical = 0;
                     _sensPersoHorizontal = -1;
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
@@ -411,7 +409,6 @@ namespace SAE
                 else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
                 {
                     _perso.Play("gHaut");
-                    _sensPersoHorizontal = 0;
                     _sensPersoVertical = -1;
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
@@ -429,6 +426,7 @@ namespace SAE
                 else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
                 {
                     _perso.Play("gBas");
+                    _sensPersoVertical = 1;
                     _sensPersoHorizontal = 0;
                     _sensPersoVertical = 1;
 
@@ -451,15 +449,15 @@ namespace SAE
                 {
                     _perso.Play("gDroiteImo");
                 }
-            else
+            else if (_sensPersoHorizontal == -1)
                 {
                     _perso.Play("gGaucheImo");
                 }
-            if(_sensPersoVertical==1)
+            else if(_sensPersoVertical==1)
                 {
                     _perso.Play("gBasImo");
                 }
-                else
+            else if (_sensPersoVertical == -1)
                 {
                     _perso.Play("gHautImo");
                 }
