@@ -367,28 +367,28 @@ namespace SAE
                 if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
                 {
                     _perso.Play("gDroite");
-                    _sensPersoVertical = 0;
                     _sensPersoHorizontal = 1;
+                    _sensPersoVertical = 0;
                 }
                 else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
                 {
                     _perso.Play("gGauche");
-                    _sensPersoVertical = 0;
                     _sensPersoHorizontal = -1;
+                    _sensPersoVertical = 0;
                 }
                 //flèche haut
                 else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
                 {
                     _perso.Play("gHaut");
-                    _sensPersoHorizontal = 0;
                     _sensPersoVertical = -1;
+                    _sensPersoHorizontal = 0;
                 }
                 //flèche bas
                 else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
                 {
                     _perso.Play("gBas");
-                    _sensPersoHorizontal = 0;
                     _sensPersoVertical = 1;
+                    _sensPersoHorizontal = 0;
                 }
             }
             else
@@ -397,15 +397,15 @@ namespace SAE
                 {
                     _perso.Play("gDroiteImo");
                 }
-            else
+            else if (_sensPersoHorizontal == -1)
                 {
                     _perso.Play("gGaucheImo");
                 }
-            if(_sensPersoVertical==1)
+            else if(_sensPersoVertical==1)
                 {
                     _perso.Play("gBasImo");
                 }
-                else
+            else if (_sensPersoVertical == -1)
                 {
                     _perso.Play("gHautImo");
                 }
