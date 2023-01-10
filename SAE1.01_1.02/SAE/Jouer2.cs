@@ -177,10 +177,10 @@ namespace SAE
             //FENETRE
             /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-            _graphics.ApplyChanges();*/
+            _graphics.ApplyChanges();
             //camera
             var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            _camera = new OrthographicCamera(viewportadapter);
+            _camera = new OrthographicCamera(viewportadapter);*/
 
             _ghostAttaque = false;
             _positionPerso = new Vector2(420, 670);
