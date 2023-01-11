@@ -324,7 +324,7 @@ namespace SAE
                     //  _sensPersoVertical = 1;
                     //  _sensPersoHorizontal = 0;
                     //  _sensPersoVertical = 1;
-
+                     
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
