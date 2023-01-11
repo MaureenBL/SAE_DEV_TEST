@@ -568,7 +568,7 @@ namespace SAE
             }
 
             //affichage score
-            if (_score == 5)
+            if (_score == 1)
             {
                 _myGame.SpriteBatch.DrawString(_policeEnd, $"{_end}", _positionEnd, Color.White);
                 _myGame.SpriteBatch.Draw(_textureFin, new Rectangle(510, 285, 50, 50), Color.White);
