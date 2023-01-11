@@ -230,6 +230,12 @@
 /processorParam:TextureFormat=Color
 /build:george.png
 
+#begin keySound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:keySound.wav
+
 #begin map/mapGenerale.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
@@ -314,6 +320,12 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:SongAccueil.mp3
+
+#begin SongEnd.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:SongEnd.mp3
 
 #begin Titre.spritefont
 /importer:FontDescriptionImporter

@@ -67,11 +67,8 @@ namespace SAE
         private Game1 _game1;
         public SpriteBatch SpriteBatch { get; set; }
 
-
         private GraphicsDeviceManager _graphics;
 
-        // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
-        // défini dans Game1
         public Commande(Game1 game) : base(game)
         {
             _myGame = game;
@@ -126,15 +123,16 @@ namespace SAE
             KeyboardState keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Space))
             {
-                Initialize();
-               // _screenManager.LoadScreen(_reglesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow)); // NE MARCHE PAS 
+                Initialize(); 
             }
         }
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.Blue); // on utilise la reference vers Game1 pour changer le graphisme
+            
             _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
+            //texte
             _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
             _myGame.SpriteBatch.DrawString(_policeAvancer, $"{_avancer}", _positionAvancer, Color.White);
             _myGame.SpriteBatch.DrawString(_policeReculer, $"{_reculer}", _positionReculer, Color.White);
@@ -143,6 +141,7 @@ namespace SAE
             _myGame.SpriteBatch.DrawString(_policeRetour, $"{_retour}", _positionRetour, Color.White);
             _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
 
+            //texture
             _myGame.SpriteBatch.Draw(_textureH, new Rectangle(290, 230, 50, 50), Color.White);
             _myGame.SpriteBatch.Draw(_textureB, new Rectangle(280, 280, 50, 50), Color.White);
             _myGame.SpriteBatch.Draw(_textureD, new Rectangle(290, 330, 50, 50), Color.White);

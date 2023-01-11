@@ -17,8 +17,7 @@ using MonoGame.Extended.Screens.Transitions;
 using MonoGame.Extended.ViewportAdapters;
 using MonoGame.Extended;
 using Microsoft.Xna.Framework.Media;
-
-
+using Microsoft.Xna.Framework.Audio;
 
 namespace SAE
 {
@@ -27,8 +26,8 @@ namespace SAE
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         //TAILLE FENETRE
-        public const int TAILLE_FENETRE_L = 1600;
-        public const int TAILLE_FENETRE_H = 900;
+        public const int TAILLE_FENETRE_L = 1120;
+        public const int TAILLE_FENETRE_H = 800;
         //MAP
         private TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
@@ -48,8 +47,8 @@ namespace SAE
         private int _vitessePerso;
         private int _nbVie;
         private int _nbDebattage;
-        public const int LARGEUR_PERSO = 48;
-        public const int HAUTEUR_PERSO = 64;
+        public const int LARGEUR_PERSO = 14;
+        public const int HAUTEUR_PERSO = 14;
         //MONSTRES
         //animation
         private AnimatedSprite _bat;
@@ -125,18 +124,26 @@ namespace SAE
         private Texture2D _textureEsc;
         private Texture2D _textureFin;
 
+        private SoundEffect _sound;
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
         // défini dans Game1
         public Jouer2(Game1 game) : base(game)
         {
+           
             _myGame = game;
         }
 
         public override void Initialize()
         {
-            _cle = true;
+
+            //FENETRE
+          /*  _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+            _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
+            _graphics.ApplyChanges();*/
+
+
 
             //game over
             _gameOver = "Game Over";
@@ -160,13 +167,19 @@ namespace SAE
             _positionRegle = new Vector2(350, 250);
 
             //Cle
+            _cle = true;
             _rectCle = new Rectangle[5];
-            _rectCle = new Rectangle[] {new Rectangle(45, 670, 25, 25),new Rectangle(770, 570, 25, 25),new Rectangle(380, 120, 25, 25),new Rectangle(660, 245, 25, 25),new Rectangle(950, 20, 25, 25) };
+            _rectCle = new Rectangle[] 
+            {
+                new Rectangle(45, 670, 25, 25),
+                new Rectangle(770, 570, 25, 25),
+                new Rectangle(380, 120, 25, 25),
+                new Rectangle(660, 245, 25, 25),
+                new Rectangle(1050, 20, 25, 25), 
+                new Rectangle(755, 400, 25, 25) 
+            };
 
             
-            //Fausse Cle;
-
-
             //Perso
             _sensPersoHorizontal = 0;
             _sensPersoVertical = 0;
@@ -180,15 +193,17 @@ namespace SAE
             _positionPerso = new Vector2(400, TAILLE_FENETRE_H - 2 * HAUTEUR_PERSO);
 
 
-            // TODO: Add your initialization logic here
+            //vitesse des monstres
+            _batVitesse = 50;
+            _ghostVitesse = 0;
+            _skeletonVitesse = 25;
 
-            //FENETRE
             /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
             _graphics.ApplyChanges();
             //camera
-            //var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            _camera = new OrthographicCamera(viewportadapter);*/
+            var viewportadapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 550);
+            _camera = new OrthographicCamera(viewportadapter);
 
 
             _positionPerso = new Vector2(420, 670);
@@ -206,9 +221,6 @@ namespace SAE
             _batPosition[2] = new Vector2(950, 520);
             for (int i = 0; i < _batPosition.Length; i++)
             {
-                _batPositionIni[i] = _batPosition[i];
-                _batZone[i] = new Rectangle((int)(_batPositionIni[i].X + (BAT_LARGEUR/2) - 100), (int)(_batPositionIni[i].Y - (BAT_HAUTEUR/2) - 25), 200, 200);
-            }
             //vitesse des monstres
             for (int i = 0; i < _batVitesse.Length; i++)
                 _batVitesse[i] = 50;
@@ -218,6 +230,10 @@ namespace SAE
             _ghostVitesse = 0;
             _skeletonVitesse = 50;
 
+            _positionPerso = new Vector2(400, 770);
+                _batPositionIni[i] = _batPosition[i];
+                _batZone[i] = new Rectangle((int)(_batPositionIni[i].X + (BAT_LARGEUR/2) - 100), (int)(_batPositionIni[i].Y - (BAT_HAUTEUR/2) - 25), 200, 200);
+            }
             base.Initialize();
         }
         public override void LoadContent()
@@ -225,6 +241,9 @@ namespace SAE
             //TEXTURE CLE
             _myGame.SpriteBatch = new SpriteBatch(GraphicsDevice);
             _textureCle = Content.Load<Texture2D>("cle");
+
+            //SoundEffect
+            _sound = Content.Load<SoundEffect>("keySound");
 
             //Chargement de la map
             _tiledMap = Content.Load<TiledMap>("map/mapGenerale");
@@ -234,13 +253,13 @@ namespace SAE
             SpriteSheet persoTexture = Content.Load<SpriteSheet>("george.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(persoTexture);
             _textureRejouer = Content.Load<Texture2D>("G");
-            _textureEsc = Content.Load<Texture2D>("esc");
-            _textureFin = Content.Load<Texture2D>("F");
-
             SpriteSheet batTexture = Content.Load<SpriteSheet>("bat.sf", new JsonContentLoader());
             _bat = new AnimatedSprite(batTexture);
             SpriteSheet skeletonTexture = Content.Load<SpriteSheet>("Squelette.sf", new JsonContentLoader());
             _skeleton = new AnimatedSprite(skeletonTexture);
+            SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
+            _ghost = new AnimatedSprite(ghostTexture);
+
             SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
             _ghost = new AnimatedSprite(ghostTexture);
 
@@ -259,12 +278,12 @@ namespace SAE
             //Déplacement et Animation + Collision
             
             _keyboardState = Keyboard.GetState();
-            /*if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
+            if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
             {
                 if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
                 {
                     _perso.Play("gDroite");
-                    _sensPersoHorizontal = 1;
+                  //  _sensPersoHorizontal = 1;
                     ushort tx1 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
@@ -274,15 +293,12 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
                         _positionPerso.X += walkSpeed;
-                    else
-                    {
-                        _positionPerso.X -= 1;
-                    }
+                    
                 }
                 else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
                 {
                     _perso.Play("gGauche");
-                    _sensPersoHorizontal = -1;
+                 //   _sensPersoHorizontal = -1;
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
@@ -292,17 +308,13 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
                         _positionPerso.X -= walkSpeed;
-                    else
-                    {
-                        _positionPerso.X += 1;
-
-                    }
+                    
                 }
                 //flèche haut
                 else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
                 {
                     _perso.Play("gHaut");
-                    _sensPersoVertical = -1;
+                  //  _sensPersoVertical = -1;
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
@@ -310,18 +322,15 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
                         _positionPerso.Y -= walkSpeed;
-                    else
-                    {
-                        _positionPerso.Y += 1;
-                    }
+                    
                 }
                 //flèche bas
                 else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
                 {
                     _perso.Play("gBas");
-                    _sensPersoVertical = 1;
-                    _sensPersoHorizontal = 0;
-                    _sensPersoVertical = 1;
+                  //  _sensPersoVertical = 1;
+                  //  _sensPersoHorizontal = 0;
+                  //  _sensPersoVertical = 1;
 
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
@@ -330,13 +339,10 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
                         _positionPerso.Y += walkSpeed;
-                    else
-                    {
-                        _positionPerso.Y -= 1;
-                    }
+                    
                 }
             }
-            else
+            /*else
             {
             if (_sensPersoHorizontal==1)
                 {
@@ -354,68 +360,69 @@ namespace SAE
                 {
                     _perso.Play("gHautImo");
                 }
-            _sensPersoVertical = 0;
-             _sensPersoHorizontal = 0;
-            }*/
-            if (_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
-            {
-                if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
-                {
-                    _perso.Play("gGauche");
-                    _sensPersoHorizontal = -1;
-                    _sensPersoVertical = 0;
-                }
-                //flèche haut
-                else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-                {
-                    _perso.Play("gHaut");
-                    _sensPersoVertical = -1;
-                    _sensPersoHorizontal = 0;
-                }
-                //flèche bas
-                else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-                {
-                    _perso.Play("gBas");
-                    _sensPersoVertical = 1;
-                    _sensPersoHorizontal = 0;
-                }
-                else if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-                {
-                    _perso.Play("gDroite");
-                    _sensPersoVertical = 0;
-                    _sensPersoHorizontal = 1;
-                }
+            /* if (_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
+             {
+                 if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
+                 {
+                     _perso.Play("gGauche");
+                     _sensPersoHorizontal = -1;
+                     _sensPersoVertical = 0;
+                 }
+                 //flèche haut
+                 else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
+                 {
+                     _perso.Play("gHaut");
+                     _sensPersoVertical = -1;
+                     _sensPersoHorizontal = 0;
+                 }
+                 //flèche bas
+                 else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+                 {
+                     _perso.Play("gBas");
+                     _sensPersoVertical = 1;
+                     _sensPersoHorizontal = 0;
+                 }
+                 else if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+                 {
+                     _perso.Play("gDroite");
+                     _sensPersoVertical = 0;
+                     _sensPersoHorizontal = 1;
+                 }
+             }
+             else
+             {
+                 if (_sensPersoHorizontal == 1)
+                 {
+                     _perso.Play("gDroiteImo");
+                 }
+                 else if (_sensPersoHorizontal == -1)
+                 {
+                     _perso.Play("gGaucheImo");
+                 }
+                 else if (_sensPersoVertical == 1)
+                 {
+                     _perso.Play("gBasImo");
+                 }
+                 else if (_sensPersoVertical == -1)
+                 {
+                     _perso.Play("gHautImo");
+                 }
+                 _sensPersoVertical = 0;
+                 _sensPersoHorizontal = 0;
+             }
+                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
             }
-            else
-            {
-                if (_sensPersoHorizontal == 1)
-                {
-                    _perso.Play("gDroiteImo");
-                }
-                else if (_sensPersoHorizontal == -1)
-                {
-                    _perso.Play("gGaucheImo");
-                }
-                else if (_sensPersoVertical == 1)
-                {
-                    _perso.Play("gBasImo");
-                }
-                else if (_sensPersoVertical == -1)
-                {
-                    _perso.Play("gHautImo");
-                }
-                _sensPersoVertical = 0;
-                _sensPersoHorizontal = 0;
-            }
-                _positionPerso += new Vector2(_sensPersoHorizontal * _vitessePerso * deltaTime, _sensPersoVertical * _vitessePerso * deltaTime);
+                _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
+                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
 
             //pour collision clé
             
-
-            //COMPORTEMENT
-
-              //Fantome
+            //Fantome
+            //le fantome attaque
+            if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque==false)
+                //Fantome
                 //le fantome attaque
                 if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque==false)
                 {
@@ -568,15 +575,15 @@ namespace SAE
                 _skeletonOrientationY = 0;
             }
             _skeletonPosition += new Vector2(_skeletonOrientationX * _skeletonVitesse * deltaTime, _skeletonOrientationY * _skeletonVitesse * deltaTime);
-
-            _tiledMapRenderer.Update(gameTime);
-                _perso.Update(gameTime);
                 _ghost.Update(gameTime);
                 _bat.Update(gameTime);
                 _skeleton.Update(deltaTime);
+            _tiledMapRenderer.Update(gameTime);
+                _perso.Update(gameTime);
+                _ghost.Update(gameTime);
 
             //Camera
-            //  _camera.LookAt(_positionPerso);        
+              _camera.LookAt(_positionPerso);        
 
             //Camera
             /*_camera.LookAt(_positionPerso);
@@ -591,19 +598,19 @@ namespace SAE
             //SCORE
             for (int i =0; i < _rectCle.Length; i++)
             {
-                Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-                if (rectJoueur.Intersects(_rectCle[i]))
+                if (CollisionJoueur(_rectCle[i]))
                 {
-                    _cle = false;
+                    _rectCle[i] = new Rectangle(0,0,0,0);
+                    _sound.Play();
                     _score += 1;                    
                 }
-            }
+            /*if (CollisionJoueur()) // collision entre le joueur et les monstres
 
             //Vie
-           /*if (CollisionJoueur()) // collision entre le joueur et les monstres
+            if (CollisionJoueur()) // collision entre le joueur et les monstres
             {
                 _vie -= 1;
-            }
+            }*/
 
             if (_vie == 0)
                 {
@@ -618,22 +625,12 @@ namespace SAE
             }
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.DarkGoldenrod); // on utilise la reference vers Game1 pour changer le graphisme
-            _tiledMapRenderer.Draw();
-            /*   _tiledMapRenderer.Draw(_camera.GetViewMatrix());
+            _myGame.GraphicsDevice.Clear(Color.Black); // on utilise la reference vers Game1 pour changer le graphisme
+            //_tiledMapRenderer.Draw();
+               _tiledMapRenderer.Draw(_camera.GetViewMatrix());
                var transformMatrix = _camera.GetViewMatrix();
-               _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);*/
-
-            _myGame.SpriteBatch.Begin();
+               _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
-            /* _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite */
-            _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
-
             for(int i = 0; i<_rectCle.Length; i++)
             {
                 if(_cle == true)
@@ -641,61 +638,13 @@ namespace SAE
                     _myGame.SpriteBatch.Draw(_textureCle, _rectCle[i], Color.White); 
                 }
             }
-
-            //Affichage clé 1
-/*
-            if(_cle == true)
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
-            }
-*/
-            /*
-            //Affichage clé 2
-            if()
-            {
-                _score += 1;
-                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            }
-            else
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(770, 570, 25, 25), Color.White); // 2: piece rouge - bas
-            }
-            //Affichage clé 3
-            if()
-            {
-                _score += 1;
-                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            }
-            else
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(380, 120, 25, 25), Color.White); // 3: piece bleu - milieu
-            }
-            //Affichage clé 4
-            if()
-            {
-                _score += 1;
-                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            }
-            else
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(660, 245, 25, 25), Color.White); // 4: piece verte - haut / angle
-            }
-            //Affichage clé 5
-            if()
-            {
-                _score += 1;
-                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            }
-            else
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(950, 20, 25, 25), Color.White); // 5: piece rouge - angle en haut à droite
-            }*/
+            _myGame.SpriteBatch.End();
 
 
+            _myGame.SpriteBatch.Begin();
+            _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
+            
             //Affichage vie
             if (_vie == 0)
             {
@@ -715,28 +664,27 @@ namespace SAE
             }
 
             //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
-            for(int i=0; i<_batPosition.Length; i++)
-            {
+           /* for(int i=0; i<_batPosition.Length; i++)
+            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
+            _myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             _myGame.SpriteBatch.Draw(_bat, _batPosition[i]);
             }
             _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
-            _myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
             _myGame.SpriteBatch.End();
+            
+
         }
-       public bool CollisionJoueur(Rectangle objet)
+        public bool CollisionJoueur(Rectangle objet)
         {
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            return rectJoueur.Intersects(objet);
+        /*public bool CollisionJoueur()
         }
 
-       /* public bool CollisionJoueur()
-        {
+        public bool CollisionJoueur()
+         //   Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
 
             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            for(int i=0; i<_batPosition.Length; i++)
-            {
-                Rectangle rectangleBat = new Rectangle((int)_batPosition[i].X, (int)_batPosition[i].Y, BAT_LARGEUR, BAT_HAUTEUR);
-            }         
+            //Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
             Rectangle rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
             return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleSkeleton);
         }*/
@@ -751,7 +699,23 @@ namespace SAE
             }
             return rectJoueur.Intersects(rectCle[i]);
         }*/
-    
+        //méthode détection de collision avec la map
+        private bool IsCollision(ushort x, ushort y)
+        {
+
+            TiledMapTile? tile;
+            if (mapLayer.TryGetTile(x, y, out tile) == false)
+            {
+                return false;
+            }
+            if (!tile.Value.IsBlank)
+            {
+
+
+                return true;
+            }
+            return false;
+        }
 
     }
 
@@ -772,22 +736,6 @@ namespace SAE
     }*/
 
 
-    //méthode détection de collision avec la map
-    /*  private bool IsCollision(ushort x, ushort y)
-      {
-
-          TiledMapTile? tile;
-          if (mapLayer.TryGetTile(x, y, out tile) == false)
-          {
-              return false;
-          }
-          if (!tile.Value.IsBlank)
-          {
-
-
-              return true;
-          }
-          return false;
-      }*/
+    
 }
 

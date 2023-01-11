@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended.Screens;
 
 namespace SAE
@@ -40,21 +38,10 @@ namespace SAE
         private Vector2 _positionQuitter;
         public const int TAILLE_QUITTER = 100;
 
-        //musique / son
-        private Song _song;
-
-
         //transition
         public SpriteBatch SpriteBatch { get; set; }
 
-
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-
-
         private Game1 _myGame;
-        // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
-        // défini dans Game1
         public Accueil(Game1 game) : base(game)
         {
             _myGame = game;
@@ -95,16 +82,8 @@ namespace SAE
             _textureCommande = Content.Load<Texture2D>("C");
             _textureEsc = Content.Load<Texture2D>("esc");
 
-            //MUSIQUE
-            _song = Content.Load<Song>("SongAccueil");
 
             base.LoadContent();
-        }
-
-        void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
-        {
-            // 0.0f is silent, 1.0f is full volume
-            MediaPlayer.Volume = 0.5f;
         }
 
         public override void Update(GameTime gameTime)
@@ -116,9 +95,7 @@ namespace SAE
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
             _myGame.SpriteBatch.Begin();
-            //ACCUEIL
             _myGame.SpriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
             _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
             _myGame.SpriteBatch.DrawString(_policeJouer, $"{_jouer}", _positionJouer, Color.White);
@@ -130,9 +107,6 @@ namespace SAE
             _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
             _myGame.SpriteBatch.Draw(_textureEsc, new Rectangle(830, 670, 30, 30), Color.White);
 
-            //GEORGE
-
-            //     _spriteBatch.Draw(_perso, _positionPerso);
             _myGame.SpriteBatch.End();
 
         }
