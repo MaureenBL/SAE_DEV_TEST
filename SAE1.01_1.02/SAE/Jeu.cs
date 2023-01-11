@@ -1,13 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Content;
-using MonoGame.Extended.Tiled.Renderers;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Screens;
-using MonoGame.Extended.Screens.Transitions;
 
 
 namespace SAE
@@ -17,16 +10,16 @@ namespace SAE
         private Game1 _myGame;
 
         //Regle
-        private string _regle;
-        private SpriteFont _policeRegle;
-        private Vector2 _positionRegle;
-
+        private string _rappel;
+        private SpriteFont _policeRappel;
+        private Vector2 _positionRappel;
 
         //titre
         private string _titre;
         private SpriteFont _policeTitre;
         private Vector2 _positionTitre;
 
+        //texture
         private Texture2D _textureFond;
         private Texture2D _texturePlay;
         public SpriteBatch SpriteBatch { get; set; }
@@ -45,14 +38,14 @@ namespace SAE
             _policeTitre = Content.Load<SpriteFont>("Titre");
             _positionTitre = new Vector2(265, 100);
 
-            _regle = "Souviens toi, tu dois arriver au bout sans mourir. \n" +
+            _rappel = "Souviens toi, tu dois arriver au bout sans mourir. \n" +
                 "Pour cela, c'est facile, il faut que trouver 5 clefs qui sont un peu partout \n" +
                 "Je te rappel que des monstres t'attaqueront pour ne pas que tu gagnes \n" +
                 "\n Rappel des commandes : pour bouger utilise les fleches directionnelles." +
                 "\nIl te faut 5 clefs ! Bon courage ! Je crois en toi et surtout ne meurs pas ! \n" +
                 "\n Pour commencer clique sur : ";
-            _policeRegle = Content.Load<SpriteFont>("regles");
-            _positionRegle = new Vector2(50, 250);
+            _policeRappel = Content.Load<SpriteFont>("regles");
+            _positionRappel = new Vector2(50, 250);
             base.Initialize();
         }
         
@@ -67,14 +60,13 @@ namespace SAE
         { }
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.Yellow); // on utilise la reference vers Game1 pour changer le graphisme
+            _myGame.GraphicsDevice.Clear(Color.Yellow); 
 
             _myGame.SpriteBatch.Begin();
-
             _myGame.SpriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
             _myGame.SpriteBatch.Draw(_texturePlay, new Rectangle(410, 500, 50, 50), Color.White);
             _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
-            _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+            _myGame.SpriteBatch.DrawString(_policeRappel, $"{_rappel}", _positionRappel, Color.White);
             _myGame.SpriteBatch.End();
         }
     }

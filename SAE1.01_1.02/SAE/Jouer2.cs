@@ -41,6 +41,10 @@ namespace SAE
         public const int LARGEUR_PERSO = 14;
         public const int HAUTEUR_PERSO = 14;
         //MONSTRES
+
+
+
+
         //animation
         private AnimatedSprite _bat;
         private AnimatedSprite _ghost;
@@ -86,9 +90,9 @@ namespace SAE
         private SpriteFont _police;
         private Vector2 _positionScore;
         //Regle
-        private string _regle;
-        private SpriteFont _policeRegle;
-        private Vector2 _positionRegle;
+        private string _end;
+        private SpriteFont _policeEnd;
+        private Vector2 _positionEnd;
 
 
         //Vie
@@ -124,6 +128,9 @@ namespace SAE
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
         // défini dans Game1
+
+
+
         public Jouer2(Game1 game) : base(game)
         {
 
@@ -150,9 +157,9 @@ namespace SAE
             _score = 0;
             _police = Content.Load<SpriteFont>("Font");
             _positionScore = new Vector2(15, 10);
-            _regle = " Bravo tu as toutes les clefs ! \n Clique sur : ";
-            _policeRegle = Content.Load<SpriteFont>("regles");
-            _positionRegle = new Vector2(350, 250);
+            _end = " Bravo tu as toutes les clefs ! \n Clique sur : ";
+            _policeEnd = Content.Load<SpriteFont>("regles");
+            _positionEnd = new Vector2(350, 250);
 
             //Cle
             _cle = true;
@@ -568,7 +575,7 @@ namespace SAE
             //affichage score
             if (_score == 5)
             {
-                _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+                _myGame.SpriteBatch.DrawString(_policeEnd, $"{_end}", _positionEnd, Color.White);
                 _myGame.SpriteBatch.Draw(_textureFin, new Rectangle(510, 285, 50, 50), Color.White);
             }
 
@@ -576,11 +583,12 @@ namespace SAE
 
 
         }
-        public bool CollisionJoueur(Rectangle objet)
-        {
-            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            return rectJoueur.Intersects(objet);
-        }
+         public bool CollisionJoueur(Rectangle objet)
+         {
+             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+
+             return rectJoueur.Intersects(objet);
+         }
 
        
 
@@ -589,13 +597,13 @@ namespace SAE
         private bool IsCollision(ushort x, ushort y)
         {
 
-            TiledMapTile? tile;
-            if (mapLayer.TryGetTile(x, y, out tile) == false)
-            {
-                return false;
-            }
-            if (!tile.Value.IsBlank)
-            {
+                TiledMapTile? tile;
+                if (mapLayer.TryGetTile(x, y, out tile) == false)
+                {
+                    return false;
+                }
+                if (!tile.Value.IsBlank)
+                {
 
 
                 return true;

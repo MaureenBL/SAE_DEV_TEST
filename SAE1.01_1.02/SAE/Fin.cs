@@ -1,13 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Content;
-using MonoGame.Extended.Tiled.Renderers;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Screens;
-using MonoGame.Extended.Screens.Transitions;
 
 
 namespace SAE
@@ -17,9 +10,9 @@ namespace SAE
         private Game1 _myGame;
 
         //Regle
-        private string _regle;
-        private SpriteFont _policeRegle;
-        private Vector2 _positionRegle;
+        private string _texteFin;
+        private SpriteFont _policeTexteFin;
+        private Vector2 _positionTexteFin;
         
         //congr
         private string _congr;
@@ -60,11 +53,11 @@ namespace SAE
             _policeTitre = Content.Load<SpriteFont>("Titre");
             _positionTitre = new Vector2(350, 5);
 
-            _regle = "Woaw ! Je n'en attendais pas moins de toi. Tu as eu toutes \n les clefs  et tu ne t'aies pas " +
+            _texteFin = "Woaw ! Je n'en attendais pas moins de toi. Tu as eu toutes \n les clefs  et tu ne t'aies pas " +
                 "fais avoir  par les monstres. \n Bravo tu es sorti sans soucis. \n Tu peux choisir de rejouer ou bien de quitter." +
                 "\n            Bonne continuation !";
-            _policeRegle = Content.Load<SpriteFont>("End");
-            _positionRegle = new Vector2(2, 300);
+            _policeTexteFin = Content.Load<SpriteFont>("End");
+            _positionTexteFin = new Vector2(2, 300);
 
             _congr = " Congratulations !! ";
             _policeCongr = Content.Load<SpriteFont>("End");
@@ -94,18 +87,18 @@ namespace SAE
         { }
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.Yellow); // on utilise la reference vers Game1 pour changer le graphisme
+            _myGame.GraphicsDevice.Clear(Color.Yellow); 
 
             _myGame.SpriteBatch.Begin();
-
             _myGame.SpriteBatch.Draw(_textureFin, new Rectangle(0, 0, 1000, 700), Color.White);
+            //texte
             _myGame.SpriteBatch.DrawString(_policeTitre, $"{_titre}", _positionTitre, Color.White);
-            _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.LightBlue);
+            _myGame.SpriteBatch.DrawString(_policeTexteFin, $"{_texteFin}", _positionTexteFin, Color.LightBlue);
             _myGame.SpriteBatch.DrawString(_policeCongr, $"{_congr}", _positionCongr, Color.White);
-
             _myGame.SpriteBatch.DrawString(_policeRejouer, $"{_rejouer}", _positionRejouer, Color.White);
             _myGame.SpriteBatch.DrawString(_policeQuitter, $"{_quitter}", _positionQuitter, Color.White);
 
+            //texture
             _myGame.SpriteBatch.Draw(_textureRejouer, new Rectangle(250, 620, 50, 45), Color.White);
             _myGame.SpriteBatch.Draw(_textureEsc, new Rectangle(650, 620, 50, 50), Color.White);
             _myGame.SpriteBatch.End();
