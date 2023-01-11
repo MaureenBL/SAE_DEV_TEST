@@ -405,9 +405,9 @@ namespace SAE
              }
                  _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
                  _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
-            }
+            
                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
+                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
 
             //pour collision clé
@@ -617,6 +617,9 @@ namespace SAE
 
             }
         }
+    
+
+         
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.Black); // on utilise la reference vers Game1 pour changer le graphisme
