@@ -50,6 +50,10 @@ namespace SAE
         public const int LARGEUR_PERSO = 14;
         public const int HAUTEUR_PERSO = 14;
         //MONSTRES
+
+
+
+
         //animation
         private AnimatedSprite _bat;
         private AnimatedSprite _ghost;
@@ -86,6 +90,7 @@ namespace SAE
         private bool[] _batAttaque;
         private bool _skeletonAttaque;
         private bool espaceEtat;
+
 
         //Score
         private int _score;
@@ -129,6 +134,9 @@ namespace SAE
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
         // défini dans Game1
+
+
+
         public Jouer2(Game1 game) : base(game)
         {
 
@@ -137,14 +145,6 @@ namespace SAE
 
         public override void Initialize()
         {
-
-            //FENETRE
-            /*  _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
-              _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-              _graphics.ApplyChanges();*/
-
-
-
             //game over
             _gameOver = "Game Over";
             _policeGameOver = Content.Load<SpriteFont>("Titre");
@@ -197,15 +197,14 @@ namespace SAE
             _ghostVitesse = 0;
             _skeletonVitesse = 25;
 
-           /* _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
-            _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-            _graphics.ApplyChanges();*/
-            //camera
             var viewportadapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 550);
             _camera = new OrthographicCamera(viewportadapter);
+                     
 
+            _positionPerso = new Vector2(400, 770);
 
-            _positionPerso = new Vector2(420, 670);
+            _ghostVitesse = 0;
+            _skeletonVitesse = 25;
             _skeletonPosition = new Vector2(600, 400);
             _ghostPosition = new Vector2(-GHOST_LARGEUR, -GHOST_HAUTEUR);
             _batPosition = new Vector2[3];
@@ -228,7 +227,10 @@ namespace SAE
             _ghostAttaque = false;
             _skeletonVitesse = 50;
 
-            _positionPerso = new Vector2(400, 770);
+
+
+
+
             base.Initialize();
         }
         public override void LoadContent()
@@ -254,6 +256,7 @@ namespace SAE
             _skeleton = new AnimatedSprite(skeletonTexture);
             SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
             _ghost = new AnimatedSprite(ghostTexture);
+
 
             base.LoadContent();
         }
@@ -335,77 +338,7 @@ namespace SAE
                 }
             }
 
-            /*else
-            {
-            if (_sensPersoHorizontal==1)
-                {
-                    _perso.Play("gDroiteImo");
-                }
-            else if (_sensPersoHorizontal == -1)
-                {
-                    _perso.Play("gGaucheImo");
-                }
-            else if(_sensPersoVertical==1)
-                {
-                    _perso.Play("gBasImo");
-                }
-            else if (_sensPersoVertical == -1)
-                {
-                    _perso.Play("gHautImo");
-                }
-            /* if (_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
-             {
-                 if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
-                 {
-                     _perso.Play("gGauche");
-                     _sensPersoHorizontal = -1;
-                     _sensPersoVertical = 0;
-                 }
-                 //flèche haut
-                 else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-                 {
-                     _perso.Play("gHaut");
-                     _sensPersoVertical = -1;
-                     _sensPersoHorizontal = 0;
-                 }
-                 //flèche bas
-                 else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
-                 {
-                     _perso.Play("gBas");
-                     _sensPersoVertical = 1;
-                     _sensPersoHorizontal = 0;
-                 }
-                 else if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
-                 {
-                     _perso.Play("gDroite");
-                     _sensPersoVertical = 0;
-                     _sensPersoHorizontal = 1;
-                 }
-             }
-             else
-             {
-                 if (_sensPersoHorizontal == 1)
-                 {
-                     _perso.Play("gDroiteImo");
-                 }
-                 else if (_sensPersoHorizontal == -1)
-                 {
-                     _perso.Play("gGaucheImo");
-                 }
-                 else if (_sensPersoVertical == 1)
-                 {
-                     _perso.Play("gBasImo");
-                 }
-                 else if (_sensPersoVertical == -1)
-                 {
-                     _perso.Play("gHautImo");
-                 }
-                 _sensPersoVertical = 0;
-                 _sensPersoHorizontal = 0;
-             }
-                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
-            
+           
                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
@@ -422,6 +355,7 @@ namespace SAE
                     _ghostAttaque = true;
                     //supprimer la clé
                 }
+
 
             //Le héros se défend
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque == true)
@@ -578,15 +512,7 @@ namespace SAE
             //Camera
             _camera.LookAt(_positionPerso);
 
-            //Camera
-            /*_camera.LookAt(_positionPerso);
-            //_cameraPosition = _positionPerso;
-            const float movementSpeed = 200;
-            _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
-
-            */ 
-
-
+           
 
             //SCORE
             for (int i = 0; i < _rectCle.Length; i++)
@@ -605,8 +531,7 @@ namespace SAE
          
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.Black); // on utilise la reference vers Game1 pour changer le graphisme
-                                                       //_tiledMapRenderer.Draw();
+            _myGame.GraphicsDevice.Clear(Color.Black); 
             _tiledMapRenderer.Draw(_camera.GetViewMatrix());
             var transformMatrix = _camera.GetViewMatrix();
             _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);
@@ -659,16 +584,6 @@ namespace SAE
              return rectJoueur.Intersects(objet);
          }
 
-            /*public bool CollisionCle()
-            {
-                Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-                for(int i = 0; i<_rectCle.Length; i++)
-                {
-                    Rectangle rectCle = _rectCle[i];
-
-                }
-                return rectJoueur.Intersects(rectCle[i]);
-            }*/
             //méthode détection de collision avec la map
             private bool IsCollision(ushort x, ushort y)
             {
