@@ -92,9 +92,9 @@ namespace SAE
         private SpriteFont _police;
         private Vector2 _positionScore;
         //Regle
-        private string _regle;
-        private SpriteFont _policeRegle;
-        private Vector2 _positionRegle;
+        private string _end;
+        private SpriteFont _policeEnd;
+        private Vector2 _positionEnd;
 
 
         //Vie
@@ -162,9 +162,9 @@ namespace SAE
             _score = 0;
             _police = Content.Load<SpriteFont>("Font");
             _positionScore = new Vector2(15, 10);
-            _regle = " Bravo tu as toutes les clefs ! \n Clique sur : ";
-            _policeRegle = Content.Load<SpriteFont>("regles");
-            _positionRegle = new Vector2(350, 250);
+            _end = " Bravo tu as toutes les clefs ! \n Clique sur : ";
+            _policeEnd = Content.Load<SpriteFont>("regles");
+            _positionEnd = new Vector2(350, 250);
 
             //Cle
             _cle = true;
@@ -645,7 +645,7 @@ namespace SAE
             //affichage score
             if (_score == 5)
             {
-                _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
+                _myGame.SpriteBatch.DrawString(_policeEnd, $"{_end}", _positionEnd, Color.White);
                 _myGame.SpriteBatch.Draw(_textureFin, new Rectangle(510, 285, 50, 50), Color.White);
             }
             _myGame.SpriteBatch.End();
