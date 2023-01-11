@@ -457,7 +457,6 @@ namespace SAE
             {
                 _skeletonAttaque = true;
                 _skeleton.Play("squeletteEnMarche");
-                _vie -= 1;
             }
             else
             {
