@@ -584,7 +584,7 @@ namespace SAE
             const float movementSpeed = 200;
             _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
 
-            */
+            */ 
 
 
 
