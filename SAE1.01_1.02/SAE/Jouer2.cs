@@ -427,7 +427,7 @@ namespace SAE
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque == true)
             {
                 espaceEtat = true;
-                _nbDebattage++;
+                _nbDebattage++;  
             }
 
             if (!(_keyboardState.IsKeyDown(Keys.Space)))
