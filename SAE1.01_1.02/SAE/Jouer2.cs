@@ -37,7 +37,7 @@ namespace SAE
         private KeyboardState _keyboardState;
         //camera
         private OrthographicCamera _camera;
-        
+
 
         //PERSONNAGE - GEORGE
         private AnimatedSprite _perso;
@@ -80,7 +80,7 @@ namespace SAE
         //zone
         public Rectangle _skeletonZone;
         public Rectangle[] _batZone;
-        
+
         //commportement
         private bool _ghostAttaque;
         private bool[] _batAttaque;
@@ -131,7 +131,7 @@ namespace SAE
         // défini dans Game1
         public Jouer2(Game1 game) : base(game)
         {
-           
+
             _myGame = game;
         }
 
@@ -139,9 +139,9 @@ namespace SAE
         {
 
             //FENETRE
-          /*  _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
-            _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-            _graphics.ApplyChanges();*/
+            /*  _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+              _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
+              _graphics.ApplyChanges();*/
 
 
 
@@ -169,17 +169,17 @@ namespace SAE
             //Cle
             _cle = true;
             _rectCle = new Rectangle[5];
-            _rectCle = new Rectangle[] 
+            _rectCle = new Rectangle[]
             {
                 new Rectangle(45, 670, 25, 25),
                 new Rectangle(770, 570, 25, 25),
                 new Rectangle(380, 120, 25, 25),
                 new Rectangle(660, 245, 25, 25),
-                new Rectangle(1050, 20, 25, 25), 
-                new Rectangle(755, 400, 25, 25) 
+                new Rectangle(1050, 20, 25, 25),
+                new Rectangle(755, 400, 25, 25)
             };
 
-            
+
             //Perso
             _sensPersoHorizontal = 0;
             _sensPersoVertical = 0;
@@ -194,13 +194,12 @@ namespace SAE
 
 
             //vitesse des monstres
-            _batVitesse = 50;
             _ghostVitesse = 0;
             _skeletonVitesse = 25;
 
-            /*_graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
+           /* _graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
             _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-            _graphics.ApplyChanges();
+            _graphics.ApplyChanges();*/
             //camera
             var viewportadapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 550);
             _camera = new OrthographicCamera(viewportadapter);
@@ -221,19 +220,15 @@ namespace SAE
             _batPosition[2] = new Vector2(950, 520);
             for (int i = 0; i < _batPosition.Length; i++)
             {
-            //vitesse des monstres
-            for (int i = 0; i < _batVitesse.Length; i++)
                 _batVitesse[i] = 50;
-            for (int i = 0; i < _batAttaque.Length; i++)
                 _batAttaque[i] = false;
+                _batPositionIni[i] = _batPosition[i];
+                _batZone[i] = new Rectangle((int)(_batPositionIni[i].X + (BAT_LARGEUR / 2) - 100), (int)(_batPositionIni[i].Y - (BAT_HAUTEUR / 2) - 25), 200, 200);
+            }
             _ghostAttaque = false;
-            _ghostVitesse = 0;
             _skeletonVitesse = 50;
 
             _positionPerso = new Vector2(400, 770);
-                _batPositionIni[i] = _batPosition[i];
-                _batZone[i] = new Rectangle((int)(_batPositionIni[i].X + (BAT_LARGEUR/2) - 100), (int)(_batPositionIni[i].Y - (BAT_HAUTEUR/2) - 25), 200, 200);
-            }
             base.Initialize();
         }
         public override void LoadContent()
@@ -260,10 +255,7 @@ namespace SAE
             SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
             _ghost = new AnimatedSprite(ghostTexture);
 
-            SpriteSheet ghostTexture = Content.Load<SpriteSheet>("Fantome.sf", new JsonContentLoader());
-            _ghost = new AnimatedSprite(ghostTexture);
-
-            base.LoadContent(); 
+            base.LoadContent();
         }
         public override void Update(GameTime gameTime)
         {
@@ -276,14 +268,14 @@ namespace SAE
 
 
             //Déplacement et Animation + Collision
-            
+
             _keyboardState = Keyboard.GetState();
-            if(_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
+            if (_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Right))
             {
                 if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
                 {
                     _perso.Play("gDroite");
-                  //  _sensPersoHorizontal = 1;
+                    //  _sensPersoHorizontal = 1;
                     ushort tx1 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
@@ -293,12 +285,12 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
                         _positionPerso.X += walkSpeed;
-                    
+
                 }
                 else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))//flèche gauche
                 {
                     _perso.Play("gGauche");
-                 //   _sensPersoHorizontal = -1;
+                    //   _sensPersoHorizontal = -1;
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
@@ -308,13 +300,13 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2) && !IsCollision(tx3, ty3))
                         _positionPerso.X -= walkSpeed;
-                    
+
                 }
                 //flèche haut
                 else if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
                 {
                     _perso.Play("gHaut");
-                  //  _sensPersoVertical = -1;
+                    //  _sensPersoVertical = -1;
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)(_positionPerso.Y / _tiledMap.TileHeight);
                     ushort tx2 = (ushort)((_positionPerso.X + LARGEUR_PERSO) / _tiledMap.TileWidth);
@@ -322,15 +314,15 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
                         _positionPerso.Y -= walkSpeed;
-                    
+
                 }
                 //flèche bas
                 else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
                 {
                     _perso.Play("gBas");
-                  //  _sensPersoVertical = 1;
-                  //  _sensPersoHorizontal = 0;
-                  //  _sensPersoVertical = 1;
+                    //  _sensPersoVertical = 1;
+                    //  _sensPersoHorizontal = 0;
+                    //  _sensPersoVertical = 1;
 
                     ushort tx1 = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                     ushort ty1 = (ushort)((_positionPerso.Y + HAUTEUR_PERSO) / _tiledMap.TileHeight);
@@ -339,9 +331,10 @@ namespace SAE
                     //animation = "walkNorth";
                     if (!IsCollision(tx1, ty1) && !IsCollision(tx2, ty2))
                         _positionPerso.Y += walkSpeed;
-                    
+
                 }
             }
+
             /*else
             {
             if (_sensPersoHorizontal==1)
@@ -411,56 +404,56 @@ namespace SAE
                  _sensPersoHorizontal = 0;
              }
                  _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
+                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
             }
                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
-                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
+                _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
 
 
             //pour collision clé
-            
+
             //Fantome
             //le fantome attaque
-            if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque==false)
+            if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque == false)
                 //Fantome
                 //le fantome attaque
-                if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque==false)
+                if ((Keyboard.GetState().IsKeyDown(Keys.Add)) && _ghostAttaque == false)
                 {
                     _ghostAttaque = true;
                     //supprimer la clé
                 }
 
-                //Le héros se défend
-                if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque==true)
-                {
-                    espaceEtat = true;
-                    _nbDebattage++;
-                }
+            //Le héros se défend
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && espaceEtat == false && _ghostAttaque == true)
+            {
+                espaceEtat = true;
+                _nbDebattage++;
+            }
 
-                if (!(_keyboardState.IsKeyDown(Keys.Space)))
-                {
-                    espaceEtat = false;
-                }
+            if (!(_keyboardState.IsKeyDown(Keys.Space)))
+            {
+                espaceEtat = false;
+            }
 
-                if(_nbDebattage>=10 && _ghostAttaque==true)
-                {
-                    _vitessePerso = VITESSE_PERSO;
-                    float t1 = deltaTime;
-                    _ghost.Play("fantomeMort");
-                    _ghostAttaque = false;
-                    _nbDebattage = 0;
-                }
+            if (_nbDebattage >= 10 && _ghostAttaque == true)
+            {
+                _vitessePerso = VITESSE_PERSO;
+                float t1 = deltaTime;
+                _ghost.Play("fantomeMort");
+                _ghostAttaque = false;
+                _nbDebattage = 0;
+            }
 
-                //le fantome est en train d'attaquer
-                if (_ghostAttaque==true)
-                {
-                    _ghost.Play("fantomeInvoque");
-                    _ghostPosition = _positionPerso;
-                    _vitessePerso = 0;
-                }
+            //le fantome est en train d'attaquer
+            if (_ghostAttaque == true)
+            {
+                _ghost.Play("fantomeInvoque");
+                _ghostPosition = _positionPerso;
+                _vitessePerso = 0;
+            }
 
             //Chauve-souris
-            for(int i=0; i<_batZone.Length; i++)
+            for (int i = 0; i < _batZone.Length; i++)
             {
                 if (CollisionJoueur(_batZone[i]))
                 {
@@ -471,7 +464,7 @@ namespace SAE
                 {
                     _batAttaque[i] = false;
                 }
-                if(_batAttaque[i]==true)
+                if (_batAttaque[i] == true)
                 {
                     if (_batPosition[i].X < _positionPerso.X)
                     {
@@ -525,13 +518,13 @@ namespace SAE
                         _batOrientationY[i] = 0;
                     }
                 }
-               _batPosition[i] += new Vector2((int)_batOrientationX[i] * _batVitesse[i] * deltaTime, (int)_batOrientationY[i] * _batVitesse[i] * deltaTime);
+                _batPosition[i] += new Vector2((int)_batOrientationX[i] * _batVitesse[i] * deltaTime, (int)_batOrientationY[i] * _batVitesse[i] * deltaTime);
             }
 
 
             //Squelette
-            _skeletonZone = new Rectangle((int)(_skeletonPosition.X - (SKELETON_LARGEUR/2)), (int)(_skeletonPosition.Y - (SKELETON_HAUTEUR / 2)), 150, 150);
-            if(CollisionJoueur(_skeletonZone))
+            _skeletonZone = new Rectangle((int)(_skeletonPosition.X - (SKELETON_LARGEUR / 2)), (int)(_skeletonPosition.Y - (SKELETON_HAUTEUR / 2)), 150, 150);
+            if (CollisionJoueur(_skeletonZone))
             {
                 _skeletonAttaque = true;
                 _skeleton.Play("squeletteEnMarche");
@@ -546,7 +539,7 @@ namespace SAE
                 if (_skeletonPosition.X < _positionPerso.X)
                 {
                     _skeletonOrientationX = 1;
-                    
+
                 }
                 else if (_skeletonPosition.X > _positionPerso.X)
                 {
@@ -575,15 +568,15 @@ namespace SAE
                 _skeletonOrientationY = 0;
             }
             _skeletonPosition += new Vector2(_skeletonOrientationX * _skeletonVitesse * deltaTime, _skeletonOrientationY * _skeletonVitesse * deltaTime);
-                _ghost.Update(gameTime);
-                _bat.Update(gameTime);
-                _skeleton.Update(deltaTime);
+            _ghost.Update(gameTime);
+            _bat.Update(gameTime);
+            _skeleton.Update(deltaTime);
             _tiledMapRenderer.Update(gameTime);
-                _perso.Update(gameTime);
-                _ghost.Update(gameTime);
+            _perso.Update(gameTime);
+            _ghost.Update(gameTime);
 
             //Camera
-              _camera.LookAt(_positionPerso);        
+            _camera.LookAt(_positionPerso);
 
             //Camera
             /*_camera.LookAt(_positionPerso);
@@ -596,23 +589,23 @@ namespace SAE
 
 
             //SCORE
-            for (int i =0; i < _rectCle.Length; i++)
+            for (int i = 0; i < _rectCle.Length; i++)
             {
                 if (CollisionJoueur(_rectCle[i]))
                 {
-                    _rectCle[i] = new Rectangle(0,0,0,0);
+                    _rectCle[i] = new Rectangle(0, 0, 0, 0);
                     _sound.Play();
-                    _score += 1;                    
+                    _score += 1;
                 }
-            /*if (CollisionJoueur()) // collision entre le joueur et les monstres
+                /*if (CollisionJoueur()) // collision entre le joueur et les monstres
 
-            //Vie
-            if (CollisionJoueur()) // collision entre le joueur et les monstres
-            {
-                _vie -= 1;
-            }*/
+                //Vie
+                if (CollisionJoueur()) // collision entre le joueur et les monstres
+                {
+                    _vie -= 1;
+                }*/
 
-            if (_vie == 0)
+                if (_vie == 0)
                 {
                     this.Initialize();
                 }
@@ -620,31 +613,38 @@ namespace SAE
                 if (_score == 5)
                 {
                     this.Initialize();
-                }*/
+                }
 
             }
+        }
         public override void Draw(GameTime gameTime)
         {
             _myGame.GraphicsDevice.Clear(Color.Black); // on utilise la reference vers Game1 pour changer le graphisme
-            //_tiledMapRenderer.Draw();
-               _tiledMapRenderer.Draw(_camera.GetViewMatrix());
-               var transformMatrix = _camera.GetViewMatrix();
-               _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);
+                                                       //_tiledMapRenderer.Draw();
+            _tiledMapRenderer.Draw(_camera.GetViewMatrix());
+            var transformMatrix = _camera.GetViewMatrix();
+            _myGame.SpriteBatch.Begin(transformMatrix: transformMatrix);
             _myGame.SpriteBatch.Draw(_perso, _positionPerso);
-            for(int i = 0; i<_rectCle.Length; i++)
+            for (int i = 0; i < _rectCle.Length; i++)
             {
-                if(_cle == true)
+                if (_cle == true)
                 {
-                    _myGame.SpriteBatch.Draw(_textureCle, _rectCle[i], Color.White); 
+                    _myGame.SpriteBatch.Draw(_textureCle, _rectCle[i], Color.White);
                 }
             }
+            for (int i = 0; i < _batPosition.Length; i++)
+            {
+                _myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
+                _myGame.SpriteBatch.Draw(_bat, _batPosition[i]);
+            }
+            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
             _myGame.SpriteBatch.End();
 
 
             _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
             _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
-            
+
             //Affichage vie
             if (_vie == 0)
             {
@@ -657,85 +657,49 @@ namespace SAE
             }
 
             //affichage score
-            if(_score == 5)
+            if (_score == 5)
             {
                 _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
                 _myGame.SpriteBatch.Draw(_textureFin, new Rectangle(510, 285, 50, 50), Color.White);
             }
-
-            //_myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
-           /* for(int i=0; i<_batPosition.Length; i++)
-            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
-            _myGame.SpriteBatch.Draw(_skeleton, _skeletonPosition);
-            _myGame.SpriteBatch.Draw(_bat, _batPosition[i]);
-            }
-            _myGame.SpriteBatch.Draw(_ghost, _ghostPosition);
             _myGame.SpriteBatch.End();
-            
+
 
         }
-        public bool CollisionJoueur(Rectangle objet)
-        {
-            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-        /*public bool CollisionJoueur()
-        }
+         public bool CollisionJoueur(Rectangle objet)
+         {
+             Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
 
-        public bool CollisionJoueur()
-         //   Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
+             return rectJoueur.Intersects(objet);
+         }
 
-            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            //Rectangle rectangleBat = new Rectangle((int)_batPosition.X, (int)_batPosition.Y, BAT_LARGEUR, BAT_HAUTEUR);            
-            Rectangle rectangleSkeleton = new Rectangle((int)_skeletonPosition.X, (int)_skeletonPosition.Y, SKELETON_LARGEUR, SKELETON_HAUTEUR);
-            return rectJoueur.Intersects(rectangleBat) || rectJoueur.Intersects(rectangleSkeleton);
-        }*/
-
-        /*public bool CollisionCle()
-        {
-            Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
-            for(int i = 0; i<_rectCle.Length; i++)
+            /*public bool CollisionCle()
             {
-                Rectangle rectCle = _rectCle[i];
-               
-            }
-            return rectJoueur.Intersects(rectCle[i]);
-        }*/
-        //méthode détection de collision avec la map
-        private bool IsCollision(ushort x, ushort y)
-        {
+                Rectangle rectJoueur = new Rectangle((int)_positionPerso.X, (int)_positionPerso.Y, LARGEUR_PERSO, HAUTEUR_PERSO);
+                for(int i = 0; i<_rectCle.Length; i++)
+                {
+                    Rectangle rectCle = _rectCle[i];
 
-            TiledMapTile? tile;
-            if (mapLayer.TryGetTile(x, y, out tile) == false)
+                }
+                return rectJoueur.Intersects(rectCle[i]);
+            }*/
+            //méthode détection de collision avec la map
+            private bool IsCollision(ushort x, ushort y)
             {
+
+                TiledMapTile? tile;
+                if (mapLayer.TryGetTile(x, y, out tile) == false)
+                {
+                    return false;
+                }
+                if (!tile.Value.IsBlank)
+                {
+
+
+                    return true;
+                }
                 return false;
             }
-            if (!tile.Value.IsBlank)
-            {
-
-
-                return true;
-            }
-            return false;
-        }
-
     }
-
-    //méthode détection de collision avec la map
-    /*private bool IsCollision(ushort x, ushort y)
-    {
-
-        TiledMapTile? tile;
-        if (mapLayer.TryGetTile(x, y, out tile) == false)
-        {
-            return false;
-        }
-        if (!tile.Value.IsBlank)
-        {
-            return true;
-        }
-        return false;
-    }*/
-
-
-    
 }
 
