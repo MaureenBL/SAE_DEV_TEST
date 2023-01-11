@@ -597,23 +597,6 @@ namespace SAE
                     _sound.Play();
                     _score += 1;
                 }
-                /*if (CollisionJoueur()) // collision entre le joueur et les monstres
-
-                //Vie
-                if (CollisionJoueur()) // collision entre le joueur et les monstres
-                {
-                    _vie -= 1;
-                }*/
-
-                if (_vie == 0)
-                {
-                    this.Initialize();
-                }
-
-                if (_score == 5)
-                {
-                    this.Initialize();
-                }
 
             }
         }
