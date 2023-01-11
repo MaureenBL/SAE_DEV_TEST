@@ -19,29 +19,6 @@ namespace SAE
         public const int TAILLE_FENETRE_L = 950;
         public const int TAILLE_FENETRE_H = 700;
 
-        private SpriteBatch _spriteBatch;
-
-        private MouseState _mouseState;
-
-
-        public const int TAILLE_POLICE = 24;
-        private bool _finPartie;
-        //game over 
-        //titre
-        private string _gameOver;
-        private Vector2 _positionGameOver;
-        //Rejouer
-        private string _rejouer;
-        private Vector2 _positionRejouer;
-        private Rectangle _rectRejouer;
-        //Rejouer
-      /*  private string _quitter;
-        private Vector2 _positionQuitter;
-        private Rectangle _rectQuitter; */
-        //Score
-        private Vector2 _positionScorePartie;
-
-        private SpriteFont _police;
 
         //titre
         private string _titre;
@@ -53,6 +30,7 @@ namespace SAE
         private SpriteFont _policeRegle;
         private Vector2 _positionRegle;
 
+        //texture
         private Texture2D _textureFond;
         private Texture2D _textureRetour;
 
@@ -62,6 +40,8 @@ namespace SAE
         private Vector2 _positionRetour;
 
         public SpriteBatch SpriteBatch { get; set; }
+        private SpriteBatch _spriteBatch;
+        private MouseState _mouseState;
 
         private Game1 _myGame;
         // pour récupérer une référence à l’objet game pour avoir accès à tout ce qui est
@@ -78,23 +58,7 @@ namespace SAE
             _titre = "Haunted Manor";
             _policeTitre = Content.Load<SpriteFont>("Titre");
             _positionTitre = new Vector2(265, 50);
-
-            _finPartie = false;
-            //GAME OVER 
-            _gameOver = "GAME OVER";
-            _positionGameOver = new Vector2((TAILLE_FENETRE_L / 2) - TAILLE_POLICE * _gameOver.Length / 2, TAILLE_FENETRE_H * 1 / 4);
-            
-            //REJOUER 
-            _rejouer = "REJOUER";
-            _positionRejouer = new Vector2((TAILLE_FENETRE_L * 1 / 4) - TAILLE_POLICE * _rejouer.Length / 2, TAILLE_FENETRE_H * 3 / 4);
-            _rectRejouer = new Rectangle((int)_positionRejouer.X, (int)_positionRejouer.Y, TAILLE_POLICE * _rejouer.Length, TAILLE_POLICE * 2);
-            /*  //QUITTER 
-              _quitter = "QUITTER";
-              _positionQuitter = new Vector2((TAILLE_FENETRE_L * 3 / 4) - TAILLE_POLICE * _quitter.Length / 2, TAILLE_FENETRE_H * 3 / 4);
-              _rectQuitter = new Rectangle((int)_positionQuitter.X, (int)_positionQuitter.Y, TAILLE_POLICE * _quitter.Length, TAILLE_POLICE * 2);
-              //SCORE FIN DE PARTIE
-              _positionScorePartie = new Vector2((TAILLE_FENETRE_L / 2) - 145, TAILLE_FENETRE_H / 2);
-  */
+           
             //accueil
             _regle = "Le but est simple. Si tu veux pouvoir sortir d'ici, il ne faut pas mourir. \n" +
                 "Ce manoir est maudit." +
@@ -122,28 +86,11 @@ namespace SAE
         }
         public override void Update(GameTime gameTime)
         {
-            _mouseState = Mouse.GetState();
-
-            _finPartie = true;
-
-            if (_mouseState.LeftButton == ButtonState.Pressed && _rectRejouer.Contains(_mouseState.Position))
-            {
-                Initialize();
-            }
-        //    else if (_mouseState.LeftButton == ButtonState.Pressed && _rectQuitter.Contains(_mouseState.Position))
-            {
-                //_screenManager.LoadScreen(_commandesTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
-
-            }
-
-
+           
         }
         public override void Draw(GameTime gameTime)
         {
-            _myGame.GraphicsDevice.Clear(Color.Red); // on utilise la reference vers
-                                                     // Game1 pour changer le graphisme
-
-            // TODO: Add your drawing code here
+            _myGame.GraphicsDevice.Clear(Color.Red); 
 
             _myGame.SpriteBatch.Begin();
             _myGame.SpriteBatch.Draw(_textureFond, new Rectangle(0, 0, 1000, 700), Color.White);
@@ -152,20 +99,6 @@ namespace SAE
             _myGame.SpriteBatch.DrawString(_policeRegle, $"{_regle}", _positionRegle, Color.White);
             _myGame.SpriteBatch.DrawString(_policeRetour, $"{_retour}", _positionRetour, Color.White);
             _myGame.SpriteBatch.End();
-            /*
-             if (_finPartie)
-             {
-                 GraphicsDevice.Clear(Color.Red * 0.7f);
-
-                 _spriteBatch.DrawString(_police, _gameOver, _positionGameOver, Color.White);
-                 _spriteBatch.DrawString(_police, _rejouer, _positionRejouer, Color.White);
-                 _spriteBatch.DrawString(_police, _quitter, _positionQuitter, Color.White);
-                 _spriteBatch.DrawString(_police, $"Score de la partie :{_score}", _positionScorePartie, Color.White);
-
-
-             } 
-
-            _spriteBatch.End(); */
         }
     }
 }

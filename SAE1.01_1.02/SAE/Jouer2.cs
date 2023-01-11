@@ -179,9 +179,6 @@ namespace SAE
             };
 
             
-            //Fausse Cle;
-
-
             //Perso
             _sensPersoHorizontal = 0;
             _sensPersoVertical = 0;
@@ -195,15 +192,11 @@ namespace SAE
             _positionPerso = new Vector2(400, TAILLE_FENETRE_H - 2 * HAUTEUR_PERSO);
 
 
-            // TODO: Add your initialization logic here
             //vitesse des monstres
             _batVitesse = 50;
             _ghostVitesse = 0;
             _skeletonVitesse = 25;
-            //FENETRE
-            /*_myGame.Graphics.PreferredBackBufferWidth = TAILLE_FENETRE_L;
-            _graphics.PreferredBackBufferHeight = TAILLE_FENETRE_H;
-            _graphics.ApplyChanges();*/
+
             //camera
             var viewportadapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 550);
             _camera = new OrthographicCamera(viewportadapter);
@@ -622,69 +615,9 @@ namespace SAE
 
 
             _myGame.SpriteBatch.Begin();
-            /* _myGame.SpriteBatch.Draw(_textureCle, _positionCle1, Color.White); // 1: piece violette - en bas a gauche
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
-            _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite */
             _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
             _myGame.SpriteBatch.DrawString(_policeVie, $"Vies : {_vie}", _positionVie, Color.White);
-
-
-            //Affichage clé 1
-/*
-            if(_cle == true)
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(45, 670, 25, 25), Color.White); // 1: piece violette - en bas a gauche
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle2, Color.White); // 2: piece rouge - bas
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle3, Color.White); // 3: piece bleu - milieu
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle4, Color.White); // 4: piece verte - haut / angle
-                _myGame.SpriteBatch.Draw(_textureCle, _positionCle5, Color.White); // 5: piece rouge - angle en haut à droite
-            }
-*/
-            /*
-            //Affichage clé 2
-            if()
-            {
-                _score += 1;
-                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            }
-            else
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(770, 570, 25, 25), Color.White); // 2: piece rouge - bas
-            }
-            //Affichage clé 3
-            if()
-            {
-                _score += 1;
-                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            }
-            else
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(380, 120, 25, 25), Color.White); // 3: piece bleu - milieu
-            }
-            //Affichage clé 4
-            if()
-            {
-                _score += 1;
-                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            }
-            else
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(660, 245, 25, 25), Color.White); // 4: piece verte - haut / angle
-            }
-            //Affichage clé 5
-            if()
-            {
-                _score += 1;
-                _myGame.SpriteBatch.DrawString(_police, $"Score : {_score}", _positionScore, Color.White);
-            }
-            else
-            {
-                _myGame.SpriteBatch.Draw(_textureCle, new Rectangle(950, 20, 25, 25), Color.White); // 5: piece rouge - angle en haut à droite
-            }*/
-
-
+            
             //Affichage vie
             if (_vie == 0)
             {
