@@ -412,7 +412,7 @@ namespace SAE
              }
                  _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
                  _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;*/
-            }
+            
                 _positionPerso.X += _sensPersoHorizontal * _vitessePerso * deltaTime;
                 _positionPerso.Y += _sensPersoVertical * _vitessePerso * deltaTime;
 
@@ -620,7 +620,7 @@ namespace SAE
                 if (_score == 5)
                 {
                     this.Initialize();
-                }*/
+                }
 
             }
         public override void Draw(GameTime gameTime)
