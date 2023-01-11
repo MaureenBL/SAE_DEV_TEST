@@ -168,7 +168,15 @@ namespace SAE
             //Cle
             _cle = true;
             _rectCle = new Rectangle[5];
-            _rectCle = new Rectangle[] {new Rectangle(45, 670, 25, 25),new Rectangle(770, 570, 25, 25),new Rectangle(380, 120, 25, 25),new Rectangle(660, 245, 25, 25),new Rectangle(950, 20, 25, 25) };
+            _rectCle = new Rectangle[] 
+            {
+                new Rectangle(45, 670, 25, 25),
+                new Rectangle(770, 570, 25, 25),
+                new Rectangle(380, 120, 25, 25),
+                new Rectangle(660, 245, 25, 25),
+                new Rectangle(1050, 20, 25, 25), 
+                new Rectangle(755, 400, 25, 25) 
+            };
 
             
             //Fausse Cle;

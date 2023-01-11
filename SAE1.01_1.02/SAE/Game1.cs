@@ -63,6 +63,7 @@ namespace SAE
         //musique / son
         private Song _song;
         private Song _gameSong;
+        private Song _endSong;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;        
@@ -131,15 +132,12 @@ namespace SAE
             //MUSIQUE
             _song = Content.Load<Song>("SongAccueil");
             _gameSong = Content.Load<Song>("GameSong");
+            _endSong = Content.Load<Song>("SongEnd");
 
             MediaPlayer.Play(_song);
         }
 
-        void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
-        {
-            // 0.0f is silent, 1.0f is full volume
-            MediaPlayer.Volume = 0.2f;
-        }
+        
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -165,6 +163,7 @@ namespace SAE
             {
                 _screenManager.LoadScreen(_jouerTrans, new FadeTransition(GraphicsDevice, Color.LightGray));
                 MediaPlayer.Stop();
+                MediaPlayer.Volume = 0.5f;
                 MediaPlayer.Play(_gameSong);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
@@ -188,6 +187,8 @@ namespace SAE
             {
                 _screenManager.LoadScreen(_finTrans, new FadeTransition(GraphicsDevice, Color.LightGoldenrodYellow));
                 MediaPlayer.Stop();
+                MediaPlayer.Volume = 0.1f;
+                MediaPlayer.Play(_endSong);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
